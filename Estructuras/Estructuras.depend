@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1664656474 source:c:\users\multirepair\desktop\estructura de datos\estructuras\estructuras\main.c
+	<stdio.h>
+	<stdlib.h>
+	"RAL.h"
+
+1664756716 c:\users\multirepair\desktop\estructura de datos\estructuras\estructuras\ral.h
+	"vendedor.h"
+
+1664756586 c:\users\multirepair\desktop\estructura de datos\estructuras\estructuras\vendedor.h
+

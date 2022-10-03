@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1664467341 source:c:\users\multirepair\desktop\estructura de datos\pm2_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1663806951 c:\users\multirepair\desktop\estructura de datos\pm2_eda\abb.h
+	<malloc.h>
+

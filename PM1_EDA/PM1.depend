@@ -1,0 +1,69 @@
+# depslib dependency file v1.0
+1662666186 source:c:\users\multirepair\desktop\estructura de datos\pm1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"vendedor.h"
+	"funciones.h"
+
+1662664739 c:\users\multirepair\desktop\estructura de datos\pm1\vendedor.h
+
+1662666236 c:\users\multirepair\desktop\estructura de datos\pm1\funciones.h
+	"busquedaBinaria.h"
+	<string.h>
+	<stdlib.h>
+
+1662658076 c:\users\multirepair\desktop\estructura de datos\pm1\busquedabinaria.h
+	<math.h>
+
+1663550158 source:c:\users\multirepair\desktop\programacion 1\pm1_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+	"vendedor.h"
+	"funciones.h"
+	"funcionesLSOBT.h"
+	"controles.h"
+
+1662664739 c:\users\multirepair\desktop\programacion 1\pm1_eda\vendedor.h
+
+1663549711 c:\users\multirepair\desktop\programacion 1\pm1_eda\funciones.h
+	<string.h>
+	<stdlib.h>
+
+1663542114 c:\users\multirepair\desktop\programacion 1\pm1_eda\busquedabinaria.h
+	<math.h>
+
+1663550440 c:\users\multirepair\desktop\programacion 1\pm1_eda\funcioneslsobt.h
+	<string.h>
+	<stdlib.h>
+	"busquedaBinaria.h"
+
+1663546297 c:\users\multirepair\desktop\programacion 1\pm1_eda\controles.h
+
+1664411289 source:c:\users\multirepair\desktop\estructura de datos\pm1_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+	"menu.h"
+
+1663941399 c:\users\multirepair\desktop\estructura de datos\pm1_eda\vendedor.h
+
+1664417194 c:\users\multirepair\desktop\estructura de datos\pm1_eda\funciones.h
+	<string.h>
+	<stdlib.h>
+
+1664410423 c:\users\multirepair\desktop\estructura de datos\pm1_eda\funcioneslsobt.h
+	<string.h>
+	<stdlib.h>
+
+1664221115 c:\users\multirepair\desktop\estructura de datos\pm1_eda\busquedabinaria.h
+	<math.h>
+
+1664305941 c:\users\multirepair\desktop\estructura de datos\pm1_eda\controles.h
+
+1664417178 c:\users\multirepair\desktop\estructura de datos\pm1_eda\menu.h
+	<stdio.h>
+	<stdlib.h>
+	"vendedor.h"
+	"funciones.h"
+	"funcionesLSOBT.h"
+	"controles.h"
+
