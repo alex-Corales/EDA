@@ -9,3 +9,18 @@
 
 1664756586 c:\users\multirepair\desktop\estructura de datos\estructuras\estructuras\vendedor.h
 
+1665090230 source:c:\users\multirepair\desktop\eda\estructuras\main.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
+
+1665090093 c:\users\multirepair\desktop\eda\estructuras\ral.h
+
+1664756586 c:\users\multirepair\desktop\eda\estructuras\vendedor.h
+
+1665092880 c:\users\multirepair\desktop\eda\estructuras\rac.h
+	"vendedor.h"
+
+1665092880 c:\users\multirepair\desktop\eda\estructuras\funciones.h
+	"RAC.h"
+

@@ -6,3 +6,25 @@
 1663806951 c:\users\multirepair\desktop\estructura de datos\pm2_eda\abb.h
 	<malloc.h>
 
+1665207515 source:c:\users\multirepair\desktop\eda\pm2_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+	"RAC.h"
+	"RS.h"
+
+1665101937 c:\users\multirepair\desktop\eda\pm2_eda\rac.h
+	"vendedores.h"
+
+1665104570 c:\users\multirepair\desktop\eda\pm2_eda\vendedores.h
+
+1665097586 c:\users\multirepair\desktop\eda\pm2_eda\funciones.h
+	"RAC.h"
+
+1665209738 c:\users\multirepair\desktop\eda\pm2_eda\rs.h
+	"listaEnlazada.h"
+
+1665208429 c:\users\multirepair\desktop\eda\pm2_eda\listaenlazada.h
+	<malloc.h>
+
+1665207372 c:\users\multirepair\desktop\eda\pm2_eda\rs_aux.h
+

@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "RAL.h"
+#include "funciones.h"
 
 int main(){
-    rebalseAbiertoLineal();
+    rebalseAbiertoCuadratico();
     return 0;
 }
