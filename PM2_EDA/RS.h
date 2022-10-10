@@ -1,44 +1,104 @@
 #ifndef RS_H_INCLUDED
 #define RS_H_INCLUDED
 #endif // RS_H_INCLUDED
-//#include "vendedores.h"
+#include "controles.h"
 #include "listaEnlazada.h"
 #define M 100
 
-datosVendedor evocarRS(lista *, int, int *);
-void imprimir(datosVendedor);
-int hashingRS(int);
-void initRS(lista *);
-int localizarRS(lista *, int, int *);
-int altaRS(lista *, datosVendedor);
 
-int posRS = 0;
-int cantRS = 0;
-
+char auxDni[20];
+char opc1[10];
+int aux, num, dni, auxopc;
+int posRS;
+int exito;
 
 void menuRS(){
 
+    int opc = 0;
+    datosVendedor vendedor;
     lista RS[M];
     initRS(RS);
-    datosVendedor empleado;
-    empleado.numDni = 42125797;
-    altaRS(RS, empleado);
-    empleado.numDni = 43123517;
-    altaRS(RS, empleado);
-    empleado.numDni = 49696181;
-    altaRS(RS, empleado);
+    do{
+        printf("<1> Dar de alta\n");
+        printf("<2> Dar de baja\n");
+        printf("<3> Consultar vendedor\n");
+        printf("<4> Mostrar estructura\n");
+        printf("<5> Memorizacion previa\n");
+        printf("<6> Salir\n");
+        printf("- ");
+        do{
+            scanf("%s", opc1);
+            auxopc = controlIngresoNum(opc1);
+        }while(auxopc==0);
+        opc = atoi(opc1);
 
-    /*
-    int dni = 42;
-    int exito;
-    datosVendedor temp;
-    temp = evocarRS(RS, dni, &exito);
-    printf("\nEXITO: %d\n", exito);
-    if (exito == 2){
-        imprimir(temp);
-    }
-    */
-    mostrarRS(RS);
+        system("cls");
+        switch(opc){
+        case 1:
+            printf("\nIngrese el dni: ");
+            fflush(stdin);
+            scanf("%d", &vendedor.numDni);
+            printf("\nIngrese el nombre y apellido: ");
+            fflush(stdin);
+            scanf("%s", vendedor.nombreApellido);
+            printf("\nIngrese el numero de telefono: ");
+            fflush(stdin);
+            scanf("%s", vendedor.numTelefono);
+            printf("\nIngrese el monto vendido: ");
+            fflush(stdin);
+            scanf("%f", &vendedor.montoVendido);
+            printf("\nIngrese la cantidad vendida: ");
+            fflush(stdin);
+            scanf("%d", &vendedor.cantVendido);
+            printf("\nIngrese el canal de venta: ");
+            fflush(stdin);
+            scanf("%s", vendedor.canalDeVenta);
+
+            aux = altaRS(RS, vendedor);
+
+            if (aux == 1) printf("\nEl vendedor se cargo con exito");
+            else printf("\nEl vendedor ya se encuentra cargado");
+            printf("\n");
+            system("pause");
+            system("cls");
+
+            break;
+        case 2:
+            printf("\nIngrese el dni del vendedor: ");
+            scanf("%d", &dni);
+            int aux = bajaRS(RS, dni);
+            if(aux == 1) printf("\nNo hay elementos para dar de baja");
+            if(aux == 0) printf("\nEl vendendor no se encuentra cargado en la lista");
+            else printf("\nFue dado de baja exitosamente");
+            printf("\n");
+            system("pause");
+            system("cls");
+            break;
+        case 3:
+            /*
+            printf("\nIngrese el dni que desea buscar: ");
+            scanf("%d", &dni);
+            datosVendedor consult = evocarRS(RS, dni, &exito);
+
+            if(exito == 1 || exito == 0) printf("\nNO");
+            else imprimir(consult);
+            printf("\n");
+            system("pause");
+            system("cls");
+            */
+            break;
+        case 4:
+            mostrarRS(RS);
+            printf("\n");
+            system("pause");
+            system("cls");
+            break;
+            break;
+        case 5:
+            break;
+        }
+
+    }while(opc != 6);
 }
 
 void imprimir(datosVendedor dat){
@@ -70,9 +130,7 @@ void initRS(lista dat[]){
 }
 
 int localizarRS(lista dat[], int dni, int *posRS){
-
     *posRS = hashingRS(dni);
-    printf("\nHASH: %d", *posRS);
     int aux = localizarLista(&dat[*posRS], dni);
     if(aux == 1) return 1; //No hay elementos en la lista
     if(aux == 0) return 0; //El elemento no esta en la lista
@@ -81,7 +139,7 @@ int localizarRS(lista dat[], int dni, int *posRS){
 
 int altaRS(lista dat[], datosVendedor empleado){
     //if(cantRS == M) return 0;
-    int aux = localizarRS(dat, empleado.numDni, &posRS);
+    aux = localizarRS(dat, empleado.numDni, &posRS);
     if(aux == 2) return 0; //No puedo dar de alta por que el elemento ya existe
 
     altaLista(&dat[posRS], empleado);
@@ -89,31 +147,28 @@ int altaRS(lista dat[], datosVendedor empleado){
     return 1;
 }
 
+int bajaRS(lista dat[], int dni){
+    int aux = localizarRS(dat, dni, &posRS);
+    if(aux == 1) return 1; //No hay elementos en la lista
+    if(aux == 0) return 0; //El elemento no esta en la lista
+
+    bajaLista(&dat[posRS], dni);
+    return 2;
+}
+
 datosVendedor evocarRS(lista dat[], int dni, int *exito){
     datosVendedor temp;
     *exito = localizarRS(dat, dni, &posRS);
-    return evocarLista(dat[posRS]);
-}
-
-int bajaRS(){
-
+    return temp;
 }
 
 void mostrarRS(lista dat[]){
     for(int i = 0; i < M; i++){
-        printf("\nBalde N°: %d: ", i);
-        mostrarLVD(dat[i]);
+        printf("\nBalde N: %d", i);
+        mostrarLista(dat[i]);
     }
 }
 
-void mostrarLVD(lista dat){
-    isEmpty(dat);
-    reset(&dat);
-    while(isOos(dat) != 1){
-        imprimir(evocarLista(dat));
-        forwardlist(&dat);
-    }
-}
 
 
 

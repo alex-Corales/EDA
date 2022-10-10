@@ -7,3 +7,5 @@ typedef struct{
     int cantVendido;
     char canalDeVenta[20];
 }datosVendedor;
+
+

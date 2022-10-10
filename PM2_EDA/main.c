@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "RAC.h"
 #include "RS.h"
-
+#include "abb.h"
 
 int main(){
 
@@ -21,7 +21,7 @@ int main(){
         switch(opc){
         case 1:
             system("cls");
-            printf("\nPronto\n");
+            menuABB();
             system("pause");
             system("cls");
             break;

@@ -86,10 +86,7 @@ int localizarLista(lista *p, int dni){
 void altaLista(lista *p, datosVendedor varado){
 
     if(isEmpty(*p)==0) reset(p);
-    //printf("\nDNI 1 %d", p->cursor->vipd.numDni);
     while(isOos(*p) != 1){
-        printf("\nDNI %d", p->cursor->vipd.numDni);
-        system("pause");
         forwardlist(p);
     }
 
@@ -110,7 +107,13 @@ void altaLista(lista *p, datosVendedor varado){
     }
 }
 
-void bajaLista(lista *p){
+void bajaLista(lista *p, int dni){
+
+    if(isEmpty(*p)==0) reset(p);
+    while(isOos(*p) != 1 && p->cursor->vipd.numDni != dni){
+        forwardlist(p);
+    }
+
     if(((*p).cursor)==((*p).acceso)){
         (*p).acceso=(*p).cursor->next;
         free((*p).cursor);
@@ -121,6 +124,15 @@ void bajaLista(lista *p){
         (*p).cursoraux->next=(*p).cursor->next;
         free((*p).cursor);
         (*p).cursor=(*p).cursoraux->next;
+    }
+}
+
+void mostrarLista(lista dat){
+    isEmpty(dat);
+    reset(&dat);
+    while(isOos(dat) != 1){
+        imprimir(evocarLista(dat));
+        forwardlist(&dat);
     }
 }
 
