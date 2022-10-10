@@ -36,3 +36,26 @@
 1665359429 c:\users\multirepair\desktop\eda\pm2_eda\arbolgrafico.h
 	"ABB.h"
 
+1665373460 source:c:\users\monica\desktop\eda\pm2_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+	"RAC.h"
+	"RS.h"
+	"abb.h"
+
+1665368520 c:\users\monica\desktop\eda\pm2_eda\rac.h
+	"vendedores.h"
+
+1665368520 c:\users\monica\desktop\eda\pm2_eda\vendedores.h
+
+1665368520 c:\users\monica\desktop\eda\pm2_eda\rs.h
+	"controles.h"
+	"listaEnlazada.h"
+
+1665368520 c:\users\monica\desktop\eda\pm2_eda\controles.h
+
+1665368520 c:\users\monica\desktop\eda\pm2_eda\listaenlazada.h
+	<malloc.h>
+
+1665388837 c:\users\monica\desktop\eda\pm2_eda\abb.h
+

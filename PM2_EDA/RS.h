@@ -5,7 +5,6 @@
 #include "listaEnlazada.h"
 #define M 100
 
-
 char auxDni[20];
 char opc1[10];
 int aux, num, dni, auxopc;

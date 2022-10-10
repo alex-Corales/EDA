@@ -1,6 +1,6 @@
-
 void mostrarArbolBinRec(arbol *nodo, char cad[]){
-    printf("%d\n",nodo->cursor->vipdABB.numDni);
+
+    printf("Hola\n", nodo->cursor->vipdABB.numDni);
 
     if(nodo->cursor->nodoIzquierdo != NULL){
         char cad2[MAXTAMCAD]; strcpy(cad2, cad);
@@ -21,11 +21,11 @@ void mostrarArbolBinRec(arbol *nodo, char cad[]){
         char cad3[MAXTAMCAD]; strcpy(cad3, cad);
         printf("%s%c%c%c%c%c", cad, 195,196,196,196,196);
         strcat(cad3, "      ");
-        mostrarArbolBinRec(nodo->cursor->nodoDerecho);
+        mostrarArbolBinRec(nodo->cursor->nodoDerecho, cad3);
     }
 }
 
 void mostrarArbolBin(arbol nodo){
-    if(nodo->acceso == NULL) printf("\nEl arbol esta vacio");
-    else mostrarArbolBinRec(nodo->acceso, "");
+    if(nodo.acceso == NULL) printf("\nEl arbol esta vacio");
+    else mostrarArbolBinRec(nodo.acceso,"");
 }

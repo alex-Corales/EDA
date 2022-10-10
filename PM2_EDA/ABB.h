@@ -1,28 +1,27 @@
 #ifndef ABB_H_INCLUDED
 #define ABB_H_INCLUDED
 #endif // ABB_H_INCLUDED
-# define MAXTAMCAD 100
 
+int *cantVendedores = 0;
 
-typedef struct{
+struct nodoABB{
     datosVendedor vipdABB;
     struct nodoABB *nodoPadre;
     struct nodoABB *nodoDerecho;
     struct nodoABB *nodoIzquierdo;
-}nodoABB;
+};
 
-typedef struct{
-    nodoABB *acceso;
-    nodoABB *cursor;
-    nodoABB *cursorAux;
-}arbol;
+struct nodoABB *raiz = NULL;
+struct nodoABB *anterior;
+struct nodoABB *cursor;
+struct nodoABB *aux1;
+struct nodoABB *aux2;
 
 void menuABB(){
 
-    int aux;
+    int auxABB, opcABB;
+    char opc1ABB[10];
     datosVendedor vendedorABB;
-    arbol arbol;
-    initABB(&arbol);
     do{
         printf("<1> Dar de alta\n");
         printf("<2> Dar de baja\n");
@@ -31,46 +30,69 @@ void menuABB(){
         printf("<5> Memorizacion previa\n");
         printf("<6> Salir\n");
         printf("- ");
-        do{
-            scanf("%s", opc1);
-            auxopc = controlIngresoNum(opc1);
-        }while(auxopc==0);
-        opc = atoi(opc1);
+        scanf("%d", &opcABB);
 
         system("cls");
-        switch(opc){
+        switch(opcABB){
         case 1:
+            printf("\nIngrese el dni: ");
+            fflush(stdin);
+            scanf("%d", &vendedorABB.numDni);
+            printf("\nIngrese el nombre y apellido: ");
+            fflush(stdin);
+            scanf("%s", vendedorABB.nombreApellido);
+            printf("\nIngrese el numero de telefono: ");
+            fflush(stdin);
+            scanf("%s", vendedorABB.numTelefono);
+            printf("\nIngrese el monto vendido: ");
+            fflush(stdin);
+            scanf("%f", &vendedorABB.montoVendido);
+            printf("\nIngrese la cantidad vendida: ");
+            fflush(stdin);
+            scanf("%d", &vendedorABB.cantVendido);
+            printf("\nIngrese el canal de venta: ");
+            fflush(stdin);
+            scanf("%s", vendedorABB.canalDeVenta);
 
-            vendedorABB.numDni = 28;
-            aux = altaABB(&arbol, vendedorABB);
-            vendedorABB.numDni = 11;
-            aux = altaABB(&arbol, vendedorABB);
-            vendedorABB.numDni = 96;
-            aux = altaABB(&arbol, vendedorABB);
-            vendedorABB.numDni = 21;
-            aux = altaABB(&arbol, vendedorABB);
-            vendedorABB.numDni = 6;
-            aux = altaABB(&arbol, vendedorABB);
-            vendedorABB.numDni = 1;
-            aux = altaABB(&arbol, vendedorABB);
-            vendedorABB.numDni = 30;
-            aux = altaABB(&arbol, vendedorABB);
-            vendedorABB.numDni = 10;
-            aux = altaABB(&arbol, vendedorABB);
-            vendedorABB.numDni = 2;
-            aux = altaABB(&arbol, vendedorABB);
-
-
+            int auxAlta = altaABB(vendedorABB);
+            if(auxAlta == 0) printf("\nEl vendedor ya se encuentra cargado en el sistema");
+            else printf("\nEl vendedor fue cargado");
+            printf("\n");
+            system("pause");
+            system("cls");
             break;
         case 2:
+            printf("\nIngrese el dni del vendedor que desea eliminar: ");
+            scanf("%d", &vendedorABB.numDni);
+            int auxBaja = bajaABB(vendedorABB);
+            if(auxBaja == 2) printf("\nBaja cancelada");
+            else printf("\nBorrado");
             break;
         case 3:
+            /*printf("\nIngrese el dni del vendedor que desea buscar: ");
+            scanf("%d", &vendedorABB.numDni);
+
+            datosVendedor consultABB = evocarABB(vendedorABB.numDni);
+            if(consultABB.numDni == 1) printf("\nEl vendedor no se encuentra cargado");
+            else imprimirABB(consultABB);
+            printf("\n");
+            system("pause");
+            system("cls");*/
             break;
         case 4:
-            //resetABB(&arbol);
-            mostrarArbolBin(arbol);
+            printf("\npreOrden\n");
+            preOrden(raiz);
+            printf("\n");
+            system("pause");
+            system("cls");
             break;
         case 5:
+            aux = memorizacionPreviaABB(vendedorABB);
+            if (aux != 0) printf("\nSe cargo el archivo con exito");
+            else printf("\nHubo un problema al leer el archivo vendedores.txt");
+            printf("\n");
+            system("pause");
+            system("cls");
             break;
         }
 
@@ -78,164 +100,152 @@ void menuABB(){
 
 }
 
-void initABB(arbol *p){
-    p->acceso = NULL;
-    p->cursor = NULL;
-    p->cursorAux = NULL;
+void imprimirABB(datosVendedor dat){
+    printf("\n------------------------------");
+    printf("\nNombre y Apellido: %s", dat.nombreApellido);
+    printf("\nDni: %d", dat.numDni);
+    printf("\nNumero de telefono: %s", dat.numTelefono);
+    printf("\nMonto vendido: %f", dat.montoVendido);
+    printf("\nCantidad vendida: %d", dat.cantVendido);
+    printf("\nCanal de venta: %s", dat.canalDeVenta);
+    printf("\n------------------------------\n");
 }
 
-int isFullABB(arbol p){
-    nodoABB *n;
-    n = (nodoABB*)malloc(sizeof(nodoABB));
-
-    if(n == NULL){
-        free(n);
-        return 1;
-    }else{
-        free(n);
-        return 0;
-    }
-}
-
-int isEmptyABB(arbol p){
-    if(p.acceso == NULL) return 1;
-    else return 0;
-}
-
-
-int isOosABB(arbol p){
-    if(p.cursor == NULL) return 1;
-    else return 0;
-}
-
-void resetABB(arbol *p){
-    p->cursor = p->acceso;
-    p->cursorAux = p->acceso;
-}
-
-int localizarABB(arbol *p, int dni){
-    int numDni = dni;
-    if(isEmptyABB(*p) == 1) return 1; //No hay elementos en el arbol
-    resetABB(&p);
-
-    while(isOosABB(*p) != NULL){
-        if(p->cursor->vipdABB.numDni != numDni){
-            p->cursorAux = p->cursor;
-            if(p->cursor->vipdABB.numDni < numDni){
-                p->cursor = p->cursor->nodoDerecho;
-            }else{
-                p->cursor = p->cursor->nodoIzquierdo;
-            }
-        }else return 2;
-    }
-
-        if(isOosABB(*p) == 1) return 1;
-}
-
-int altaABB(arbol *p, datosVendedor dat){
-
-    int auxExito = localizarABB(&p, dat.numDni);
-    if(auxExito == 2) return 0;
-
-    nodoABB *aux = (nodoABB*)malloc(sizeof(nodoABB));
-    if(aux == NULL) return 1;
-    if(p->cursor == NULL){
-        printf("\nCabeza\n");
-        p->acceso = aux;
-        aux->nodoDerecho = NULL;
-        aux->nodoIzquierdo = NULL;
-        p->cursor = p->acceso;
-        p->cursorAux = p->acceso;
-    }else if(p->cursor->vipdABB.numDni > dat.numDni){
-        printf("\nIzquierda\n");
-        p->cursorAux = p->cursor;
-        p->cursor = p->cursor->nodoIzquierdo;
-        p->cursorAux->nodoIzquierdo = aux;
-        aux->nodoIzquierdo = NULL;
-        aux->nodoDerecho = NULL;
-        p->cursor = aux;
-    }else{
-        printf("\nDerecha\n");
-        p->cursorAux = p->cursor;
-        p->cursor = p->cursor->nodoDerecho;
-        p->cursorAux->nodoDerecho = aux;
-        aux->nodoDerecho = NULL;
-        aux->nodoIzquierdo = NULL;
-        p->cursor = aux;
-    }
-    p->cursor->vipdABB = dat;
-
-    printf("\nAcceso: %d", p->acceso->vipdABB.numDni);
-    printf("\nAnterior: %d", p->cursorAux->vipdABB.numDni);
-    printf("\nNuevo: %d", p->cursor->vipdABB.numDni);
-
-}
-
-void preOrden(arbol *p){
-    if (p->cursor != NULL){
-        printf("%d, ", p->cursor->vipdABB.numDni);
-        preOrden(p->cursor->nodoIzquierdo);
-        preOrden(p->cursor->nodoDerecho);
-    }
-}
-
-void inOrden(arbol *p){
-    if (p->cursor != NULL){
-        inOrden(p->cursor->nodoIzquierdo);
-        printf("%d, ", p->cursor->vipdABB.numDni);
-        inOrden(p->cursor->nodoDerecho);
-    }
-}
-
-void postOrden(arbol *p){
-    if (p->cursor != NULL){
-        postOrden(p->cursor->nodoIzquierdo);
-        postOrden(p->cursor->nodoDerecho);
-        printf("%d, ", p->cursor->vipdABB.numDni);
-    }
-}
-
-void mostrarArbolBinRec(arbol *nodo, char cad[]){
-
-    printf("Hola\n", nodo->cursor->vipdABB.numDni);
-
-    if(nodo->cursor->nodoIzquierdo != NULL){
-        char cad2[MAXTAMCAD]; strcpy(cad2, cad);
-        if(nodo->cursor->nodoDerecho != NULL){
-            printf("%s%c%c%c%c%c", cad, 195,196,196,196,196);
-            char simb = 179, aux[2];
-            aux[0] = simb; aux[1] = '\0'; strcat(cad2, aux);
-            strcat(cad2, "      ");
-            mostrarArbolBinRec(nodo->cursor->nodoIzquierdo,cad2);
-        }else{
-            printf("%s%c%c%c%c%c", cad, 195,196,196,196,196);
-            strcat(cad2, "      ");
-            mostrarArbolBinRec(nodo->cursor->nodoIzquierdo,cad2);
+int localizarABB(int numDni){
+    cursor = raiz;
+    while(cursor != NULL && cursor->vipdABB.numDni != numDni){
+        anterior = cursor;
+        if(numDni < cursor->vipdABB.numDni){
+            cursor = cursor->nodoIzquierdo;
+        }
+        else{
+            cursor = cursor->nodoDerecho;
         }
     }
+    if(cursor == NULL) return 1; //El vendedor no esta en el arbol
+    else return 0; //El vendedor se encuentra en el arbol
+}
 
-    if(nodo->cursor->nodoDerecho != NULL){
-        char cad3[MAXTAMCAD]; strcpy(cad3, cad);
-        printf("%s%c%c%c%c%c", cad, 195,196,196,196,196);
-        strcat(cad3, "      ");
-        mostrarArbolBinRec(nodo->cursor->nodoDerecho, cad3);
+int altaABB(datosVendedor dat){
+    if(*cantVendedores == 110) return -1; //No se pueden ingresar mas vendedores
+    int aux = localizarABB(dat.numDni);
+    if(aux == 0) return 0; //No puedo dar de alta por que el vendedor ya esta cargado
+
+    struct nodoABB *nuevo = malloc(sizeof(struct nodoABB));
+    if(nuevo == NULL) return 1;
+
+    nuevo->vipdABB = dat;
+    nuevo->nodoDerecho = NULL;
+    nuevo->nodoIzquierdo = NULL;
+    if(raiz == NULL){
+        raiz = nuevo;
+    }else{
+        if(dat.numDni < anterior->vipdABB.numDni)
+            anterior->nodoIzquierdo = nuevo;
+        else
+            anterior->nodoDerecho = nuevo;
+    }
+    *cantVendedores++;
+    return 2; //El vendedor se cargo
+}
+
+int bajaABB(datosVendedor dat){ //Politica de remplazo: Menor de los mayores con copia de datos
+    int aux = localizarABB(dat.numDni);
+    if(aux == 1) return 1; //El vendedor no se encuentra en el arbol
+    int opcBaja;
+    printf("\nDni: %d", cursor->vipdABB.numDni);
+    printf("\nNombre y apellido: %s", cursor->vipdABB.nombreApellido);
+    printf("\nNumero de telefono: %s", cursor->vipdABB.numTelefono);
+    printf("\nMonto vendido: %f", cursor->vipdABB.montoVendido);
+    printf("\nCantidad vendida: %d", cursor->vipdABB.cantVendido);
+    printf("\nCanal de venta: %s", cursor->vipdABB.canalDeVenta);
+    printf("\nDesea eliminar el vendedor?");
+    printf("\n<1> Si");
+    printf("\n<2> No");
+    printf("\n- ");
+    scanf("%d", &opcBaja);
+    if(opcBaja == 2) return 2;
+
+    if(cursor->nodoIzquierdo == NULL && cursor->nodoDerecho == NULL){
+        if(cursor == raiz) raiz = NULL;
+        else{
+            if(anterior->vipdABB.numDni > dat.numDni) anterior->nodoIzquierdo = NULL;
+            else anterior->nodoDerecho = NULL;
+            free(cursor);
+        }
+    }else if((cursor->nodoIzquierdo == NULL && cursor->nodoDerecho != NULL) || (cursor->nodoIzquierdo != NULL && cursor->nodoDerecho == NULL)){
+        if(cursor == raiz){
+            if(cursor->nodoIzquierdo != NULL) raiz = cursor->nodoIzquierdo;
+            else raiz = cursor->nodoDerecho;
+        }else{
+            if(anterior->vipdABB.numDni > dat.numDni && cursor->nodoIzquierdo == NULL) anterior->nodoIzquierdo = cursor->nodoDerecho;
+            else if(anterior->vipdABB.numDni > dat.numDni && cursor->nodoDerecho == NULL) anterior->nodoDerecho = cursor->nodoIzquierdo;
+            else if(anterior->vipdABB.numDni < dat.numDni && cursor->nodoDerecho == NULL) anterior->nodoDerecho = cursor->nodoIzquierdo;
+            else if(anterior->vipdABB.numDni < dat.numDni && cursor->nodoIzquierdo == NULL) anterior->nodoIzquierdo = cursor->nodoDerecho;
+            free(cursor);
+        }
+    }else{
+        aux2 = cursor->nodoDerecho;
+        aux1 = cursor->nodoDerecho;
+        while(aux1->nodoIzquierdo != NULL){
+            aux2 = aux1;
+            aux1 = aux1->nodoIzquierdo;
+        }
+        if(aux1 == aux2){
+            cursor->nodoDerecho = aux1->nodoDerecho;
+            cursor->vipdABB = aux1->vipdABB;
+        }else{
+            cursor->vipdABB = aux1->vipdABB;
+            aux2->nodoIzquierdo = aux1->nodoDerecho;
+        }
+    }
+    *cantVendedores--;
+    return 0; //El vendedor se elimino
+}
+
+/*datosVendedor evocarABB(int dni){
+    struct nodoABB *auxs;
+    auxs->vipdABB.numDni = 1;
+    int aux = localizarABB(dni);
+    if(aux == 1) return auxs->vipdABB; //El vendedor no esta cargado
+    else cursor->vipdABB;
+}*/
+
+int pertenece(){}
+
+void preOrden(struct nodoABB *cursor){
+    if (cursor != NULL){
+        imprimirABB(cursor->vipdABB);
+        preOrden(cursor->nodoIzquierdo);
+        preOrden(cursor->nodoDerecho);
     }
 }
 
-void mostrarArbolBin(arbol nodo){
-    if(nodo.acceso == NULL) printf("\nEl arbol esta vacio");
-    else mostrarArbolBinRec(nodo.acceso,"");
+void inOrden(struct nodoABB *cursor){
+    if (cursor != NULL){
+        inOrden(cursor->nodoIzquierdo);
+        imprimirABB(cursor->vipdABB);
+        inOrden(cursor->nodoDerecho);
+    }
 }
 
+void postOrden(struct nodoABB *cursor){
+    if (cursor != NULL){
+        postOrden(cursor->nodoIzquierdo);
+        postOrden(cursor->nodoDerecho);
+        imprimirABB(cursor->vipdABB);
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
+int memorizacionPreviaABB(datosVendedor dat){
+    FILE *fp;
+    if((fp = fopen("vendedores.txt","r"))==NULL) return 0;
+    else{
+        while(!feof(fp)){
+            fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &dat.numDni, dat.nombreApellido, dat.numTelefono, &dat.montoVendido, &dat.cantVendido, dat.canalDeVenta);
+            altaABB(dat);
+        }
+        return 1;
+    }
+    fclose(fp);
+} //Guarda los datos del archivo
