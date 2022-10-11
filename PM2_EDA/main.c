@@ -1,16 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "pantalla.h"
 #include "RAC.h"
 #include "RS.h"
 #include "abb.h"
 
 int main(){
+    system("color f");
     int opc = 0;
     do{
         printf("------------------------------");
         printf("\nBIENVENIDO AL MENU PRINCIPAL");
         printf("\n------------------------------");
-        printf("\n<1> Arbol binario de busque");
+        printf("\n<1> Arbol binario de busqueda");
         printf("\n<2> Rebalse abierto cuadratico");
         printf("\n<3> Rebalse separado");
         printf("\n<4> Salir");
@@ -21,18 +23,17 @@ int main(){
         case 1:
             system("cls");
             menuABB();
-            system("pause");
             system("cls");
             break;
         case 2:
             system("cls");
             menuRAC();
-            system("pause");
+            system("cls");
             break;
         case 3:
             system("cls");
             menuRS();
-            system("pause");
+            system("cls");
             break;
         }
     }while(opc != 4);

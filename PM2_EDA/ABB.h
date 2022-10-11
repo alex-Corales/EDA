@@ -2,7 +2,9 @@
 #define ABB_H_INCLUDED
 #endif // ABB_H_INCLUDED
 
-int *cantVendedores = 0;
+int cantVendedoresABB = 0;
+int j = 0;
+int numDni = 0;
 
 struct nodoABB{
     datosVendedor vipdABB;
@@ -14,22 +16,29 @@ struct nodoABB{
 struct nodoABB *raiz = NULL;
 struct nodoABB *anterior;
 struct nodoABB *cursor;
+struct nodoABB *auxs;
 struct nodoABB *aux1;
 struct nodoABB *aux2;
+
+datosVendedor evocarABB(int);
 
 void menuABB(){
 
     int auxABB, opcABB;
     char opc1ABB[10];
     datosVendedor vendedorABB;
+    datosVendedor tempABB;
     do{
-        printf("<1> Dar de alta\n");
-        printf("<2> Dar de baja\n");
-        printf("<3> Consultar vendedor\n");
-        printf("<4> Mostrar estructura\n");
-        printf("<5> Memorizacion previa\n");
-        printf("<6> Salir\n");
-        printf("- ");
+        printf("------------------------------");
+        printf("\nMENU ARBOL BINARIO");
+        printf("\n------------------------------");
+        printf("\n<1> Dar de alta");
+        printf("\n<2> Dar de baja");
+        printf("\n<3> Consultar vendedor");
+        printf("\n<4> Mostrar estructura");
+        printf("\n<5> Memorizacion previa");
+        printf("\n<6> Salir");
+        printf("\n- ");
         scanf("%d", &opcABB);
 
         system("cls");
@@ -67,24 +76,98 @@ void menuABB(){
             int auxBaja = bajaABB(vendedorABB);
             if(auxBaja == 2) printf("\nBaja cancelada");
             else printf("\nBorrado");
-            break;
-        case 3:
-            /*printf("\nIngrese el dni del vendedor que desea buscar: ");
-            scanf("%d", &vendedorABB.numDni);
-
-            datosVendedor consultABB = evocarABB(vendedorABB.numDni);
-            if(consultABB.numDni == 1) printf("\nEl vendedor no se encuentra cargado");
-            else imprimirABB(consultABB);
-            printf("\n");
-            system("pause");
-            system("cls");*/
-            break;
-        case 4:
-            printf("\npreOrden\n");
-            preOrden(raiz);
             printf("\n");
             system("pause");
             system("cls");
+            break;
+        case 3:
+
+            printf("\nIngrese el dni del vendedor que desea buscar: ");
+            scanf("%d", &numDni);
+
+            datosVendedor tempABB = evocarABB(numDni);
+
+            if(tempABB.numDni == 1) printf("\nEl vendedor no se encuentra cargado");
+            else imprimirABB(tempABB);
+            printf("\n");
+            system("pause");
+            system("cls");
+            break;
+        case 4:
+            printf("------------------------------");
+            printf("\nMENU ARBOL BINARIO");
+            printf("\n------------------------------");
+            printf("\nComo desea ver el Arbol");
+            printf("\n<1> Pre-Orden");
+            printf("\n<2> Pre-Orden con hijos");
+            printf("\n<3> Otros");
+            printf("\n- ");
+            scanf("%d", &opcABB);
+
+            switch(opcABB){
+            case 1:
+                system("cls");
+                printf("------------------------------");
+                printf("\npreOrden\n");
+                printf("------------------------------");
+                int aux = preOrden(raiz);
+                if(aux == 1) printf("\nNo hay vendedores cargados");
+                printf("\n------------------------------");
+                printf("\nADVERTENCIA: ULTIMO VENDEDOR");
+                printf("\nSi presiona una tecla volvera al menu");
+                printf("\n------------------------------");
+                printf("\n");
+                system("pause");
+                system("cls");
+                break;
+            case 2:
+                system("cls");
+                printf("------------------------------");
+                printf("\npreOrden\n");
+                printf("------------------------------");
+                aux = preOrdenHijos(raiz);
+                if(aux == 1) printf("\nNo hay vendedores cargados");
+                printf("\n------------------------------");
+                printf("\nADVERTENCIA: ULTIMO VENDEDOR");
+                printf("\nSi presiona una tecla volvera al menu");
+                printf("\n------------------------------");
+                printf("\n");
+                system("pause");
+                system("cls");
+                break;
+            case 3:
+                system("cls");
+                printf("------------------------------");
+                printf("\nMENU ARBOL BINARIO");
+                printf("\n------------------------------");
+                printf("\n<1> In-Orden");
+                printf("\n<2> Post-Orden");
+                printf("\n<3> Por niveles");
+                printf("\n- ");
+                scanf("%d", &opcABB);
+                switch(opcABB){
+                case 1:
+                    system("cls");
+                    printf("\ninOrden\n");
+                    inOrden(raiz);
+                    printf("\n");
+                    system("pause");
+                    system("cls");
+                    break;
+                case 2:
+                    system("cls");
+                    printf("\npostOrden\n");
+                    postOrden(raiz);
+                    printf("\n");
+                    system("pause");
+                    system("cls");
+                    break;
+                case 3:
+                    break;
+                }
+                break;
+            }
+
             break;
         case 5:
             aux = memorizacionPreviaABB(vendedorABB);
@@ -96,7 +179,7 @@ void menuABB(){
             break;
         }
 
-    }while(opc != 6);
+    }while(opcABB != 6);
 
 }
 
@@ -127,7 +210,7 @@ int localizarABB(int numDni){
 }
 
 int altaABB(datosVendedor dat){
-    if(*cantVendedores == 110) return -1; //No se pueden ingresar mas vendedores
+    if(cantVendedoresABB == 110) return -1; //No se pueden ingresar mas vendedores
     int aux = localizarABB(dat.numDni);
     if(aux == 0) return 0; //No puedo dar de alta por que el vendedor ya esta cargado
 
@@ -145,7 +228,7 @@ int altaABB(datosVendedor dat){
         else
             anterior->nodoDerecho = nuevo;
     }
-    *cantVendedores++;
+    cantVendedoresABB++;
     return 2; //El vendedor se cargo
 }
 
@@ -199,23 +282,57 @@ int bajaABB(datosVendedor dat){ //Politica de remplazo: Menor de los mayores con
             aux2->nodoIzquierdo = aux1->nodoDerecho;
         }
     }
-    *cantVendedores--;
+    cantVendedoresABB--;
     return 0; //El vendedor se elimino
 }
 
-/*datosVendedor evocarABB(int dni){
-    struct nodoABB *auxs;
-    auxs->vipdABB.numDni = 1;
+datosVendedor evocarABB(int dni){
+    datosVendedor temp;
+    temp.numDni = 1;
+
     int aux = localizarABB(dni);
-    if(aux == 1) return auxs->vipdABB; //El vendedor no esta cargado
+    if(aux == 1) return temp; //El vendedor no esta cargado
+
     else cursor->vipdABB;
-}*/
+}
 
 int pertenece(){}
 
-void preOrden(struct nodoABB *cursor){
+int preOrdenHijos(struct nodoABB *cursor){
+    if(raiz == NULL) return 1;
+    if (cursor != NULL){
+        printf("\nPADRE: ");
+        imprimirABB(cursor->vipdABB);
+
+        if(cursor->nodoIzquierdo == NULL){
+            printf("\n------------------------------");
+            printf("\nHIJO IZQUIERDO: NO TIENE");
+            printf("\n------------------------------");
+        }else{
+            printf("\nHIJO IZQUIERDO: ");
+            imprimirABB(cursor->nodoIzquierdo->vipdABB);
+        }
+
+        if(cursor->nodoDerecho == NULL){
+            printf("\n------------------------------");
+            printf("\nHIJO DERECHO: NO TIENE");
+            printf("\n------------------------------");
+        }else{
+            printf("\nHIJO DERECHO: ");
+            imprimirABB(cursor->nodoDerecho->vipdABB);
+        }
+        printf("\n");
+        system("pause");
+        preOrdenHijos(cursor->nodoIzquierdo);
+        preOrdenHijos(cursor->nodoDerecho);
+    }
+}
+
+int preOrden(struct nodoABB *cursor){
+    if(raiz == NULL) return 1;
     if (cursor != NULL){
         imprimirABB(cursor->vipdABB);
+        if ((j % 5) == 0){system("\n pause");}j++;
         preOrden(cursor->nodoIzquierdo);
         preOrden(cursor->nodoDerecho);
     }
@@ -248,4 +365,4 @@ int memorizacionPreviaABB(datosVendedor dat){
         return 1;
     }
     fclose(fp);
-} //Guarda los datos del archivo
+}

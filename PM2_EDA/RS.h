@@ -3,8 +3,9 @@
 #endif // RS_H_INCLUDED
 #include "controles.h"
 #include "listaEnlazada.h"
-#define M 100
+#define M 61 //p= 1.84 -> M = N/p -> M = 110/1.84 -> M = 59.78 -> M = 61.
 
+int cantRS;
 char auxDni[20];
 char opc1[10];
 int aux, num, dni, auxopc;
@@ -18,13 +19,16 @@ void menuRS(){
     lista RS[M];
     initRS(RS);
     do{
-        printf("<1> Dar de alta\n");
-        printf("<2> Dar de baja\n");
-        printf("<3> Consultar vendedor\n");
-        printf("<4> Mostrar estructura\n");
-        printf("<5> Memorizacion previa\n");
-        printf("<6> Salir\n");
-        printf("- ");
+        printf("------------------------------");
+        printf("\nMENU REBALSE SEPARADO");
+        printf("\n------------------------------");
+        printf("\n<1> Dar de alta");
+        printf("\n<2> Dar de baja");
+        printf("\n<3> Consultar vendedor");
+        printf("\n<4> Mostrar estructura");
+        printf("\n<5> Memorizacion previa");
+        printf("\n<6> Salir");
+        printf("\n- ");
         do{
             scanf("%s", opc1);
             auxopc = controlIngresoNum(opc1);
@@ -94,13 +98,20 @@ void menuRS(){
             break;
             break;
         case 5:
+            aux = memorizacionPreviaRS(RS,vendedor);
+            if (aux != 0) printf("\nSe cargo el archivo con exito");
+            else printf("\nHubo un problema al leer el archivo vendedores.txt");
+            printf("\n");
+            system("pause");
+            system("cls");
+            break;
             break;
         }
 
     }while(opc != 6);
 }
 
-void imprimir(datosVendedor dat){
+void imprimirRS(datosVendedor dat){
     printf("\n------------------------------");
     printf("\nNombre y Apellido: %s", dat.nombreApellido);
     printf("\nDni: %d", dat.numDni);
@@ -119,7 +130,6 @@ int hashingRS(int dni){
     longitud = strlen(x);
     for(i = 0; i < longitud; i++) contador+= ((int)x[i]) * (i+1);
     return (contador % M);
-
 }
 
 void initRS(lista dat[]){
@@ -137,12 +147,12 @@ int localizarRS(lista dat[], int dni, int *posRS){
 }
 
 int altaRS(lista dat[], datosVendedor empleado){
-    //if(cantRS == M) return 0;
+    if(cantRS == 110) return 0;
     aux = localizarRS(dat, empleado.numDni, &posRS);
     if(aux == 2) return 0; //No puedo dar de alta por que el elemento ya existe
 
     altaLista(&dat[posRS], empleado);
-
+    cantRS++;
     return 1;
 }
 
@@ -152,13 +162,18 @@ int bajaRS(lista dat[], int dni){
     if(aux == 0) return 0; //El elemento no esta en la lista
 
     bajaLista(&dat[posRS], dni);
+    cantRS--;
     return 2;
 }
 
-datosVendedor evocarRS(lista dat[], int dni, int *exito){
-    datosVendedor temp;
-    *exito = localizarRS(dat, dni, &posRS);
+datosVendedor evocarRS(lista dat[], int dni){
+    datosVendedor aux;
+    aux.numDni = -1;
     return temp;
+}
+
+int perteneceRS(lista dat[], int dni){
+    if(localizarRS(dat, dni, &posRS) == 2) return 1; //El vendedor esta cargado
 }
 
 void mostrarRS(lista dat[]){
@@ -168,7 +183,18 @@ void mostrarRS(lista dat[]){
     }
 }
 
-
+int memorizacionPreviaRS(lista dat[], datosVendedor empleado){
+    FILE *fp;
+    if((fp = fopen("vendedores.txt","r"))==NULL) return 0;
+    else{
+        while(!feof(fp)){
+            fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &empleado.numDni, empleado.nombreApellido, empleado.numTelefono, &empleado.montoVendido, &empleado.cantVendido, empleado.canalDeVenta);
+            altaRS(dat, empleado);
+        }
+        return 1;
+    }
+    fclose(fp);
+}
 
 
 
