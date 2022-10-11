@@ -1,6 +1,13 @@
+/*
+    Grupo 30
+    Corales Alex Nahuel
+    alexcorales21@gmail.com
+*/
+
 #ifndef CONTROLES_H_INCLUDED
 #define CONTROLES_H_INCLUDED
 #endif // CONTROLES_H_INCLUDED
+
 
 int controlIngresoNum(char numero[]){
     int i;

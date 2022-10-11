@@ -1,7 +1,12 @@
+/*
+    Grupo 30
+    Corales Alex Nahuel
+    alexcorales21@gmail.com
+*/
+
 #ifndef LISTAENLAZADA_H_INCLUDED
 #define LISTAENLAZADA_H_INCLUDED
 #endif // LISTAENLAZADA_H_INCLUDED
-
 #include <malloc.h>
 
 typedef struct{
@@ -10,7 +15,7 @@ typedef struct{
 }nodo;
 
 typedef struct{
-    nodo *acceso; //cabecera de la lista
+    nodo *acceso;
     nodo *cursor;
     nodo *cursoraux;
 }lista;
@@ -36,12 +41,10 @@ int localizarLista(lista *p, int dni){
         p->cursor = p->cursor->next;
     }
 
-    if(p->cursor == NULL) return 0;
+    if(p->cursor == NULL) return 0; //El elemento no esta en la lista
     if(p->cursor->vipd.numDni == numDni) return 2;
 }
 
-
-//Insertar un elemento a la lista
 void altaLista(lista *p, datosVendedor varado){
 
     nodo *aux = (nodo*)malloc(sizeof(nodo));

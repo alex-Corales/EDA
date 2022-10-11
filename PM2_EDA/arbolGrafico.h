@@ -1,31 +1,35 @@
-void mostrarArbolBinRec(arbol *nodo, char cad[]){
+/*
+    Grupo 30
+    Corales Alex Nahuel
+    alexcorales21@gmail.com
+*/
 
-    printf("Hola\n", nodo->cursor->vipdABB.numDni);
+void mostrarArbolBinRec(struct nodoABB *nodo, char cad[]){
 
-    if(nodo->cursor->nodoIzquierdo != NULL){
+    if(nodo->nodoIzquierdo != NULL){
         char cad2[MAXTAMCAD]; strcpy(cad2, cad);
-        if(nodo->cursor->nodoDerecho != NULL){
+        if(nodo->nodoDerecho != NULL){
             printf("%s%c%c%c%c%c", cad, 195,196,196,196,196);
             char simb = 179, aux[2];
             aux[0] = simb; aux[1] = '\0'; strcat(cad2, aux);
             strcat(cad2, "      ");
-            mostrarArbolBinRec(nodo->cursor->nodoIzquierdo,cad2);
+            mostrarArbolBinRec(nodo->nodoIzquierdo,cad2);
         }else{
             printf("%s%c%c%c%c%c", cad, 195,196,196,196,196);
             strcat(cad2, "      ");
-            mostrarArbolBinRec(nodo->cursor->nodoIzquierdo,cad2);
+            mostrarArbolBinRec(nodo->nodoIzquierdo,cad2);
         }
     }
 
-    if(nodo->cursor->nodoDerecho != NULL){
+    if(nodo->nodoDerecho != NULL){
         char cad3[MAXTAMCAD]; strcpy(cad3, cad);
         printf("%s%c%c%c%c%c", cad, 195,196,196,196,196);
         strcat(cad3, "      ");
-        mostrarArbolBinRec(nodo->cursor->nodoDerecho, cad3);
+        mostrarArbolBinRec(nodo->nodoDerecho, cad3);
     }
 }
 
-void mostrarArbolBin(arbol nodo){
-    if(nodo.acceso == NULL) printf("\nEl arbol esta vacio");
-    else mostrarArbolBinRec(nodo.acceso,"");
+void mostrarArbolBin(){
+    if(raiz == NULL) printf("\nEl arbol esta vacio");
+    else mostrarArbolBinRec(raiz,"");
 }

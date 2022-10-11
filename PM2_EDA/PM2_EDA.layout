@@ -2,49 +2,97 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="RAC.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="main.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6503" topLine="209" />
+			<Cursor1 position="647" topLine="18" />
 		</Cursor>
 	</File>
-	<File name="pantalla.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+	<File name="arbolGrafico.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="844" topLine="1" />
+			<Cursor1 position="74" topLine="0" />
 		</Cursor>
+	</File>
+	<File name="RAC.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="74" topLine="7" />
+		</Cursor>
+		<Folding>
+			<Collapse line="57" />
+			<Collapse line="181" />
+			<Collapse line="191" />
+			<Collapse line="198" />
+			<Collapse line="209" />
+			<Collapse line="231" />
+			<Collapse line="243" />
+			<Collapse line="270" />
+			<Collapse line="288" />
+			<Collapse line="295" />
+			<Collapse line="299" />
+		</Folding>
 	</File>
 	<File name="vendedores.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="138" topLine="0" />
+			<Cursor1 position="242" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="listaEnlazada.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="listaEnlazada.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="446" topLine="15" />
+			<Cursor1 position="74" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="22" />
+			<Collapse line="28" />
+			<Collapse line="32" />
+			<Collapse line="47" />
+			<Collapse line="66" />
+			<Collapse line="81" />
+		</Folding>
+	</File>
+	<File name="controles.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="74" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="RS.h" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="ABB.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5322" topLine="160" />
+			<Cursor1 position="76" topLine="0" />
 		</Cursor>
+		<Folding>
+			<Collapse line="51" />
+			<Collapse line="245" />
+			<Collapse line="256" />
+			<Collapse line="271" />
+			<Collapse line="294" />
+			<Collapse line="348" />
+			<Collapse line="358" />
+			<Collapse line="362" />
+			<Collapse line="396" />
+			<Collapse line="406" />
+			<Collapse line="414" />
+			<Collapse line="422" />
+		</Folding>
 	</File>
-	<File name="ABB.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+	<File name="RS.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3227" topLine="87" />
+			<Cursor1 position="74" topLine="0" />
 		</Cursor>
+		<Folding>
+			<Collapse line="40" />
+			<Collapse line="165" />
+			<Collapse line="176" />
+			<Collapse line="186" />
+			<Collapse line="192" />
+			<Collapse line="200" />
+			<Collapse line="210" />
+			<Collapse line="232" />
+			<Collapse line="239" />
+			<Collapse line="243" />
+			<Collapse line="251" />
+		</Folding>
 	</File>
-	<File name="main.c" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="pantalla.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="923" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="arbolGrafico.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1126" topLine="4" />
-		</Cursor>
-	</File>
-	<File name="controles.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
+			<Cursor1 position="74" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

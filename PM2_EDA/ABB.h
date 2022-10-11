@@ -1,10 +1,13 @@
+/*
+    Grupo 30
+    Corales Alex Nahuel
+    alexcorales21@gmail.com
+*/
+
 #ifndef ABB_H_INCLUDED
 #define ABB_H_INCLUDED
 #endif // ABB_H_INCLUDED
-
-int cantVendedoresABB = 0;
-int j = 0;
-int numDni = 0;
+#define MAXTAMCAD 100
 
 struct nodoABB{
     datosVendedor vipdABB;
@@ -20,7 +23,31 @@ struct nodoABB *auxs;
 struct nodoABB *aux1;
 struct nodoABB *aux2;
 
+/*
+    PROTOTIPOS
+*/
+
 datosVendedor evocarABB(int);
+int localizarABB(int);
+int altaABB(datosVendedor);
+int bajaABB(datosVendedor);
+int pertenece(int);
+int preOrdenHijos(struct nodoABB *);
+int preOrden(struct nodoABB *);
+int memorizacionPreviaABB(datosVendedor);
+void imprimirABB(datosVendedor);
+void inOrden(struct nodoABB *);
+void postOrden(struct nodoABB *);
+
+/*
+    VARIABLES
+*/
+
+int cantVendedoresABB = 0;
+int j = 0;
+int numDni = 0;
+char auxS[50];
+
 
 void menuABB(){
 
@@ -45,26 +72,51 @@ void menuABB(){
         switch(opcABB){
         case 1:
             printf("\nIngrese el dni: ");
-            fflush(stdin);
-            scanf("%d", &vendedorABB.numDni);
+            do{
+                scanf("%s", auxS);
+                auxopc = controlIngresoNum(auxS);
+            }while(auxopc==0);
+            vendedorABB.numDni = atoi(auxS);
+
             printf("\nIngrese el nombre y apellido: ");
-            fflush(stdin);
-            scanf("%s", vendedorABB.nombreApellido);
+            do{
+                getchar();
+                gets(vendedorABB.nombreApellido);
+                num=controlIngresoLetras(vendedorABB.nombreApellido);
+            }while(num==0);
+
             printf("\nIngrese el numero de telefono: ");
-            fflush(stdin);
-            scanf("%s", vendedorABB.numTelefono);
+            do{
+                getchar();
+                gets(vendedorABB.numTelefono);
+                num=controlIngresoLetrasNumero(vendedorABB.numTelefono);
+            }while(num == 0);
+
             printf("\nIngrese el monto vendido: ");
-            fflush(stdin);
-            scanf("%f", &vendedorABB.montoVendido);
+            do{
+                scanf("%s", auxS);
+                auxopc = controlIngresoNum(auxS);
+            }while(auxopc==0);
+            vendedorABB.montoVendido = atoi(auxS);
+
             printf("\nIngrese la cantidad vendida: ");
-            fflush(stdin);
-            scanf("%d", &vendedorABB.cantVendido);
+            do{
+                scanf("%s", auxS);
+                auxopc = controlIngresoNum(auxS);
+            }while(auxopc==0);
+            vendedorABB.cantVendido = atoi(auxS);
+
             printf("\nIngrese el canal de venta: ");
-            fflush(stdin);
-            scanf("%s", vendedorABB.canalDeVenta);
+            do{
+                getchar();
+                gets(vendedorABB.canalDeVenta);
+                num=controlIngresoLetras(vendedorABB.canalDeVenta);
+            }while(num==0);
 
             int auxAlta = altaABB(vendedorABB);
             if(auxAlta == 0) printf("\nEl vendedor ya se encuentra cargado en el sistema");
+            else if(auxAlta == -1) printf("\nEl vendedor no se puede cargar por que la estructura esta llena");
+            else if(auxAlta == 1) printf("\nError, no se puede cargar el vendedor");
             else printf("\nEl vendedor fue cargado");
             printf("\n");
             system("pause");
@@ -74,8 +126,9 @@ void menuABB(){
             printf("\nIngrese el dni del vendedor que desea eliminar: ");
             scanf("%d", &vendedorABB.numDni);
             int auxBaja = bajaABB(vendedorABB);
-            if(auxBaja == 2) printf("\nBaja cancelada");
-            else printf("\nBorrado");
+            if(auxBaja == 2) printf("\nSe cancelo la baja");
+            else if(auxBaja == 1) printf("\nEl vendedor no se encuentra cargado");
+            else printf("\nEL vendedor se borro con exito");
             printf("\n");
             system("pause");
             system("cls");
@@ -94,84 +147,91 @@ void menuABB(){
             system("cls");
             break;
         case 4:
-            printf("------------------------------");
-            printf("\nMENU ARBOL BINARIO");
-            printf("\n------------------------------");
-            printf("\nComo desea ver el Arbol");
-            printf("\n<1> Pre-Orden");
-            printf("\n<2> Pre-Orden con hijos");
-            printf("\n<3> Otros");
-            printf("\n- ");
-            scanf("%d", &opcABB);
-
-            switch(opcABB){
-            case 1:
-                system("cls");
-                printf("------------------------------");
-                printf("\npreOrden\n");
-                printf("------------------------------");
-                int aux = preOrden(raiz);
-                if(aux == 1) printf("\nNo hay vendedores cargados");
-                printf("\n------------------------------");
-                printf("\nADVERTENCIA: ULTIMO VENDEDOR");
-                printf("\nSi presiona una tecla volvera al menu");
-                printf("\n------------------------------");
-                printf("\n");
-                system("pause");
-                system("cls");
-                break;
-            case 2:
-                system("cls");
-                printf("------------------------------");
-                printf("\npreOrden\n");
-                printf("------------------------------");
-                aux = preOrdenHijos(raiz);
-                if(aux == 1) printf("\nNo hay vendedores cargados");
-                printf("\n------------------------------");
-                printf("\nADVERTENCIA: ULTIMO VENDEDOR");
-                printf("\nSi presiona una tecla volvera al menu");
-                printf("\n------------------------------");
-                printf("\n");
-                system("pause");
-                system("cls");
-                break;
-            case 3:
-                system("cls");
+            do{
                 printf("------------------------------");
                 printf("\nMENU ARBOL BINARIO");
                 printf("\n------------------------------");
-                printf("\n<1> In-Orden");
-                printf("\n<2> Post-Orden");
-                printf("\n<3> Por niveles");
+                printf("\nComo desea ver el Arbol");
+                printf("\n<1> Pre-Orden");
+                printf("\n<2> Pre-Orden con hijos");
+                printf("\n<3> Otros");
+                printf("\n<4> Salir");
                 printf("\n- ");
                 scanf("%d", &opcABB);
+
                 switch(opcABB){
                 case 1:
                     system("cls");
-                    printf("\ninOrden\n");
-                    inOrden(raiz);
+                    printf("------------------------------");
+                    printf("\npreOrden\n");
+                    printf("------------------------------");
+                    int aux = preOrden(raiz);
+                    if(aux == 1) printf("\nNo hay vendedores cargados");
+                    printf("\n------------------------------");
+                    printf("\nADVERTENCIA: ULTIMO VENDEDOR");
+                    printf("\nSi presiona una tecla volvera al menu");
+                    printf("\n------------------------------");
                     printf("\n");
                     system("pause");
                     system("cls");
                     break;
                 case 2:
                     system("cls");
-                    printf("\npostOrden\n");
-                    postOrden(raiz);
+                    printf("------------------------------");
+                    printf("\npreOrden\n");
+                    printf("------------------------------");
+                    aux = preOrdenHijos(raiz);
+                    if(aux == 1) printf("\nNo hay vendedores cargados");
+                    printf("\n------------------------------");
+                    printf("\nADVERTENCIA: ULTIMO VENDEDOR");
+                    printf("\nSi presiona una tecla volvera al menu");
+                    printf("\n------------------------------");
                     printf("\n");
                     system("pause");
                     system("cls");
                     break;
                 case 3:
+                    do{
+                        system("cls");
+                        printf("------------------------------");
+                        printf("\nMENU ARBOL BINARIO");
+                        printf("\n------------------------------");
+                        printf("\n<1> In-Orden");
+                        printf("\n<2> Post-Orden");
+                        printf("\n<3> Por niveles");
+                        printf("\n<4> Salir");
+                        printf("\n- ");
+                        scanf("%d", &opcABB);
+                        switch(opcABB){
+                        case 1:
+                            system("cls");
+                            printf("\ninOrden\n");
+                            inOrden(raiz);
+                            printf("\n");
+                            system("pause");
+                            system("cls");
+                            break;
+                        case 2:
+                            system("cls");
+                            printf("\npostOrden\n");
+                            postOrden(raiz);
+                            printf("\n");
+                            system("pause");
+                            system("cls");
+                            break;
+                        case 3:
+                            break;
+                        }
+                    }while(opcABB != 4);
                     break;
                 }
-                break;
-            }
+            }while(opcABB != 4);
 
             break;
         case 5:
             aux = memorizacionPreviaABB(vendedorABB);
-            if (aux != 0) printf("\nSe cargo el archivo con exito");
+            if (aux == 1) printf("\nSe cargo el archivo con exito");
+            else if(aux == -1) printf("\nSe cargo el archivo con exito y se lleno la estructura");
             else printf("\nHubo un problema al leer el archivo vendedores.txt");
             printf("\n");
             system("pause");
@@ -293,10 +353,12 @@ datosVendedor evocarABB(int dni){
     int aux = localizarABB(dni);
     if(aux == 1) return temp; //El vendedor no esta cargado
 
-    else cursor->vipdABB;
+    return cursor->vipdABB;
 }
 
-int pertenece(){}
+int pertenece(int dni){
+    if(localizarABB(dni) == 0) return 1; //El vendedor se encuentra cargado
+}
 
 int preOrdenHijos(struct nodoABB *cursor){
     if(raiz == NULL) return 1;
@@ -310,7 +372,9 @@ int preOrdenHijos(struct nodoABB *cursor){
             printf("\n------------------------------");
         }else{
             printf("\nHIJO IZQUIERDO: ");
-            imprimirABB(cursor->nodoIzquierdo->vipdABB);
+            printf("\n------------------------------");
+            printf("\nDni: %d", cursor->nodoIzquierdo->vipdABB.numDni);
+            printf("\n------------------------------");
         }
 
         if(cursor->nodoDerecho == NULL){
@@ -319,7 +383,9 @@ int preOrdenHijos(struct nodoABB *cursor){
             printf("\n------------------------------");
         }else{
             printf("\nHIJO DERECHO: ");
-            imprimirABB(cursor->nodoDerecho->vipdABB);
+            printf("\n------------------------------");
+            printf("\nDni: %d", cursor->nodoDerecho->vipdABB.numDni);
+            printf("\n------------------------------");
         }
         printf("\n");
         system("pause");
@@ -355,14 +421,21 @@ void postOrden(struct nodoABB *cursor){
 }
 
 int memorizacionPreviaABB(datosVendedor dat){
+    int auxMemo = 0;
     FILE *fp;
     if((fp = fopen("vendedores.txt","r"))==NULL) return 0;
     else{
         while(!feof(fp)){
             fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &dat.numDni, dat.nombreApellido, dat.numTelefono, &dat.montoVendido, &dat.cantVendido, dat.canalDeVenta);
-            altaABB(dat);
+            auxMemo = altaABB(dat);
+            if(auxMemo == -1){
+                fclose(fp);
+                return -1; //Se lleno la estructura
+            }
         }
         return 1;
+        fclose(fp);
     }
-    fclose(fp);
 }
+
+

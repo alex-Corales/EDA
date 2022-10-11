@@ -1,3 +1,8 @@
+/*
+    Grupo 30
+    Corales Alex Nahuel
+    alexcorales21@gmail.com
+*/
 
 typedef struct{
     char nombreApellido[50];

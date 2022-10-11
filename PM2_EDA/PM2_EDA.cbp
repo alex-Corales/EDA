@@ -46,9 +46,6 @@
 		<Unit filename="controles.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="funciones.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="listaEnlazada.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>

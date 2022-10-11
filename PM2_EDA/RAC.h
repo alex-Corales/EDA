@@ -1,3 +1,9 @@
+/*
+    Grupo 30
+    Corales Alex Nahuel
+    alexcorales21@gmail.com
+*/
+
 #ifndef RAC_H_INCLUDED
 #define RAC_H_INCLUDED
 #endif // RAC_H_INCLUDED
@@ -11,28 +17,50 @@
     -(ocupada)
 */
 
-int *cantVendedoresRAC = 0;
-int pos = 0;
-int opc = 0;
-char auxDni[20];
-char opc1[10];
-int aux, num, dni, auxopc;
-int posRS;
-int exito;
-
 typedef struct{
     char estado;
     datosVendedor dat;
 }celda;
 
+/*
+    PROTOTIPOS
+*/
+
 datosVendedor evocarRAC(celda *, int);
+int localizarRAC(celda *, int, int *);
+int altaRAC(celda *, datosVendedor);
+int bajaRAC(celda *, int);
+int perteneceRAC(celda *, int);
+int memorizacionPreviaRAC(celda *, datosVendedor);
+int mostrarRAC(celda *);
+int hashingRAC(int);
+void imprimirRAC(datosVendedor);
+void initRAC(celda *);
+
+/*
+    VARIABLES
+*/
+
+int cantVendido;
+int cantVendedoresRAC = 0;
+int dni = 0;
+int pos = 0;
+int auxopc = 0;
+int opc = 0;
+int num = 0;
+int aux = 0;
+int posRS;
+int exito;
+char auxS[50];
+char opc1[10];
+
 
 void menuRAC(){
 
     celda RAC[M];
     initRAC(RAC);
     int opc = 0;
-    datosVendedor vendedor;
+    datosVendedor vendedorRAC;
     do{
         printf("------------------------------");
         printf("\nMENU REBALSE ABIERTO CUADRATICO");
@@ -54,27 +82,51 @@ void menuRAC(){
         switch(opc){
         case 1:
             printf("\nIngrese el dni: ");
-            fflush(stdin);
-            scanf("%d", &vendedor.numDni);
-            printf("\nIngrese el nombre y apellido: ");
-            fflush(stdin);
-            scanf("%s", vendedor.nombreApellido);
-            printf("\nIngrese el numero de telefono: ");
-            fflush(stdin);
-            scanf("%s", vendedor.numTelefono);
-            printf("\nIngrese el monto vendido: ");
-            fflush(stdin);
-            scanf("%f", &vendedor.montoVendido);
-            printf("\nIngrese la cantidad vendida: ");
-            fflush(stdin);
-            scanf("%d", &vendedor.cantVendido);
-            printf("\nIngrese el canal de venta: ");
-            fflush(stdin);
-            scanf("%s", vendedor.canalDeVenta);
-            aux = altaRAC(RAC, vendedor);
+            do{
+                scanf("%s", auxS);
+                auxopc = controlIngresoNum(auxS);
+            }while(auxopc==0);
+            vendedorRAC.numDni = atoi(auxS);
 
+            printf("\nIngrese el nombre y apellido: ");
+            do{
+                getchar();
+                gets(vendedorRAC.nombreApellido);
+                num=controlIngresoLetras(vendedorRAC.nombreApellido);
+            }while(num==0);
+
+            printf("\nIngrese el numero de telefono: ");
+            do{
+                getchar();
+                gets(vendedorRAC.numTelefono);
+                num=controlIngresoLetrasNumero(vendedorRAC.numTelefono);
+            }while(num == 0);
+
+            printf("\nIngrese el monto vendido: ");
+            do{
+                scanf("%s", auxS);
+                auxopc = controlIngresoNum(auxS);
+            }while(auxopc==0);
+            vendedorRAC.montoVendido = atoi(auxS);
+
+            printf("\nIngrese la cantidad vendida: ");
+            do{
+                scanf("%s", auxS);
+                auxopc = controlIngresoNum(auxS);
+            }while(auxopc==0);
+            vendedorRAC.cantVendido = atoi(auxS);
+
+            printf("\nIngrese el canal de venta: ");
+            do{
+                getchar();
+                gets(vendedorRAC.canalDeVenta);
+                num=controlIngresoLetras(vendedorRAC.canalDeVenta);
+            }while(num==0);
+
+            aux = altaRAC(RAC, vendedorRAC);
             if (aux == 1) printf("\nEl vendedor se cargo con exito");
-            else printf("\nEl vendedor ya se encuentra cargado");
+            else if (aux == 0) printf("\nEl vendedor no se puede cargar por que no hay mas lugar");
+            else printf("\nEl vendedor fue cargado con exito");
             printf("\n");
             system("pause");
             system("cls");
@@ -85,7 +137,8 @@ void menuRAC(){
             scanf("%d", &dni);
             int aux = bajaRAC(RAC, dni);
             if(aux == 1) printf("\nNo hay elementos para dar de baja");
-            if(aux == 0) printf("\nEl vendendor no se encuentra cargado en la lista");
+            else if(aux == 0) printf("\nEl vendendor no se encuentra cargado en la lista");
+            else if(aux == -1) printf("\nSe cancelo la baja del vendedor");
             else printf("\nFue dado de baja exitosamente");
             printf("\n");
             system("pause");
@@ -104,15 +157,17 @@ void menuRAC(){
 
             break;
         case 4:
-            mostrarRAC(RAC);
+            aux = mostrarRAC(RAC);
+            if(aux == 1) printf("\nNo hay vendedores cargados");
             printf("\n");
             system("pause");
             system("cls");
             break;
             break;
         case 5:
-            aux = memorizacionPreviaRAC(RAC, vendedor);
-            if (aux != 0) printf("\nSe cargo el archivo con exito");
+            aux = memorizacionPreviaRAC(RAC, vendedorRAC);
+            if (aux == 1) printf("\nSe cargo el archivo con exito");
+            else if(aux == -1) printf("\nSe cargo el archivo con exito y se lleno la estructura");
             else printf("\nHubo un problema al leer el archivo vendedores.txt");
             printf("\n");
             system("pause");
@@ -155,7 +210,6 @@ void imprimirRAC(datosVendedor dat){
 int localizarRAC(celda RAC[] ,int dni ,int *pos){
     int i = hashingRAC(dni);
     *pos = i;
-    printf("\nHash: %d", i);
     int j = 0;
     int k = 0;
     int libre = 0;
@@ -171,7 +225,7 @@ int localizarRAC(celda RAC[] ,int dni ,int *pos){
         k++;
         i = (i+k) % M;
     }
-    if(j == M) return 0; //El elemento no se encuentra en la lista
+    if(j == M || RAC[i].estado == '*') return 0; //El elemento no se encuentra en la lista
     if(libre == 1) return 2; //Encontre un lugar libre
 }
 
@@ -183,34 +237,52 @@ int altaRAC(celda RAC[], datosVendedor dat){
     RAC[pos].estado = '-';
     RAC[pos].dat = dat;
 
-    *cantVendedoresRAC++;
+    cantVendedoresRAC++;
     return 2; //Exito
 }
 
 int bajaRAC(celda RAC[], int numDni){
+    if(cantVendedoresRAC == 0) return 1;
     int aux = localizarRAC(RAC, numDni, &pos);
     if(aux == 0) return 0; //Fracasa, el elemento no esta en la lista
 
     printf("\n----------------------------");
     printf("\nDni: %d", RAC[pos].dat.numDni);
+    printf("\nNombre y Apellido: %s", RAC[pos].dat.nombreApellido);
+    printf("\nNumero de telefono: %s", RAC[pos].dat.numTelefono);
+    printf("\nMonto vendido: %f", RAC[pos].dat.montoVendido);
+    printf("\nCantidad vendida: %d", RAC[pos].dat.cantVendido);
+    printf("\nCanal de venta: %s", RAC[pos].dat.canalDeVenta);
     printf("\n----------------------------");
 
     printf("\nDesea eliminar los datos del vendedor");
     printf("\n<1> Si");
     printf("\n<2> No");
+    printf("\n- ");
     scanf("%d", &opc);
     if(opc == 1){
         RAC[pos].estado = '+';
-        *cantVendedoresRAC--;
-    }
+        cantVendedoresRAC--;
+    }else return -1;
+
+    return 2;
 }
 
-void mostrarRAC(celda RAC[]){
+int mostrarRAC(celda RAC[]){
+    if(cantVendedoresRAC == 0) return 1;
     for(int i = 0; i < M; i++){
         printf("\n-----------------------");
         printf("\nNumero de balde: %d", i);
-        printf("\nEstado: %c", RAC[i].estado);
-        printf("\nDni: %d", RAC[i].dat.numDni);
+        if(RAC[i].estado == '-'){
+            printf("\nEstado de la celda: [%c] (Ocupada)", RAC[i].estado);
+            printf("\nDni: %d", RAC[i].dat.numDni);
+            printf("\nNombre y Apellido: %s", RAC[i].dat.nombreApellido);
+            printf("\nNumero de telefono: %s", RAC[i].dat.numTelefono);
+            printf("\nMonto vendido: %f", RAC[i].dat.montoVendido);
+            printf("\nCantidad vendida: %d", RAC[i].dat.cantVendido);
+            printf("\nCanal de venta: %s", RAC[i].dat.canalDeVenta);
+        }else if(RAC[i].estado == '*') printf("\nEstado de la celda: [%c] (Virgen)", RAC[i].estado);
+        else printf("\nEstado de la celda: [%c] (Libre)", RAC[i].estado);
     }
 }
 
@@ -226,14 +298,19 @@ int perteneceRAC(celda RAC[], int numDni){
 }
 
 int memorizacionPreviaRAC(celda RAC[], datosVendedor dat){
+    int auxMemo = 0;
     FILE *fp;
     if((fp = fopen("vendedores.txt","r"))==NULL) return 0;
     else{
         while(!feof(fp)){
             fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &dat.numDni, dat.nombreApellido, dat.numTelefono, &dat.montoVendido, &dat.cantVendido, dat.canalDeVenta);
-            altaRAC(RAC, dat);
+            auxMemo = altaRAC(RAC, dat);
+            if(auxMemo == 0){
+                fclose(fp);
+                return -1; //Se lleno la estructura
+            }
         }
         return 1;
+        fclose(fp);
     }
-    fclose(fp);
 }

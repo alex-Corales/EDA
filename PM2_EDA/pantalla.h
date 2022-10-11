@@ -1,3 +1,9 @@
+/*
+    Grupo 30
+    Corales Alex Nahuel
+    alexcorales21@gmail.com
+*/
+
 #ifndef PANTALLA_H_INCLUDED
 #define PANTALLA_H_INCLUDED
 #endif // PANTALLA_H_INCLUDED
@@ -13,15 +19,11 @@ void tamanioPantalla(){
 }
 
 void gotoxy(int x , int y){
-    // CONTROLADOR PARA NUESTRA VENTANA, Y MANIPULACION DE CONSOLA
     wHnd = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    // CREAMOS OBJETO DE LAS CORDENADAS DENTRO DE UNA ESTRUCTURA
     COORD cordenadas;
-    // REDIRECCIONAMOS LAS VARIABLES DE LA ESTRUCTURA A NUESTRAS VARIABLES DE LA FUNCION
     cordenadas.X = x;
     cordenadas.Y = y;
 
-    // POSICIONAMOS EL MENSAJE DENTRO DE NUESTRA CONSOLA, A NUESTRA VENTANA CON LAS CORDENADAS DADAS.
     SetConsoleCursorPosition(wHnd,cordenadas);
 }
