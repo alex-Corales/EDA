@@ -26,64 +26,45 @@ void init(lista *p){
     (*p).cursoraux = NULL;
 }
 
-datosVendedor evocarLista(lista p){
-    return p.cursor->vipd;
-}
-
-int localizarLista(lista *p, int dni){
-    int numDni = dni;
-    if(p->acceso == NULL) return 1; //Veo si hay elementos
-    p->cursor = p->acceso;
-    p->cursoraux = p->acceso;
-
-    while(p->cursor != NULL && p->cursor->vipd.numDni != numDni){
-        p->cursoraux = p->cursor;
-        p->cursor = p->cursor->next;
-    }
-
-    if(p->cursor == NULL) return 0; //El elemento no esta en la lista
-    if(p->cursor->vipd.numDni == numDni) return 2;
-}
-
-void altaLista(lista *p, datosVendedor varado){
+int altaLista(lista *p, datosVendedor varado){
 
     nodo *aux = (nodo*)malloc(sizeof(nodo));
-    if(aux != NULL){
-        if(((*p).cursor) == ((*p).acceso)){
-            (*p).acceso=aux;
-            aux->next = (*p).cursor;
-            (*p).cursor = (*p).acceso;
-            (*p).cursoraux = (*p).acceso;
-        }
-        else{
-            (*p).cursoraux->next = aux;
-            aux->next = (*p).cursor;
-            (*p).cursor = aux;
-        }
-        (*p).cursor->vipd = varado;
+    if(aux == NULL) return 1;
+
+    p->cursor = p->acceso;
+
+    if(((*p).cursor) == ((*p).acceso)){
+        (*p).acceso=aux;
+        aux->next = (*p).cursor;
+        (*p).cursor = (*p).acceso;
+        //(*p).cursoraux = (*p).acceso;
+    }else{
+        aux->next = p->acceso;
+        p->acceso = aux;
+        //(*p).cursoraux->next = aux;
+        //aux->next = (*p).cursor;
+        //(*p).cursor = aux;
     }
+    (*p).cursor->vipd = varado;
 }
 
 void bajaLista(lista *p, int dni){
 
-    if(((*p).cursor) == ((*p).acceso)){
-        (*p).acceso = (*p).cursor->next;
-        free((*p).cursor);
-        (*p).cursor = (*p).acceso;
-        (*p).cursoraux = (*p).acceso;
+    if(p->cursor == p->acceso){
+        p->acceso = p->cursor->next;
+        p->cursor = p->acceso;
+    }else{
+        p->cursoraux->next = p->cursor->next;
+        p->cursor = p->cursoraux->next;
     }
-    else{
-        (*p).cursoraux->next = (*p).cursor->next;
-        free((*p).cursor);
-        (*p).cursor = (*p).cursoraux->next;
-    }
+    free(p->cursor);
 }
 
 void mostrarLista(lista dat){
     dat.cursor = dat.acceso;
     dat.cursoraux = dat.acceso;
     while(dat.cursor != NULL){
-        imprimirRS(evocarLista(dat));
+        imprimirRS(dat.cursor->vipd);
         dat.cursoraux = dat.cursor;
         dat.cursor = dat.cursor->next;
     }

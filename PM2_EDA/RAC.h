@@ -207,9 +207,10 @@ int localizarRAC(celda RAC[] ,int dni ,int *pos){
         +(libre)
         -(ocupada)
     */
+
     int i = hashingRAC(dni);
     int j = 0;
-    int k = 1;
+    int k = 0;
     int libre = 0;
     while(j != M && RAC[i].estado != '*'){ //Mientras
         if(RAC[i].dat.numDni == dni && RAC[i].estado == '-'){ //Dni igual y celda ocupada
@@ -327,7 +328,7 @@ int perteneceRAC(celda RAC[], int numDni){
 int memorizacionPreviaRAC(celda RAC[], datosVendedor dat){
     int auxMemo = 0;
     FILE *fp;
-    if((fp = fopen("vendedoresPrueba.txt","r"))==NULL) return 0;
+    if((fp = fopen("vendedores.txt","r"))==NULL) return 0;
     else{
         while(!feof(fp)){
             fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &dat.numDni, dat.nombreApellido, dat.numTelefono, &dat.montoVendido, &dat.cantVendido, dat.canalDeVenta);
@@ -337,7 +338,7 @@ int memorizacionPreviaRAC(celda RAC[], datosVendedor dat){
                 return -1; //Se lleno la estructura
             }
         }
-        return 1;
         fclose(fp);
+        return 1;
     }
 }

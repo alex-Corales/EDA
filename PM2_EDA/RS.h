@@ -9,13 +9,12 @@
 #endif // RS_H_INCLUDED
 #include "controles.h"
 #include "listaEnlazada.h"
-#define M 61 //p= 1.84 -> M = N/p -> M = 110/1.84 -> M = 59.78 -> M = 61.
+#define M 149 //p= 1.84 -> M = N/p -> M = 110/1.84 -> M = 59.78 -> M = 61.
 
 /*
     VARIABLES
 */
 
-int cantRS;
 char auxDni[20];
 char opc1[10];
 int aux, num, dni, auxopc;
@@ -192,24 +191,36 @@ void initRS(lista dat[]){
 
 int localizarRS(lista dat[], int dni, int *posRS){
     *posRS = hashingRS(dni);
-    int aux = localizarLista(&dat[*posRS], dni);
-    if(aux == 1) return 1; //No hay elementos en la lista
-    if(aux == 0) return 0; //El elemento no esta en la lista
-    if(aux == 2) return 2; //El elemento esta en la lista
+    //int aux = localizarLista(&dat[*posRS], dni);
+    //if(aux == 1) return 1; //No hay elementos en la lista
+    //if(aux == 0) return 0; //El elemento no esta en la lista
+    //if(aux == 2) return 2; //El elemento esta en la lista
+
+    if(dat[*posRS].acceso == NULL) return 1; //Veo si hay elementos
+    dat[*posRS].cursor = dat[*posRS].acceso;
+    dat[*posRS].cursoraux = dat[*posRS].acceso;
+
+    while(dat[*posRS].cursor != NULL && dat[*posRS].cursor->vipd.numDni != dni){
+        dat[*posRS].cursoraux = dat[*posRS].cursor;
+        dat[*posRS].cursor = dat[*posRS].cursor->next;
+    }
+
+    if(dat[*posRS].cursor == NULL) return 0; //El elemento no esta en la lista
+    if(dat[*posRS].cursor->vipd.numDni == dni) return 2;
 }
 
 int altaRS(lista dat[], datosVendedor empleado){
-    if(cantRS == 110) return 2;
     aux = localizarRS(dat, empleado.numDni, &posRS);
     if(aux == 2) return 0; //No puedo dar de alta por que el elemento ya existe
 
-    altaLista(&dat[posRS], empleado);
-    cantRS++;
+    aux = altaLista(&dat[posRS], empleado);
+    if(aux == 1) return 2; //No se puede dar de alta por que no hay mas espacio
+
     return 1;
 }
 
 int bajaRS(lista dat[], int dni){
-    if(cantRS == 0) return 1; //No hay elementos
+    if(dat->acceso == NULL) return 1; //No hay elementos
     int aux = localizarRS(dat, dni, &posRS);
     if(aux == 0) return 0; //El elemento no esta en la lista
 
@@ -224,7 +235,6 @@ int bajaRS(lista dat[], int dni){
     scanf("%d", &opc);
     if(opc == 1){
         bajaLista(&dat[posRS], dni);
-        cantRS--;
     }else return -1;
 
     return 2;
@@ -234,7 +244,7 @@ datosVendedor evocarRS(lista dat[], int dni){
     datosVendedor aux;
     aux.numDni = -1;
     if(localizarRS(dat, dni, &posRS) != 2) return aux;
-    return evocarLista(dat[posRS]);
+    return dat[posRS].cursor->vipd;
 }
 
 int perteneceRS(lista dat[], int dni){
@@ -242,7 +252,7 @@ int perteneceRS(lista dat[], int dni){
 }
 
 int mostrarRS(lista dat[]){
-    if(cantRS == 0) return 1;
+    if(dat->acceso == NULL) return 1;
     for(int i = 0; i < M; i++){
         printf("\nBalde N: %d", i);
         mostrarLista(dat[i]);
@@ -260,10 +270,20 @@ int memorizacionPreviaRS(lista dat[], datosVendedor empleado){
             if(auxMemo == 2){
                 fclose(fp);
                 return -1; //Se lleno la estructura
+            }else if(auxMemo == 0){
+                printf("\nHay un vendedor repetido");
+                printf("\nDesea ver el vendedor repetido?");
+                printf("\n<1> Si");
+                printf("\n<2> No");
+                printf("\n- ");
+                scanf("%d", &auxMemo);
+                if(auxMemo == 1) imprimirRS(empleado);
+                system("pause");
+                system("cls");
             }
         }
-        return 1;
         fclose(fp);
+        return 1;
     }
 }
 
