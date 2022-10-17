@@ -154,8 +154,7 @@ void menuABB(){
                 printf("\nComo desea ver el Arbol");
                 printf("\n<1> Pre-Orden");
                 printf("\n<2> Pre-Orden con hijos");
-                printf("\n<3> Otros");
-                printf("\n<4> Salir");
+                printf("\n<3> Salir");
                 printf("\n- ");
                 scanf("%d", &opcABB);
 
@@ -190,42 +189,8 @@ void menuABB(){
                     system("pause");
                     system("cls");
                     break;
-                case 3:
-                    do{
-                        system("cls");
-                        printf("------------------------------");
-                        printf("\nMENU ARBOL BINARIO");
-                        printf("\n------------------------------");
-                        printf("\n<1> In-Orden");
-                        printf("\n<2> Post-Orden");
-                        printf("\n<3> Por niveles");
-                        printf("\n<4> Salir");
-                        printf("\n- ");
-                        scanf("%d", &opcABB);
-                        switch(opcABB){
-                        case 1:
-                            system("cls");
-                            printf("\ninOrden\n");
-                            inOrden(raiz);
-                            printf("\n");
-                            system("pause");
-                            system("cls");
-                            break;
-                        case 2:
-                            system("cls");
-                            printf("\npostOrden\n");
-                            postOrden(raiz);
-                            printf("\n");
-                            system("pause");
-                            system("cls");
-                            break;
-                        case 3:
-                            break;
-                        }
-                    }while(opcABB != 4);
-                    break;
                 }
-            }while(opcABB != 4);
+            }while(opcABB != 3);
 
             break;
         case 5:
@@ -270,12 +235,11 @@ int localizarABB(int numDni){
 }
 
 int altaABB(datosVendedor dat){
-    if(cantVendedoresABB == 110) return -1; //No se pueden ingresar mas vendedores
     int aux = localizarABB(dat.numDni);
     if(aux == 0) return 0; //No puedo dar de alta por que el vendedor ya esta cargado
 
     struct nodoABB *nuevo = malloc(sizeof(struct nodoABB));
-    if(nuevo == NULL) return 1;
+    if(nuevo == NULL) return 1; //fallo, no se pueden agregar mas vendedores
 
     nuevo->vipdABB = dat;
     nuevo->nodoDerecho = NULL;
@@ -309,23 +273,28 @@ int bajaABB(datosVendedor dat){ //Politica de remplazo: Menor de los mayores con
     scanf("%d", &opcBaja);
     if(opcBaja == 2) return 2;
 
-    if(cursor->nodoIzquierdo == NULL && cursor->nodoDerecho == NULL){
+    if(cursor->nodoIzquierdo == NULL && cursor->nodoDerecho == NULL){ //No tiene hijos
         if(cursor == raiz) raiz = NULL;
         else{
             if(anterior->vipdABB.numDni > dat.numDni) anterior->nodoIzquierdo = NULL;
             else anterior->nodoDerecho = NULL;
-            free(cursor);
         }
-    }else if((cursor->nodoIzquierdo == NULL && cursor->nodoDerecho != NULL) || (cursor->nodoIzquierdo != NULL && cursor->nodoDerecho == NULL)){
+    }else if((cursor->nodoIzquierdo == NULL && cursor->nodoDerecho != NULL) || (cursor->nodoIzquierdo != NULL && cursor->nodoDerecho == NULL)){ //Tiene solo un hijo
         if(cursor == raiz){
-            if(cursor->nodoIzquierdo != NULL) raiz = cursor->nodoIzquierdo;
-            else raiz = cursor->nodoDerecho;
+            if(cursor->nodoIzquierdo == NULL) raiz = cursor->nodoDerecho;
+            else raiz = cursor->nodoIzquierdo;
         }else{
-            if(anterior->vipdABB.numDni > dat.numDni && cursor->nodoIzquierdo == NULL) anterior->nodoIzquierdo = cursor->nodoDerecho;
-            else if(anterior->vipdABB.numDni > dat.numDni && cursor->nodoDerecho == NULL) anterior->nodoDerecho = cursor->nodoIzquierdo;
-            else if(anterior->vipdABB.numDni < dat.numDni && cursor->nodoDerecho == NULL) anterior->nodoDerecho = cursor->nodoIzquierdo;
-            else if(anterior->vipdABB.numDni < dat.numDni && cursor->nodoIzquierdo == NULL) anterior->nodoIzquierdo = cursor->nodoDerecho;
-            free(cursor);
+            if(anterior->nodoDerecho == cursor){
+                if(cursor->nodoDerecho != NULL)
+                    anterior->nodoDerecho = cursor->nodoDerecho;
+                else
+                    anterior->nodoDerecho = cursor->nodoIzquierdo;
+            }else{
+                if(cursor->nodoIzquierdo != NULL)
+                    anterior->nodoIzquierdo = cursor->nodoIzquierdo;
+                else
+                    anterior->nodoIzquierdo = cursor->nodoDerecho;
+            }
         }
     }else{
         aux2 = cursor->nodoDerecho;
@@ -342,6 +311,7 @@ int bajaABB(datosVendedor dat){ //Politica de remplazo: Menor de los mayores con
             aux2->nodoIzquierdo = aux1->nodoDerecho;
         }
     }
+    free(cursor);
     cantVendedoresABB--;
     return 0; //El vendedor se elimino
 }
@@ -362,6 +332,7 @@ int pertenece(int dni){
 
 int preOrdenHijos(struct nodoABB *cursor){
     if(raiz == NULL) return 1;
+    system("cls");
     if (cursor != NULL){
         printf("\nPADRE: ");
         imprimirABB(cursor->vipdABB);
@@ -423,18 +394,18 @@ void postOrden(struct nodoABB *cursor){
 int memorizacionPreviaABB(datosVendedor dat){
     int auxMemo = 0;
     FILE *fp;
-    if((fp = fopen("vendedores.txt","r"))==NULL) return 0;
+    if((fp = fopen("vendedoresPrueba.txt","r"))==NULL) return 0;
     else{
         while(!feof(fp)){
             fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &dat.numDni, dat.nombreApellido, dat.numTelefono, &dat.montoVendido, &dat.cantVendido, dat.canalDeVenta);
             auxMemo = altaABB(dat);
-            if(auxMemo == -1){
+            if(auxMemo == 1){
                 fclose(fp);
                 return -1; //Se lleno la estructura
             }
         }
-        return 1;
         fclose(fp);
+        return 1;
     }
 }
 

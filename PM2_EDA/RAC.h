@@ -10,13 +10,6 @@
 #include "vendedores.h"
 #define M 149 //p= 0.77 -> M = N/p -> M = 110/0.77 -> M = 142.85 -> M = 149.
 
-/*
-    Estados de una celda
-    *(virgen)
-    +(libre)
-    -(ocupada)
-*/
-
 typedef struct{
     char estado;
     datosVendedor dat;
@@ -208,6 +201,38 @@ void imprimirRAC(datosVendedor dat){
 }
 
 int localizarRAC(celda RAC[] ,int dni ,int *pos){
+    /*
+        Estados de una celda
+        *(virgen)
+        +(libre)
+        -(ocupada)
+    */
+    int i = hashingRAC(dni);
+    int j = 0;
+    int k = 1;
+    int libre = 0;
+    while(j != M && RAC[i].estado != '*'){ //Mientras
+        if(RAC[i].dat.numDni == dni && RAC[i].estado == '-'){ //Dni igual y celda ocupada
+            *pos = i;
+            return 1; //El elemento se encuentra en la estructura
+        }else{
+            if(RAC[i].estado == '+' && libre == 0){
+                libre++;
+                *pos = i;
+            }
+            j++;
+            k++;
+            i = (i+k) % M;
+        }
+    }
+    if(j == M) return 0; //El elemento no se encuentra en la lista, estan todas las celdas llenas
+    if(libre == 1) return 2; //Encontre un lugar libre
+    if(libre == 0){ // No encontre libre y sali del while porque llegue a un *
+        *pos = i;
+        return 2;
+    }
+
+    /*
     int i = hashingRAC(dni);
     *pos = i;
     int j = 0;
@@ -227,12 +252,14 @@ int localizarRAC(celda RAC[] ,int dni ,int *pos){
     }
     if(j == M || RAC[i].estado == '*') return 0; //El elemento no se encuentra en la lista
     if(libre == 1) return 2; //Encontre un lugar libre
+    */
 }
 
 int altaRAC(celda RAC[], datosVendedor dat){
     if (cantVendedoresRAC == 110) return 0; //fracasa por que la estructura esta llena
     int aux = localizarRAC(RAC, dat.numDni, &pos);
     if(aux == 1) return 1; //fracasa por que el elemento se encuentra cargado
+    if(aux == 0) return 2; //fracasa por que estan todas las celdas llenas
 
     RAC[pos].estado = '-';
     RAC[pos].dat = dat;
@@ -300,7 +327,7 @@ int perteneceRAC(celda RAC[], int numDni){
 int memorizacionPreviaRAC(celda RAC[], datosVendedor dat){
     int auxMemo = 0;
     FILE *fp;
-    if((fp = fopen("vendedores.txt","r"))==NULL) return 0;
+    if((fp = fopen("vendedoresPrueba.txt","r"))==NULL) return 0;
     else{
         while(!feof(fp)){
             fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &dat.numDni, dat.nombreApellido, dat.numTelefono, &dat.montoVendido, &dat.cantVendido, dat.canalDeVenta);

@@ -60,7 +60,7 @@
 
 1665471775 c:\users\monica\desktop\eda\pm2_eda\abb.h
 
-1665441127 source:c:\users\multirepair\documents\eda\pm2_eda\main.c
+1665517952 source:c:\users\multirepair\documents\eda\pm2_eda\main.c
 	<stdio.h>
 	<stdlib.h>
 	"pantalla.h"
@@ -68,23 +68,23 @@
 	"RS.h"
 	"abb.h"
 
-1665447434 c:\users\multirepair\documents\eda\pm2_eda\rac.h
+1665971907 c:\users\multirepair\documents\eda\pm2_eda\rac.h
 	"vendedores.h"
 
-1665418208 c:\users\multirepair\documents\eda\pm2_eda\vendedores.h
+1665517952 c:\users\multirepair\documents\eda\pm2_eda\vendedores.h
 
-1665447850 c:\users\multirepair\documents\eda\pm2_eda\rs.h
+1665517952 c:\users\multirepair\documents\eda\pm2_eda\rs.h
 	"controles.h"
 	"listaEnlazada.h"
 
-1665418208 c:\users\multirepair\documents\eda\pm2_eda\controles.h
+1665517952 c:\users\multirepair\documents\eda\pm2_eda\controles.h
 
-1665435004 c:\users\multirepair\documents\eda\pm2_eda\listaenlazada.h
+1665517952 c:\users\multirepair\documents\eda\pm2_eda\listaenlazada.h
 	<malloc.h>
 
-1665445594 c:\users\multirepair\documents\eda\pm2_eda\abb.h
+1665860978 c:\users\multirepair\documents\eda\pm2_eda\abb.h
 
-1665440047 c:\users\multirepair\documents\eda\pm2_eda\pantalla.h
+1665517952 c:\users\multirepair\documents\eda\pm2_eda\pantalla.h
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
