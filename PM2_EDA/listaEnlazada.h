@@ -52,20 +52,22 @@ void bajaLista(lista *p, int dni){
 
     if(p->cursor == p->acceso){
         p->acceso = p->cursor->next;
+        free(p->cursor);
         p->cursor = p->acceso;
+        p->cursoraux = p->acceso;
     }else{
         p->cursoraux->next = p->cursor->next;
+        free(p->cursor);
         p->cursor = p->cursoraux->next;
     }
-    free(p->cursor);
 }
 
 void mostrarLista(lista dat){
     dat.cursor = dat.acceso;
-    dat.cursoraux = dat.acceso;
+    //dat.cursoraux = dat.acceso;
     while(dat.cursor != NULL){
         imprimirRS(dat.cursor->vipd);
-        dat.cursoraux = dat.cursor;
+        //dat.cursoraux = dat.cursor;
         dat.cursor = dat.cursor->next;
     }
 }

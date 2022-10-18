@@ -1,0 +1,127 @@
+# depslib dependency file v1.0
+1664467341 source:c:\users\multirepair\desktop\estructura de datos\pm2_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1663806951 c:\users\multirepair\desktop\estructura de datos\pm2_eda\abb.h
+	<malloc.h>
+
+1665348813 source:c:\users\multirepair\desktop\eda\pm2_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+	"RAC.h"
+	"RS.h"
+	"abb.h"
+
+1665263421 c:\users\multirepair\desktop\eda\pm2_eda\rac.h
+	"vendedores.h"
+
+1665344390 c:\users\multirepair\desktop\eda\pm2_eda\vendedores.h
+
+1665249289 c:\users\multirepair\desktop\eda\pm2_eda\funciones.h
+
+1665263730 c:\users\multirepair\desktop\eda\pm2_eda\rs.h
+	"controles.h"
+	"listaEnlazada.h"
+
+1665258560 c:\users\multirepair\desktop\eda\pm2_eda\listaenlazada.h
+	<malloc.h>
+
+1665207372 c:\users\multirepair\desktop\eda\pm2_eda\rs_aux.h
+
+1665251843 c:\users\multirepair\desktop\eda\pm2_eda\controles.h
+
+1665366178 c:\users\multirepair\desktop\eda\pm2_eda\abb.h
+
+1665359429 c:\users\multirepair\desktop\eda\pm2_eda\arbolgrafico.h
+	"ABB.h"
+
+1665471775 source:c:\users\monica\desktop\eda\pm2_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+	"pantalla.h"
+	"RAC.h"
+	"RS.h"
+	"abb.h"
+
+1665471775 c:\users\monica\desktop\eda\pm2_eda\rac.h
+	"vendedores.h"
+
+1665471775 c:\users\monica\desktop\eda\pm2_eda\vendedores.h
+
+1665471775 c:\users\monica\desktop\eda\pm2_eda\rs.h
+	"controles.h"
+	"listaEnlazada.h"
+
+1665471775 c:\users\monica\desktop\eda\pm2_eda\controles.h
+
+1665471775 c:\users\monica\desktop\eda\pm2_eda\listaenlazada.h
+	<malloc.h>
+
+1665471775 c:\users\monica\desktop\eda\pm2_eda\abb.h
+
+1665517952 source:c:\users\multirepair\documents\eda\pm2_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+	"pantalla.h"
+	"RAC.h"
+	"RS.h"
+	"abb.h"
+
+1666029381 c:\users\multirepair\documents\eda\pm2_eda\rac.h
+	"vendedores.h"
+
+1665517952 c:\users\multirepair\documents\eda\pm2_eda\vendedores.h
+
+1666031481 c:\users\multirepair\documents\eda\pm2_eda\rs.h
+	"controles.h"
+	"listaEnlazada.h"
+
+1665517952 c:\users\multirepair\documents\eda\pm2_eda\controles.h
+
+1666029701 c:\users\multirepair\documents\eda\pm2_eda\listaenlazada.h
+	<malloc.h>
+
+1665860978 c:\users\multirepair\documents\eda\pm2_eda\abb.h
+
+1665517952 c:\users\multirepair\documents\eda\pm2_eda\pantalla.h
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+
+1665471775 c:\users\monica\desktop\eda\pm2_eda\pantalla.h
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+
+1666052364 source:c:\users\multirepair\documents\eda\pm3_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+	"RAC.h"
+	"RS.h"
+	"abb.h"
+	"compEstructuras.h"
+
+1665517952 c:\users\multirepair\documents\eda\pm3_eda\pantalla.h
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+
+1666051642 c:\users\multirepair\documents\eda\pm3_eda\rac.h
+	"vendedores.h"
+
+1665517952 c:\users\multirepair\documents\eda\pm3_eda\vendedores.h
+
+1666051701 c:\users\multirepair\documents\eda\pm3_eda\rs.h
+	"controles.h"
+	"listaEnlazada.h"
+
+1665517952 c:\users\multirepair\documents\eda\pm3_eda\controles.h
+
+1666029701 c:\users\multirepair\documents\eda\pm3_eda\listaenlazada.h
+	<malloc.h>
+
+1666052485 c:\users\multirepair\documents\eda\pm3_eda\abb.h
+
+1666053696 c:\users\multirepair\documents\eda\pm3_eda\compestructuras.h
+

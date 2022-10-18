@@ -321,10 +321,6 @@ datosVendedor evocarRAC(celda RAC[], int numDni){
     return RAC[pos].dat;
 }
 
-int perteneceRAC(celda RAC[], int numDni){
-    if(localizarRAC(RAC, numDni, &pos) == 1) return 1; //El vendedor se encuentra cargado
-}
-
 int memorizacionPreviaRAC(celda RAC[], datosVendedor dat){
     int auxMemo = 0;
     FILE *fp;

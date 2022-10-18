@@ -9,12 +9,13 @@
 #endif // RS_H_INCLUDED
 #include "controles.h"
 #include "listaEnlazada.h"
-#define M 149 //p= 1.84 -> M = N/p -> M = 110/1.84 -> M = 59.78 -> M = 61.
+#define M 61 //p= 1.84 -> M = N/p -> M = 110/1.84 -> M = 59.78 -> M = 61.
 
 /*
     VARIABLES
 */
 
+int contRS;
 char auxDni[20];
 char opc1[10];
 int aux, num, dni, auxopc;
@@ -30,7 +31,7 @@ datosVendedor evocarRS(lista *, int);
 int localizarRS(lista *, int, int *);
 int altaRS(lista *, datosVendedor);
 int bajaRS(lista *, int);
-int perteneceRS(lista *, int);
+int perteneceRS(lista *, int, int *);
 int mostrarRS(lista *);
 int memorizacionPreviaRS(lista *, datosVendedor);
 int hashingRS(int);
@@ -146,7 +147,6 @@ void menuRS(){
             system("pause");
             system("cls");
             break;
-            break;
         case 5:
             aux = memorizacionPreviaRS(RS,vendedor);
             if (aux == 1) printf("\nSe cargo el archivo con exito");
@@ -155,7 +155,6 @@ void menuRS(){
             printf("\n");
             system("pause");
             system("cls");
-            break;
             break;
         }
 
@@ -191,10 +190,6 @@ void initRS(lista dat[]){
 
 int localizarRS(lista dat[], int dni, int *posRS){
     *posRS = hashingRS(dni);
-    //int aux = localizarLista(&dat[*posRS], dni);
-    //if(aux == 1) return 1; //No hay elementos en la lista
-    //if(aux == 0) return 0; //El elemento no esta en la lista
-    //if(aux == 2) return 2; //El elemento esta en la lista
 
     if(dat[*posRS].acceso == NULL) return 1; //Veo si hay elementos
     dat[*posRS].cursor = dat[*posRS].acceso;
@@ -215,19 +210,16 @@ int altaRS(lista dat[], datosVendedor empleado){
 
     aux = altaLista(&dat[posRS], empleado);
     if(aux == 1) return 2; //No se puede dar de alta por que no hay mas espacio
-
+    contRS++;
     return 1;
 }
 
 int bajaRS(lista dat[], int dni){
-    if(dat->acceso == NULL) return 1; //No hay elementos
+    if(contRS == 0) return 1; //No hay elementos
     int aux = localizarRS(dat, dni, &posRS);
     if(aux == 0) return 0; //El elemento no esta en la lista
 
-    datosVendedor temp = evocarRS(dat, dni);
-    if(temp.numDni == -1) return 0;
-    imprimirRS(temp);
-
+    imprimirRS(dat[posRS].cursor->vipd);
     printf("\nDesea eliminar los datos del vendedor");
     printf("\n<1> Si");
     printf("\n<2> No");
@@ -235,6 +227,7 @@ int bajaRS(lista dat[], int dni){
     scanf("%d", &opc);
     if(opc == 1){
         bajaLista(&dat[posRS], dni);
+        contRS--;
     }else return -1;
 
     return 2;
@@ -247,15 +240,17 @@ datosVendedor evocarRS(lista dat[], int dni){
     return dat[posRS].cursor->vipd;
 }
 
-int perteneceRS(lista dat[], int dni){
-    if(localizarRS(dat, dni, &posRS) == 2) return 1; //El vendedor esta cargado
-}
-
 int mostrarRS(lista dat[]){
-    if(dat->acceso == NULL) return 1;
+    if(contRS == 0) return 1;
+    int j = 0;
     for(int i = 0; i < M; i++){
+        if(j == 10){
+            system("pause");
+            j = 0;
+        }
         printf("\nBalde N: %d", i);
         mostrarLista(dat[i]);
+        j++;
     }
 }
 

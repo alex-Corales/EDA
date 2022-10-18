@@ -115,8 +115,7 @@ void menuABB(){
 
             int auxAlta = altaABB(vendedorABB);
             if(auxAlta == 0) printf("\nEl vendedor ya se encuentra cargado en el sistema");
-            else if(auxAlta == -1) printf("\nEl vendedor no se puede cargar por que la estructura esta llena");
-            else if(auxAlta == 1) printf("\nError, no se puede cargar el vendedor");
+            else if(auxAlta == 1) printf("\nEl vendedor no se puede cargar por que la estructura esta llena");
             else printf("\nEl vendedor fue cargado");
             printf("\n");
             system("pause");
@@ -326,10 +325,6 @@ datosVendedor evocarABB(int dni){
     return cursor->vipdABB;
 }
 
-int pertenece(int dni){
-    if(localizarABB(dni) == 0) return 1; //El vendedor se encuentra cargado
-}
-
 int preOrdenHijos(struct nodoABB *cursor){
     if(raiz == NULL) return 1;
     system("cls");
@@ -369,25 +364,13 @@ int preOrden(struct nodoABB *cursor){
     if(raiz == NULL) return 1;
     if (cursor != NULL){
         imprimirABB(cursor->vipdABB);
-        if ((j % 5) == 0){system("\n pause");}j++;
+        if (j == 10){
+            system("pause");
+            j = 0;
+        }
+        j++;
         preOrden(cursor->nodoIzquierdo);
         preOrden(cursor->nodoDerecho);
-    }
-}
-
-void inOrden(struct nodoABB *cursor){
-    if (cursor != NULL){
-        inOrden(cursor->nodoIzquierdo);
-        imprimirABB(cursor->vipdABB);
-        inOrden(cursor->nodoDerecho);
-    }
-}
-
-void postOrden(struct nodoABB *cursor){
-    if (cursor != NULL){
-        postOrden(cursor->nodoIzquierdo);
-        postOrden(cursor->nodoDerecho);
-        imprimirABB(cursor->vipdABB);
     }
 }
 
@@ -402,6 +385,16 @@ int memorizacionPreviaABB(datosVendedor dat){
             if(auxMemo == 1){
                 fclose(fp);
                 return -1; //Se lleno la estructura
+            }else if(auxMemo == 0){
+                printf("\nHay un vendedor repetido");
+                printf("\nDesea ver el vendedor repetido?");
+                printf("\n<1> Si");
+                printf("\n<2> No");
+                printf("\n- ");
+                scanf("%d", &auxMemo);
+                if(auxMemo == 1) imprimirABB(dat);
+                system("pause");
+                system("cls");
             }
         }
         fclose(fp);
