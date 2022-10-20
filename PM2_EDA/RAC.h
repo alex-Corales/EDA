@@ -143,6 +143,7 @@ void menuRAC(){
             scanf("%d", &dni);
             datosVendedor consult = evocarRAC(RAC, dni);
             if(consult.numDni == -1) printf("\nEl vendedor no esta cargado");
+            else if(consult.numDni == 1) printf("\nNo hay vendedores cargados");
             else imprimirRAC(consult);
             printf("\n");
             system("pause");
@@ -212,7 +213,7 @@ int localizarRAC(celda RAC[] ,int dni ,int *pos){
     int j = 0;
     int k = 0;
     int libre = 0;
-    while(j != M && RAC[i].estado != '*'){ //Mientras
+    while(j != M && RAC[i].estado != '*'){
         if(RAC[i].dat.numDni == dni && RAC[i].estado == '-'){ //Dni igual y celda ocupada
             *pos = i;
             return 1; //El elemento se encuentra en la estructura
@@ -228,39 +229,17 @@ int localizarRAC(celda RAC[] ,int dni ,int *pos){
     }
     if(j == M) return 0; //El elemento no se encuentra en la lista, estan todas las celdas llenas
     if(libre == 1) return 2; //Encontre un lugar libre
-    if(libre == 0){ // No encontre libre y sali del while porque llegue a un *
+    if(libre == 0){ // No encontre libre y pero hay una celda virgen
         *pos = i;
         return 2;
     }
-
-    /*
-    int i = hashingRAC(dni);
-    *pos = i;
-    int j = 0;
-    int k = 0;
-    int libre = 0;
-    while(j != M && RAC[i].estado != '*'){
-        if(RAC[i].dat.numDni == dni && RAC[i].estado == '-'){
-            *pos = i;
-            return 1; //El elemento se encuentra en la estructura
-        }else if(RAC[i].estado == '+' && libre == 0){
-            libre++;
-            *pos = i;
-        }
-        j++;
-        k++;
-        i = (i+k) % M;
-    }
-    if(j == M || RAC[i].estado == '*') return 0; //El elemento no se encuentra en la lista
-    if(libre == 1) return 2; //Encontre un lugar libre
-    */
 }
 
 int altaRAC(celda RAC[], datosVendedor dat){
-    if (cantVendedoresRAC == 110) return 0; //fracasa por que la estructura esta llena
+    if (cantVendedoresRAC == M) return 0; //fracasa por que la estructura esta llena
     int aux = localizarRAC(RAC, dat.numDni, &pos);
     if(aux == 1) return 1; //fracasa por que el elemento se encuentra cargado
-    if(aux == 0) return 2; //fracasa por que estan todas las celdas llenas
+    if(aux == 0) return 0; //fracasa por que estan todas las celdas llenas
 
     RAC[pos].estado = '-';
     RAC[pos].dat = dat;
@@ -316,6 +295,8 @@ int mostrarRAC(celda RAC[]){
 
 datosVendedor evocarRAC(celda RAC[], int numDni){
     datosVendedor aux;
+    aux.numDni = 1;
+    if(cantVendedoresRAC == 0) return aux;
     aux.numDni = -1;
     if(localizarRAC(RAC,numDni,&pos) != 1) return aux; //El vendedor no esta cargado
     return RAC[pos].dat;
@@ -332,6 +313,16 @@ int memorizacionPreviaRAC(celda RAC[], datosVendedor dat){
             if(auxMemo == 0){
                 fclose(fp);
                 return -1; //Se lleno la estructura
+            }else if(auxMemo == 1){
+                printf("\nHay un vendedor repetido");
+                printf("\nDesea ver el vendedor repetido?");
+                printf("\n<1> Si");
+                printf("\n<2> No");
+                printf("\n- ");
+                scanf("%d", &auxMemo);
+                if(auxMemo == 1) imprimirRAC(dat);
+                system("pause");
+                system("cls");
             }
         }
         fclose(fp);

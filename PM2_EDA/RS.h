@@ -244,10 +244,12 @@ int mostrarRS(lista dat[]){
     if(contRS == 0) return 1;
     int j = 0;
     for(int i = 0; i < M; i++){
-        if(j == 10){
-            system("pause");
-            j = 0;
-        }
+        //if(j == 10){
+            //printf("\n");
+            //system("pause");
+            //printf("\n");
+            //j = 0;
+        //}
         printf("\nBalde N: %d", i);
         mostrarLista(dat[i]);
         j++;
