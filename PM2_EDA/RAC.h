@@ -34,6 +34,7 @@ void initRAC(celda *);
     VARIABLES
 */
 
+int opcAuxRAC = 0;
 int cantVendido;
 int cantVendedoresRAC = 0;
 int dni = 0;
@@ -46,14 +47,13 @@ int posRS;
 int exito;
 char auxS[50];
 char opc1[10];
-
+celda RAC[M];
+datosVendedor vendedorRAC;
 
 void menuRAC(){
 
-    celda RAC[M];
-    initRAC(RAC);
+    if(opcAuxRAC == 0){initRAC(RAC); opcAuxRAC++;}
     int opc = 0;
-    datosVendedor vendedorRAC;
     do{
         printf("------------------------------");
         printf("\nMENU REBALSE ABIERTO CUADRATICO");

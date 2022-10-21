@@ -9,19 +9,22 @@
 #endif // RS_H_INCLUDED
 #include "controles.h"
 #include "listaEnlazada.h"
-#define M 61 //p= 1.84 -> M = N/p -> M = 110/1.84 -> M = 59.78 -> M = 61.
+#define M 60 //p= 1.84 -> M = N/p -> M = 110/1.84 -> M = 59.78 -> M = 60.
 
 /*
     VARIABLES
 */
 
 int contRS;
+int opcAuxRS = 0;
 char auxDni[20];
 char opc1[10];
 int aux, num, dni, auxopc;
 int posRS;
 int exito;
 char auxS[50];
+datosVendedor vendedor;
+lista RS[M];
 
 /*
     PROTOTIPOS
@@ -39,11 +42,8 @@ void imprimirRS(datosVendedor);
 void initRS(lista *);
 
 void menuRS(){
-
+    if(opcAuxRS == 0){initRS(RS); opcAuxRS++;}
     int opc = 0;
-    datosVendedor vendedor;
-    lista RS[M];
-    initRS(RS);
     do{
         printf("------------------------------");
         printf("\nMENU REBALSE SEPARADO");
@@ -103,7 +103,7 @@ void menuRS(){
             do{
                 getchar();
                 gets(vendedor.canalDeVenta);
-                num=controlIngresoLetras(vendedor.canalDeVenta);
+                num = controlIngresoLetras(vendedor.canalDeVenta);
             }while(num==0);
 
             aux = altaRS(RS, vendedor);

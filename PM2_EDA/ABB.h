@@ -127,7 +127,7 @@ void menuABB(){
             int auxBaja = bajaABB(vendedorABB);
             if(auxBaja == 2) printf("\nSe cancelo la baja");
             else if(auxBaja == 1) printf("\nEl vendedor no se encuentra cargado");
-            else printf("\nEL vendedor se borro con exito");
+            else if(auxBaja == 0) printf("\nEL vendedor se borro con exito");
             printf("\n");
             system("pause");
             system("cls");
@@ -377,7 +377,7 @@ int preOrden(struct nodoABB *cursor){
 int memorizacionPreviaABB(datosVendedor dat){
     int auxMemo = 0;
     FILE *fp;
-    if((fp = fopen("vendedoresPrueba.txt","r"))==NULL) return 0;
+    if((fp = fopen("vendedores.txt","r"))==NULL) return 0;
     else{
         while(!feof(fp)){
             fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &dat.numDni, dat.nombreApellido, dat.numTelefono, &dat.montoVendido, &dat.cantVendido, dat.canalDeVenta);

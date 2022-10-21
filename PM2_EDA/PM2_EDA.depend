@@ -60,7 +60,7 @@
 
 1665471775 c:\users\monica\desktop\eda\pm2_eda\abb.h
 
-1666211049 source:c:\users\multirepair\documents\eda\pm2_eda\main.c
+1666285875 source:c:\users\multirepair\documents\eda\pm2_eda\main.c
 	<stdio.h>
 	<stdlib.h>
 	"pantalla.h"
@@ -68,12 +68,12 @@
 	"RS.h"
 	"abb.h"
 
-1666211019 c:\users\multirepair\documents\eda\pm2_eda\rac.h
+1666286372 c:\users\multirepair\documents\eda\pm2_eda\rac.h
 	"vendedores.h"
 
 1665517952 c:\users\multirepair\documents\eda\pm2_eda\vendedores.h
 
-1666211056 c:\users\multirepair\documents\eda\pm2_eda\rs.h
+1666286445 c:\users\multirepair\documents\eda\pm2_eda\rs.h
 	"controles.h"
 	"listaEnlazada.h"
 
@@ -82,7 +82,7 @@
 1666111703 c:\users\multirepair\documents\eda\pm2_eda\listaenlazada.h
 	<malloc.h>
 
-1666119226 c:\users\multirepair\documents\eda\pm2_eda\abb.h
+1666288840 c:\users\multirepair\documents\eda\pm2_eda\abb.h
 
 1665517952 c:\users\multirepair\documents\eda\pm2_eda\pantalla.h
 	<stdio.h>
