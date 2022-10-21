@@ -7,7 +7,6 @@
 #ifndef ABB_H_INCLUDED
 #define ABB_H_INCLUDED
 #endif // ABB_H_INCLUDED
-#define MAXTAMCAD 100
 
 struct nodoABB{
     datosVendedor vipdABB;
@@ -309,6 +308,7 @@ int bajaABB(datosVendedor dat){ //Politica de remplazo: Menor de los mayores con
             cursor->vipdABB = aux1->vipdABB;
             aux2->nodoIzquierdo = aux1->nodoDerecho;
         }
+        cursor = aux1;
     }
     free(cursor);
     cantVendedoresABB--;
@@ -327,7 +327,6 @@ datosVendedor evocarABB(int dni){
 
 int preOrdenHijos(struct nodoABB *cursor){
     if(raiz == NULL) return 1;
-    system("cls");
     if (cursor != NULL){
         printf("\nPADRE: ");
         imprimirABB(cursor->vipdABB);

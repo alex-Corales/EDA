@@ -236,7 +236,7 @@ int localizarRAC(celda RAC[] ,int dni ,int *pos){
 }
 
 int altaRAC(celda RAC[], datosVendedor dat){
-    if (cantVendedoresRAC == M) return 0; //fracasa por que la estructura esta llena
+    if (cantVendedoresRAC == 110) return 0; //fracasa por que la estructura esta llena
     int aux = localizarRAC(RAC, dat.numDni, &pos);
     if(aux == 1) return 1; //fracasa por que el elemento se encuentra cargado
     if(aux == 0) return 0; //fracasa por que estan todas las celdas llenas
@@ -277,6 +277,7 @@ int bajaRAC(celda RAC[], int numDni){
 
 int mostrarRAC(celda RAC[]){
     if(cantVendedoresRAC == 0) return 1;
+    int j = 0;
     for(int i = 0; i < M; i++){
         printf("\n-----------------------");
         printf("\nNumero de balde: %d", i);
@@ -290,6 +291,13 @@ int mostrarRAC(celda RAC[]){
             printf("\nCanal de venta: %s", RAC[i].dat.canalDeVenta);
         }else if(RAC[i].estado == '*') printf("\nEstado de la celda: [%c] (Virgen)", RAC[i].estado);
         else printf("\nEstado de la celda: [%c] (Libre)", RAC[i].estado);
+        if(j == 10){
+            printf("\n");
+            system("pause");
+            printf("\n");
+            j = 0;
+        }
+        j++;
     }
 }
 
