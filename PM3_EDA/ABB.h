@@ -1,9 +1,3 @@
-/*
-    Grupo 30
-    Corales Alex Nahuel
-    alexcorales21@gmail.com
-*/
-
 #ifndef ABB_H_INCLUDED
 #define ABB_H_INCLUDED
 #endif // ABB_H_INCLUDED
@@ -27,10 +21,10 @@ struct nodoABB *aux2 = NULL;
     PROTOTIPOS
 */
 
-datosVendedor evocarABB(int);
-int localizarABB(int);
-int altaABB(datosVendedor);
-int bajaABB(datosVendedor);
+datosVendedor evocarABB(int, float *);
+int localizarABB(int, float *);
+int altaABB(datosVendedor, float *);
+int bajaABB(datosVendedor, float *);
 int pertenece(int);
 int preOrdenHijos(struct nodoABB *);
 int preOrden(struct nodoABB *);
@@ -113,7 +107,7 @@ void menuABB(){
                 num=controlIngresoLetras(vendedorABB.canalDeVenta);
             }while(num==0);
 
-            int auxAlta = altaABB(vendedorABB);
+            int auxAlta = altaABB(vendedorABB, &costo);
             if(auxAlta == 0) printf("\nEl vendedor ya se encuentra cargado en el sistema");
             else if(auxAlta == 1) printf("\nEl vendedor no se puede cargar por que la estructura esta llena");
             else printf("\nEl vendedor fue cargado");
@@ -124,7 +118,7 @@ void menuABB(){
         case 2:
             printf("\nIngrese el dni del vendedor que desea eliminar: ");
             scanf("%d", &vendedorABB.numDni);
-            int auxBaja = bajaABB(vendedorABB);
+            int auxBaja = bajaABB(vendedorABB, &costo);
             if(auxBaja == 2) printf("\nSe cancelo la baja");
             else if(auxBaja == 1) printf("\nEl vendedor no se encuentra cargado");
             else if(auxBaja == 0) printf("\nEL vendedor se borro con exito");
@@ -137,7 +131,7 @@ void menuABB(){
             printf("\nIngrese el dni del vendedor que desea buscar: ");
             scanf("%d", &numDni);
 
-            datosVendedor tempABB = evocarABB(numDni);
+            datosVendedor tempABB = evocarABB(numDni, &costo);
 
             if(tempABB.numDni == 1) printf("\nEl vendedor no se encuentra cargado");
             else imprimirABB(tempABB);
@@ -218,9 +212,11 @@ void imprimirABB(datosVendedor dat){
     printf("\n------------------------------\n");
 }
 
-int localizarABB(int numDni){
+int localizarABB(int numDni, float *costo){
     cursor = raiz;
+    *costo = 0.0;
     while(cursor != NULL && cursor->vipdABB.numDni != numDni){
+        *costo = *costo + 1;
         anterior = cursor;
         if(numDni < cursor->vipdABB.numDni){
             cursor = cursor->nodoIzquierdo;
@@ -233,8 +229,9 @@ int localizarABB(int numDni){
     else return 0; //El vendedor se encuentra en el arbol
 }
 
-int altaABB(datosVendedor dat){
-    int aux = localizarABB(dat.numDni);
+int altaABB(datosVendedor dat, float *costo){
+    float costoAux;
+    int aux = localizarABB(dat.numDni, &costoAux);
     if(aux == 0) return 0; //No puedo dar de alta por que el vendedor ya esta cargado
 
     struct nodoABB *nuevo = malloc(sizeof(struct nodoABB));
@@ -245,54 +242,80 @@ int altaABB(datosVendedor dat){
     nuevo->nodoIzquierdo = NULL;
     if(raiz == NULL){
         raiz = nuevo;
+        *costo = *costo + 1;
     }else{
-        if(dat.numDni < anterior->vipdABB.numDni)
+        if(dat.numDni < anterior->vipdABB.numDni){
             anterior->nodoIzquierdo = nuevo;
-        else
+            *costo = *costo + 1;
+        }else{
             anterior->nodoDerecho = nuevo;
+            *costo = *costo + 1;
+        }
     }
     cantVendedoresABB++;
     return 2; //El vendedor se cargo
 }
 
-int bajaABB(datosVendedor dat){ //Politica de remplazo: Menor de los mayores con copia de datos
-    int aux = localizarABB(dat.numDni);
+int bajaABB(datosVendedor dat, float *costo){ //Politica de remplazo: Menor de los mayores con copia de datos
+    float costoAux;
+    int aux = localizarABB(dat.numDni, &costoAux);
     if(aux == 1) return 1; //El vendedor no se encuentra en el arbol
-    int opcBaja;
-    printf("\nDni: %d", cursor->vipdABB.numDni);
-    printf("\nNombre y apellido: %s", cursor->vipdABB.nombreApellido);
-    printf("\nNumero de telefono: %s", cursor->vipdABB.numTelefono);
-    printf("\nMonto vendido: %f", cursor->vipdABB.montoVendido);
-    printf("\nCantidad vendida: %d", cursor->vipdABB.cantVendido);
-    printf("\nCanal de venta: %s", cursor->vipdABB.canalDeVenta);
-    printf("\nDesea eliminar el vendedor?");
-    printf("\n<1> Si");
-    printf("\n<2> No");
-    printf("\n- ");
-    scanf("%d", &opcBaja);
-    if(opcBaja == 2) return 2;
+
+    /*
+        int opcBaja;
+        printf("\nDni: %d", cursor->vipdABB.numDni);
+        printf("\nNombre y apellido: %s", cursor->vipdABB.nombreApellido);
+        printf("\nNumero de telefono: %s", cursor->vipdABB.numTelefono);
+        printf("\nMonto vendido: %f", cursor->vipdABB.montoVendido);
+        printf("\nCantidad vendida: %d", cursor->vipdABB.cantVendido);
+        printf("\nCanal de venta: %s", cursor->vipdABB.canalDeVenta);
+        printf("\nDesea eliminar el vendedor?");
+        printf("\n<1> Si");
+        printf("\n<2> No");
+        printf("\n- ");
+        scanf("%d", &opcBaja);
+        if(opcBaja == 2) return 2;
+    */
 
     if(cursor->nodoIzquierdo == NULL && cursor->nodoDerecho == NULL){ //No tiene hijos
-        if(cursor == raiz) raiz = NULL;
-        else{
-            if(anterior->vipdABB.numDni > dat.numDni) anterior->nodoIzquierdo = NULL;
-            else anterior->nodoDerecho = NULL;
+        if(cursor == raiz){
+            raiz = NULL;
+            *costo = *costo + 1;
+        }else{
+            if(anterior->vipdABB.numDni > dat.numDni){
+                anterior->nodoIzquierdo = NULL;
+                *costo = *costo + 1;
+            }else{
+                anterior->nodoDerecho = NULL;
+                *costo = *costo + 1;
+            }
         }
     }else if((cursor->nodoIzquierdo == NULL && cursor->nodoDerecho != NULL) || (cursor->nodoIzquierdo != NULL && cursor->nodoDerecho == NULL)){ //Tiene solo un hijo
         if(cursor == raiz){
-            if(cursor->nodoIzquierdo == NULL) raiz = cursor->nodoDerecho;
-            else raiz = cursor->nodoIzquierdo;
+            if(cursor->nodoIzquierdo == NULL){
+                raiz = cursor->nodoDerecho;
+                *costo = *costo + 1;
+            }else{
+                raiz = cursor->nodoIzquierdo;
+                *costo = *costo + 1;
+            }
         }else{
             if(anterior->nodoDerecho == cursor){
-                if(cursor->nodoDerecho != NULL)
+                if(cursor->nodoDerecho != NULL){
                     anterior->nodoDerecho = cursor->nodoDerecho;
-                else
+                    *costo = *costo + 1;
+                }else{
                     anterior->nodoDerecho = cursor->nodoIzquierdo;
+                    *costo = *costo + 1;
+                }
             }else{
-                if(cursor->nodoIzquierdo != NULL)
+                if(cursor->nodoIzquierdo != NULL){
                     anterior->nodoIzquierdo = cursor->nodoIzquierdo;
-                else
+                    *costo = *costo + 1;
+                }else{
                     anterior->nodoIzquierdo = cursor->nodoDerecho;
+                    *costo = *costo + 1;
+                }
             }
         }
     }else{
@@ -305,9 +328,11 @@ int bajaABB(datosVendedor dat){ //Politica de remplazo: Menor de los mayores con
         if(aux1 == aux2){
             cursor->nodoDerecho = aux1->nodoDerecho;
             cursor->vipdABB = aux1->vipdABB;
+            *costo = *costo + 1.5;
         }else{
             cursor->vipdABB = aux1->vipdABB;
             aux2->nodoIzquierdo = aux1->nodoDerecho;
+            *costo = *costo + 1.5;
         }
         cursor = aux1;
     }
@@ -316,13 +341,16 @@ int bajaABB(datosVendedor dat){ //Politica de remplazo: Menor de los mayores con
     return 0; //El vendedor se elimino
 }
 
-datosVendedor evocarABB(int dni){
+datosVendedor evocarABB(int dni, float *costo){
     datosVendedor temp;
     temp.numDni = 1;
-
-    int aux = localizarABB(dni);
-    if(aux == 1) return temp; //El vendedor no esta cargado
-
+    float costoAux;
+    int aux = localizarABB(dni, &costoAux);
+    if(aux == 1){
+        *costo = costoAux;
+        return temp; //El vendedor no esta cargado
+    }
+    *costo = costoAux;
     return cursor->vipdABB;
 }
 
@@ -382,7 +410,7 @@ int memorizacionPreviaABB(datosVendedor dat){
     else{
         while(!feof(fp)){
             fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &dat.numDni, dat.nombreApellido, dat.numTelefono, &dat.montoVendido, &dat.cantVendido, dat.canalDeVenta);
-            auxMemo = altaABB(dat);
+            auxMemo = altaABB(dat, &costo);
             if(auxMemo == 1){
                 fclose(fp);
                 return -1; //Se lleno la estructura
@@ -402,5 +430,3 @@ int memorizacionPreviaABB(datosVendedor dat){
         return 1;
     }
 }
-
-

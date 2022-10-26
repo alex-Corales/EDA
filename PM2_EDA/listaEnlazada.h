@@ -37,9 +37,13 @@ int altaLista(lista *p, datosVendedor varado){
         (*p).acceso=aux;
         aux->next = (*p).cursor;
         (*p).cursor = (*p).acceso;
+        //(*p).cursoraux = (*p).acceso;
     }else{
         aux->next = p->acceso;
         p->acceso = aux;
+        //(*p).cursoraux->next = aux;
+        //aux->next = (*p).cursor;
+        //(*p).cursor = aux;
     }
     (*p).cursor->vipd = varado;
 }
@@ -60,8 +64,10 @@ void bajaLista(lista *p, int dni){
 
 void mostrarLista(lista dat){
     dat.cursor = dat.acceso;
+    //dat.cursoraux = dat.acceso;
     while(dat.cursor != NULL){
         imprimirRS(dat.cursor->vipd);
+        //dat.cursoraux = dat.cursor;
         dat.cursor = dat.cursor->next;
     }
 }

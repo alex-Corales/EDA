@@ -1,12 +1,7 @@
-/*
-    Grupo 30
-    Corales Alex Nahuel
-    alexcorales21@gmail.com
-*/
-
 #ifndef RS_H_INCLUDED
 #define RS_H_INCLUDED
 #endif // RS_H_INCLUDED
+
 #include "controles.h"
 #include "listaEnlazada.h"
 #define M 60 //p= 1.84 -> M = N/p -> M = 110/1.84 -> M = 59.78 -> M = 60.
@@ -30,10 +25,10 @@ lista RS[M];
     PROTOTIPOS
 */
 
-datosVendedor evocarRS(lista *, int);
-int localizarRS(lista *, int, int *);
-int altaRS(lista *, datosVendedor);
-int bajaRS(lista *, int);
+datosVendedor evocarRS(lista *, int, float *);
+int localizarRS(lista *, int, int *, float *);
+int altaRS(lista *, datosVendedor, float *);
+int bajaRS(lista *, int, float *);
 int perteneceRS(lista *, int, int *);
 int mostrarRS(lista *);
 int memorizacionPreviaRS(lista *, datosVendedor);
@@ -42,6 +37,7 @@ void imprimirRS(datosVendedor);
 void initRS(lista *);
 
 void menuRS(){
+
     if(opcAuxRS == 0){initRS(RS); opcAuxRS++;}
     int opc = 0;
     do{
@@ -106,7 +102,7 @@ void menuRS(){
                 num = controlIngresoLetras(vendedor.canalDeVenta);
             }while(num==0);
 
-            aux = altaRS(RS, vendedor);
+            aux = altaRS(RS, vendedor, &costo);
 
             if (aux == 1) printf("\nEl vendedor se cargo con exito");
             else if(aux == 2) printf("\nLa estructura esta llena");
@@ -119,7 +115,7 @@ void menuRS(){
         case 2:
             printf("\nIngrese el dni del vendedor: ");
             scanf("%d", &dni);
-            int aux = bajaRS(RS, dni);
+            int aux = bajaRS(RS, dni, &costo);
             if(aux == 1) printf("\nNo hay elementos para dar de baja");
             else if(aux == 0) printf("\nEl vendendor no se encuentra cargado en la lista");
             else if(aux == -1) printf("\nSe cancelo la baja del vendedor");
@@ -131,7 +127,7 @@ void menuRS(){
         case 3:
             printf("\nIngrese el dni que desea buscar: ");
             scanf("%d", &dni);
-            datosVendedor consult = evocarRS(RS, dni);
+            datosVendedor consult = evocarRS(RS, dni, &costo);
 
             if(consult.numDni == -1) printf("\nEl vendedor no esta cargado");
             else imprimirRS(consult);
@@ -188,9 +184,9 @@ void initRS(lista dat[]){
     }
 }
 
-int localizarRS(lista dat[], int dni, int *posRS){
+int localizarRS(lista dat[], int dni, int *posRS, float *costo){
     *posRS = hashingRS(dni);
-
+    *costo = 0.0;
     if(dat[*posRS].acceso == NULL) return 1; //Veo si hay elementos
     dat[*posRS].cursor = dat[*posRS].acceso;
     dat[*posRS].cursoraux = dat[*posRS].acceso;
@@ -198,45 +194,85 @@ int localizarRS(lista dat[], int dni, int *posRS){
     while(dat[*posRS].cursor != NULL && dat[*posRS].cursor->vipd.numDni != dni){
         dat[*posRS].cursoraux = dat[*posRS].cursor;
         dat[*posRS].cursor = dat[*posRS].cursor->next;
+        *costo = *costo + 1;
     }
 
     if(dat[*posRS].cursor == NULL) return 0; //El elemento no esta en la lista
     if(dat[*posRS].cursor->vipd.numDni == dni) return 2;
 }
 
-int altaRS(lista dat[], datosVendedor empleado){
-    aux = localizarRS(dat, empleado.numDni, &posRS);
+int altaRS(lista dat[], datosVendedor empleado, float *costo){
+    float costoAux;
+    aux = localizarRS(dat, empleado.numDni, &posRS, &costoAux);
     if(aux == 2) return 0; //No puedo dar de alta por que el elemento ya existe
 
-    aux = altaLista(&dat[posRS], empleado);
-    if(aux == 1) return 2; //No se puede dar de alta por que no hay mas espacio
+    nodo *aux = (nodo*)malloc(sizeof(nodo));
+    if(aux == NULL) return 2; //No se puede dar de alta por que no hay mas espacio
+
+    dat[posRS].cursor = dat[posRS].acceso;
+
+    if(dat[posRS].cursor == dat[posRS].acceso){
+        dat[posRS].acceso = aux;
+        aux->next = dat[posRS].cursor;
+        dat[posRS].cursor = dat[posRS].acceso;
+        *costo = *costo + 1;
+    }else{
+        aux->next = dat[posRS].acceso;
+        dat[posRS].acceso = aux;
+        *costo = *costo + 1;
+    }
+    dat[posRS].cursor->vipd = empleado;
+
     contRS++;
     return 1;
 }
 
-int bajaRS(lista dat[], int dni){
+int bajaRS(lista dat[], int dni, float *costo){
     if(contRS == 0) return 1; //No hay elementos
-    int aux = localizarRS(dat, dni, &posRS);
+    float costoAux;
+    int aux = localizarRS(dat, dni, &posRS, &costoAux);
     if(aux == 0) return 0; //El elemento no esta en la lista
 
-    imprimirRS(dat[posRS].cursor->vipd);
-    printf("\nDesea eliminar los datos del vendedor");
-    printf("\n<1> Si");
-    printf("\n<2> No");
-    printf("\n- ");
-    scanf("%d", &opc);
-    if(opc == 1){
-        bajaLista(&dat[posRS], dni);
-        contRS--;
-    }else return -1;
+    if(dat[posRS].cursor == dat[posRS].acceso){
+        dat[posRS].acceso = dat[posRS].cursor->next;
+        free(dat[posRS].cursor);
+        dat[posRS].cursor = dat[posRS].acceso;
+        dat[posRS].cursoraux = dat[posRS].acceso;
+        *costo = *costo + 1;
+    }else{
+        dat[posRS].cursoraux->next = dat[posRS].cursor->next;
+        free(dat[posRS].cursor);
+        dat[posRS].cursor = dat[posRS].cursoraux->next;
+        *costo = *costo + 1;
+    }
+
+    contRS--;
+    /*
+        imprimirRS(dat[posRS].cursor->vipd);
+        printf("\nDesea eliminar los datos del vendedor");
+        printf("\n<1> Si");
+        printf("\n<2> No");
+        printf("\n- ");
+        scanf("%d", &opc);
+        if(opc == 1){
+            bajaLista(&dat[posRS], dni, &costo);
+            contRS--;
+        }else return -1;
+    */
 
     return 2;
 }
 
-datosVendedor evocarRS(lista dat[], int dni){
+datosVendedor evocarRS(lista dat[], int dni, float *costo){
     datosVendedor aux;
     aux.numDni = -1;
-    if(localizarRS(dat, dni, &posRS) != 2) return aux;
+    float costoAux;
+    if(localizarRS(dat, dni, &posRS, &costoAux) != 2){
+        *costo = costoAux;
+        return aux;
+    }
+
+    *costo = costoAux;
     return dat[posRS].cursor->vipd;
 }
 
@@ -263,7 +299,7 @@ int memorizacionPreviaRS(lista dat[], datosVendedor empleado){
     else{
         while(!feof(fp)){
             fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &empleado.numDni, empleado.nombreApellido, empleado.numTelefono, &empleado.montoVendido, &empleado.cantVendido, empleado.canalDeVenta);
-            auxMemo = altaRS(dat, empleado);
+            auxMemo = altaRS(dat, empleado, &costo);
             if(auxMemo == 2){
                 fclose(fp);
                 return -1; //Se lleno la estructura
@@ -283,8 +319,3 @@ int memorizacionPreviaRS(lista dat[], datosVendedor empleado){
         return 1;
     }
 }
-
-
-
-
-

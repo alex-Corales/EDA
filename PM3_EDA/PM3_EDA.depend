@@ -1,0 +1,65 @@
+# depslib dependency file v1.0
+1666731961 source:c:\users\multirepair\desktop\estructura de datos\estructuras\pm3_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+	"comEstructuras.h"
+
+1666732144 c:\users\multirepair\desktop\estructura de datos\estructuras\pm3_eda\comestructuras.h
+	"RAL.h"
+	"RS.h"
+	"abb.h"
+	"LSO.h"
+	"LSOBB.h"
+
+1666731740 c:\users\multirepair\desktop\estructura de datos\estructuras\pm3_eda\ral.h
+	"vendedores.h"
+
+1666731995 c:\users\multirepair\desktop\estructura de datos\estructuras\pm3_eda\vendedores.h
+
+1666731798 c:\users\multirepair\desktop\estructura de datos\estructuras\pm3_eda\rs.h
+	"controles.h"
+	"listaEnlazada.h"
+
+1666731853 c:\users\multirepair\desktop\estructura de datos\estructuras\pm3_eda\controles.h
+
+1666731874 c:\users\multirepair\desktop\estructura de datos\estructuras\pm3_eda\listaenlazada.h
+	<malloc.h>
+
+1666731658 c:\users\multirepair\desktop\estructura de datos\estructuras\pm3_eda\abb.h
+
+1666731722 c:\users\multirepair\desktop\estructura de datos\estructuras\pm3_eda\lso.h
+
+1666731764 c:\users\multirepair\desktop\estructura de datos\estructuras\pm3_eda\lsobb.h
+
+1666732436 source:c:\users\multirepair\documents\eda\pm3_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+	"comEstructuras.h"
+
+1666816117 c:\users\multirepair\documents\eda\pm3_eda\comestructuras.h
+	"RAL.h"
+	"RS.h"
+	"abb.h"
+	"LSO.h"
+	"LSOBB.h"
+
+1666814720 c:\users\multirepair\documents\eda\pm3_eda\ral.h
+	"vendedores.h"
+
+1666731995 c:\users\multirepair\documents\eda\pm3_eda\vendedores.h
+
+1666814721 c:\users\multirepair\documents\eda\pm3_eda\rs.h
+	"controles.h"
+	"listaEnlazada.h"
+
+1666731853 c:\users\multirepair\documents\eda\pm3_eda\controles.h
+
+1666808934 c:\users\multirepair\documents\eda\pm3_eda\listaenlazada.h
+	<malloc.h>
+
+1666815406 c:\users\multirepair\documents\eda\pm3_eda\abb.h
+
+1666815999 c:\users\multirepair\documents\eda\pm3_eda\lso.h
+
+1666803516 c:\users\multirepair\documents\eda\pm3_eda\lsobb.h
+
