@@ -65,7 +65,6 @@ int comparacionEstructuras(){
     if((fp = fopen("Operaciones.txt","r"))==NULL) return 1;
     else{
         while(!feof(fp)){
-
             /*
                 1 - Alta
                 2 - Baja
@@ -134,20 +133,21 @@ int comparacionEstructuras(){
                        dat.canalDeVenta);
                 //RAL
                 costo = 0;
-                exito = bajaRAL(RAL, dat.numDni, &costo);
+                exito = bajaRAL(RAL, dat, &costo, 1);
                 if(exito == 2){
                     costoRAL[1].costoAcumulado = costoRAL[1].costoAcumulado + costo;
                     costoRAL[1].cant++;
                     if(costo > costoRAL[1].costoMax) costoRAL[1].costoMax = costo;
                 }
                 //RS
-                /*costo = 0;
-                exito = bajaRS(RS, dni, &costo);
-                if(exito == 2){
-                    costoRS[1].costoAcumulado = costoRS[1].costoAcumulado + costo;
-                    costoRS[1].cant++;
-                    if(costo > costoRS[1].costoMax) costoRS[1].costoMax = costo;
-                }*/
+                //costo = 0;
+                //printf("\nDNI: %d", dat.numDni);
+                //exito = bajaRS(RS, dat.numDni, &costo);
+                //if(exito == 2){
+                    //costoRS[1].costoAcumulado = costoRS[1].costoAcumulado + costo;
+                    //costoRS[1].cant++;
+                    //if(costo > costoRS[1].costoMax) costoRS[1].costoMax = costo;
+                //}
                 //ABB
                 costo = 0;
                 exito = bajaABB(dat, &costo);
@@ -213,7 +213,6 @@ int comparacionEstructuras(){
                 //LSO
                 costo = 0;
                 exitoE = evocarLSO(LSO, dat.numDni, &costo);
-                printf("\nHOLA"); //Se rompe, controlar
                 if(exitoE.numDni != -1){
                     costoLSO[2].costoAcumulado = costoLSO[2].costoAcumulado + costo;
                     costoLSO[2].cant++;
@@ -222,6 +221,18 @@ int comparacionEstructuras(){
                     costoLSO[3].costoAcumulado = costoLSO[3].costoAcumulado + costo;
                     costoLSO[3].cant++;
                     if(costo > costoLSO[3].costoMax) costoLSO[3].costoMax = costo;
+                }
+                //LSOBB
+                costo = 0;
+                exitoE = evocarLSOBT(LSOBB, dat.numDni, &costo);
+                if(exitoE.numDni != -1){
+                    costoLSOBB[2].costoAcumulado = costoLSOBB[2].costoAcumulado + costo;
+                    costoLSOBB[2].cant++;
+                    if(costo > costoLSOBB[2].costoMax) costoLSOBB[2].costoMax = costo;
+                }else if(exitoE.numDni == -1){
+                    costoLSOBB[3].costoAcumulado = costoLSOBB[3].costoAcumulado + costo;
+                    costoLSOBB[3].cant++;
+                    if(costo > costoLSOBB[3].costoMax) costoLSOBB[3].costoMax = costo;
                 }
                 break;
             }
@@ -255,14 +266,17 @@ int comparacionEstructuras(){
     if(costoLSOBB[3].cant != 0) mLSOBB[3] = costoLSOBB[3].costoAcumulado * (1.0/costoLSOBB[3].cant); //Evocacion que fracasa
 
     printf("\t COMPARACION DE ESTRUCTURAS\n\n");
-    printf("COSTOS\t\tRAL\tRS\tABB\tLSO\tLSOBT\n");
+    printf("COSTOS\t\tRAL\tRS\tABB\tLSO\tLSOBB\n");
     printf("_____________________________________________________\n");
     printf("MAX.ALTA\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n", costoRAL[0].costoMax, costoRS[0].costoMax, costoABB[0].costoMax, costoLSO[0].costoMax, costoLSOBB[0].costoMax);
     printf("MED.ALTA\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n", mRAL[0], mRS[0], mABB[0], mLSO[0], mLSOBB[0]);
+    printf("_____________________________________________________\n");
     printf("MAX.BAJA\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n", costoRAL[1].costoMax, costoRS[1].costoMax, costoABB[1].costoMax, costoLSO[1].costoMax, costoLSOBB[1].costoMax);
     printf("MED.BAJA\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n", mRAL[1], mRS[1], mABB[1], mLSO[1], mLSOBB[1]);
+    printf("_____________________________________________________\n");
     printf("MAX.EVOEX\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n", costoRAL[2].costoMax, costoRS[2].costoMax, costoABB[2].costoMax, costoLSO[2].costoMax, costoLSOBB[2].costoMax);
     printf("MED.EVOEX\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n", mRAL[2], mRS[2], mABB[2], mLSO[2], mLSOBB[2]);
+    printf("_____________________________________________________\n");
     printf("MAX.EVONOEX\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n", costoRAL[3].costoMax, costoRS[3].costoMax, costoABB[3].costoMax, costoLSO[3].costoMax, costoLSOBB[3].costoMax);
     printf("MED.EVONOEX\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n\n", mRAL[3], mRS[3], mABB[3], mLSO[3], mLSOBB[3]);
     system("PAUSE");

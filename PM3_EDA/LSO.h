@@ -177,15 +177,14 @@ int altaLSO(datosVendedor dat[], char nombreApellido[], int numDni, char numTele
 
     if(ls == 110) return -1;
     int i = 0;
-    int aux = localizarLSO(dat,numDni,&posLSO);
+    float costoAux;
+    int aux = localizarLSO(dat,numDni,&posLSO,&costoAux);
     if(aux == 1) return 0;
 
     for(i = ls; i >= posLSO; i--){
         dat[i+1] = dat[i];
         *costo = *costo + 1.5;
     }
-
-    ls++;
 
     dat[posLSO].numDni = numDni;
     strcpy(dat[posLSO].nombreApellido, nombreApellido);
@@ -194,6 +193,7 @@ int altaLSO(datosVendedor dat[], char nombreApellido[], int numDni, char numTele
     dat[posLSO].cantVendido = cantVendido;
     strcpy(dat[posLSO].canalDeVenta, canalDeVenta);
 
+    ls++;
     return 1;
 }// ingreso de nuevos vendedores
 
@@ -201,7 +201,8 @@ int bajaLSO(datosVendedor dat[], int dni, float *costo){
 
     int i = 0, auxopc = 0, opc = 0;
     char opc1[10];
-    int aux = localizarLSO(dat, dni, &posLSO);
+    float costoAux;
+    int aux = localizarLSO(dat, dni, &posLSO, &costoAux);
     if (aux != 1) return -1;
 
     /*

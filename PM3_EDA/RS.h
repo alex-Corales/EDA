@@ -227,11 +227,12 @@ int altaRS(lista dat[], datosVendedor empleado, float *costo){
     return 1;
 }
 
-int bajaRS(lista dat[], int dni, float *costo){
+int bajaRS(lista dat[], int dni, float *costo, int opcAux){
     if(contRS == 0) return 1; //No hay elementos
     float costoAux;
     int aux = localizarRS(dat, dni, &posRS, &costoAux);
     if(aux == 0) return 0; //El elemento no esta en la lista
+    *costo = 0.0;
 
     if(dat[posRS].cursor == dat[posRS].acceso){
         dat[posRS].acceso = dat[posRS].cursor->next;

@@ -256,7 +256,7 @@ int altaABB(datosVendedor dat, float *costo){
     return 2; //El vendedor se cargo
 }
 
-int bajaABB(datosVendedor dat, float *costo){ //Politica de remplazo: Menor de los mayores con copia de datos
+int bajaABB(datosVendedor dat, float *costo){ //Politica de remplazo: Mayor de los menores con copia de datos
     float costoAux;
     int aux = localizarABB(dat.numDni, &costoAux);
     if(aux == 1) return 1; //El vendedor no se encuentra en el arbol
@@ -319,19 +319,19 @@ int bajaABB(datosVendedor dat, float *costo){ //Politica de remplazo: Menor de l
             }
         }
     }else{
-        aux2 = cursor->nodoDerecho;
-        aux1 = cursor->nodoDerecho;
-        while(aux1->nodoIzquierdo != NULL){
+        aux2 = cursor->nodoIzquierdo;
+        aux1 = cursor->nodoIzquierdo;
+        while(aux1->nodoDerecho != NULL){
             aux2 = aux1;
-            aux1 = aux1->nodoIzquierdo;
+            aux1 = aux1->nodoDerecho;
         }
         if(aux1 == aux2){
-            cursor->nodoDerecho = aux1->nodoDerecho;
+            cursor->nodoIzquierdo = aux1->nodoIzquierdo;
             cursor->vipdABB = aux1->vipdABB;
             *costo = *costo + 1.5;
         }else{
             cursor->vipdABB = aux1->vipdABB;
-            aux2->nodoIzquierdo = aux1->nodoDerecho;
+            aux2->nodoDerecho = aux1->nodoIzquierdo;
             *costo = *costo + 1.5;
         }
         cursor = aux1;
@@ -356,7 +356,6 @@ datosVendedor evocarABB(int dni, float *costo){
 
 int preOrdenHijos(struct nodoABB *cursor){
     if(raiz == NULL) return 1;
-    system("cls");
     if (cursor != NULL){
         printf("\nPADRE: ");
         imprimirABB(cursor->vipdABB);
@@ -406,7 +405,7 @@ int preOrden(struct nodoABB *cursor){
 int memorizacionPreviaABB(datosVendedor dat){
     int auxMemo = 0;
     FILE *fp;
-    if((fp = fopen("vendedoresPrueba.txt","r"))==NULL) return 0;
+    if((fp = fopen("vendedores.txt","r"))==NULL) return 0;
     else{
         while(!feof(fp)){
             fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &dat.numDni, dat.nombreApellido, dat.numTelefono, &dat.montoVendido, &dat.cantVendido, dat.canalDeVenta);

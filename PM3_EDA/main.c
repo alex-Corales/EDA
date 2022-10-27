@@ -11,20 +11,27 @@ int main(){
         printf("------------------------------");
         printf("\nBIENVENIDO AL MENU PRINCIPAL");
         printf("\n------------------------------");
-        printf("\n<1> Estructuras");
-        printf("\n<2> Comparacion de estructuras");
+        printf("\n<1> Comparacion de estructuras");
+        printf("\n<2> Estructuras");
         printf("\n<3> Salir");
         printf("\n- ");
         scanf("%d", &opc);
 
         switch(opc){
         case 1:
+            system("cls");
+            int aux = comparacionEstructuras();
+            if(aux == 1) printf("\nHubo un problema\n");
+            system("cls");
+            break;
+        case 2:
             do{
+                system("cls");
                 printf("------------------------------");
-                printf("\nBIENVENIDO AL MENU PRINCIPAL");
+                printf("\nBIENVENIDO AL MENU DE ESTRUCTURAS");
                 printf("\n------------------------------");
                 printf("\n<1> Arbol binario de busqueda");
-                printf("\n<2> Rebalse abierto cuadratico");
+                printf("\n<2> Rebalse abierto lineal");
                 printf("\n<3> Rebalse separado");
                 printf("\n<4> Lista secuencial ordenada con terminacion por contenido");
                 printf("\n<5> Lista secuencial ordenada con busqueda binaria");
@@ -35,38 +42,37 @@ int main(){
                 switch(opc){
                 case 1:
                     system("cls");
-                    menuABB();
+                    preOrdenHijos(raiz);
                     system("cls");
                     break;
                 case 2:
                     system("cls");
-                    menuRAC();
+                    mostrarRAL(RAL);
+                    system("pause");
                     system("cls");
                     break;
                 case 3:
                     system("cls");
-                    menuRS();
+                    mostrarRS(RS);
+                    system("pause");
                     system("cls");
                     break;
                 case 4:
                     system("cls");
-                    listaSecuencialOrdenadaConTerminacionPorContenido();
+                    mostrarEstrutura(LSO);
+                    system("pause");
                     system("cls");
                     break;
                 case 5:
                     system("cls");
-                    listaSecuencialOrdenadaBusquedaBinaria();
+                    mostrarEstruturaLSOBT(LSOBB);
+                    system("pause");
                     system("cls");
                     break;
                 }
             }while(opc != 6);
             break;
-        case 2:
-            system("cls");
-            int aux = comparacionEstructuras();
-            if(aux == 1) printf("\nHubo un problema\n");
-            system("cls");
-            break;
+
         }
     }while(opc != 3);
 

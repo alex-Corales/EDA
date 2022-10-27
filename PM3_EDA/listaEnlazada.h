@@ -21,11 +21,6 @@ void init(lista *p){
     (*p).cursoraux = NULL;
 }
 
-
-void bajaLista(lista *p, int dni, float *costo){
-
-}
-
 void mostrarLista(lista dat){
     dat.cursor = dat.acceso;
     //dat.cursoraux = dat.acceso;

@@ -7,7 +7,7 @@
     Prototipos
 */
 
-datosVendedor evocarLSOBT(datosVendedor *, int);
+datosVendedor evocarLSOBT(datosVendedor *, int, float *);
 int altaLSOBT(datosVendedor *, char *, int, char *, float, int, char *, float *);
 
 
@@ -123,7 +123,7 @@ void listaSecuencialOrdenadaBusquedaBinaria(void){
             }while(auxopc==0);
             dni = atoi(auxDni);
 
-            datosVendedor consult = evocarLSOBT(vendedorLSOBT, dni);
+            datosVendedor consult = evocarLSOBT(vendedorLSOBT, dni, &costo);
 
             if(consult.numDni == -1)printf("\nEl vendedor no se encuentra cargado");
             else imprimirVendedorLSOBT(consult);
@@ -162,21 +162,13 @@ void imprimirVendedorLSOBT(datosVendedor dat){
     printf("\n------------------------------\n");
 }
 
-int corrimientoElementoEliminandoLSOBT(datosVendedor dat[], int pos){
-    int i = 0;
-    int j = lsLSOBT;
-
-
-
-    return j - 1;
-
-}
-
-int localizarLSOBT(datosVendedor arreglo[], int busqueda, int ls, int *posLSOBT){
+int localizarLSOBT(datosVendedor arreglo[], int busqueda, int ls, int *posLSOBT, float *costo){
 
     int li = 0;
     int testigo = 0;
+    *costo = 0.0;
     while (li <= ls){
+        *costo = *costo + 1;
         testigo = (li + ls)/2;
         if (busqueda == arreglo[testigo].numDni){
             *posLSOBT = testigo;
@@ -192,7 +184,8 @@ int localizarLSOBT(datosVendedor arreglo[], int busqueda, int ls, int *posLSOBT)
 int altaLSOBT(datosVendedor dat[], char nombreApellido[], int numDni, char numTelefono[], float montoVendido, int cantVendido, char canalDeVenta[], float *costo){
 
     if(lsLSOBT == 109) return -1; //La estructura esta llena
-    int exito = localizarLSOBT(dat,numDni,lsLSOBT,&posLSOBT);
+    float costoAux;
+    int exito = localizarLSOBT(dat,numDni,lsLSOBT,&posLSOBT,&costoAux);
     if(exito == 1) return 0; //El vendedor ya esta cargado
 
     int i = 0;
@@ -248,7 +241,8 @@ int altaLSOBT(datosVendedor dat[], char nombreApellido[], int numDni, char numTe
 int bajaLSOBT(datosVendedor dat[], int dni, float *costo){
     int auxopc = 0, opc = 0;
     char opc1[10];
-    if(localizarLSOBT(dat, dni, lsLSOBT,&posLSOBT) == -1) return -1;
+    float costoAux;
+    if(localizarLSOBT(dat, dni, lsLSOBT,&posLSOBT,&costoAux) == -1) return -1;
 
     /*
         printf("------------------------------\n");
@@ -286,11 +280,15 @@ int bajaLSOBT(datosVendedor dat[], int dni, float *costo){
 
 } //eliminacion de vendedores existentes
 
-datosVendedor evocarLSOBT(datosVendedor dat [], int numDni){
+datosVendedor evocarLSOBT(datosVendedor dat [], int numDni, float *costo){
     datosVendedor aux;
     aux.numDni = -1;
-    if(localizarLSOBT(dat, numDni, lsLSOBT, &posLSOBT)==-1) return aux;
-
+    float costoAux;
+    if(localizarLSOBT(dat, numDni, lsLSOBT, &posLSOBT, &costoAux)==-1){
+        *costo = costoAux;
+        return aux;
+    }
+    *costo = costoAux;
     return dat[posLSOBT];
 
 } //consulta de vendedores
@@ -310,7 +308,8 @@ void mostrarEstruturaLSOBT(datosVendedor dat[]){
 } //mostrar estructura
 
 int perteneceLSOBT(datosVendedor dat[], int dni){
-    int aux = localizarLSOBT(dat, dni,lsLSOBT,&pos);
+    float costoAux;
+    int aux = localizarLSOBT(dat, dni,lsLSOBT,&pos,&costoAux);
     if(aux == 1) return 1;
     else return -1;
 }
@@ -323,6 +322,7 @@ int memorizacionPreviaLSOBT(datosVendedor dat []){
     float montoVendido;
     int cantVendido;
     char canalDeVenta[20];
+    float costoAux;
     int i = 0;
 
     FILE *fp;
@@ -333,7 +333,7 @@ int memorizacionPreviaLSOBT(datosVendedor dat []){
             if(lsLSOBT == 109) return -1;
             fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &numDni, nombreApellido, numTelefono, &montoVendido, &cantVendido, canalDeVenta);
 
-            if(localizarLSOBT(dat,numDni,lsLSOBT,&pos)!=1){
+            if(localizarLSOBT(dat,numDni,lsLSOBT,&pos,&costoAux)!=1){
                 altaLSOBT(dat, nombreApellido,numDni,numTelefono,montoVendido,cantVendido,canalDeVenta,&costo);
             }
         }

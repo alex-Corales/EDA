@@ -16,7 +16,7 @@ typedef struct{
 datosVendedor evocarRAL(celda *, int, float *);
 int localizarRAL(celda *, int, int *, float *);
 int altaRAL(celda *, datosVendedor, float *);
-int bajaRAL(celda *, int, float *);
+int bajaRAL(celda *, datosVendedor, float *, int);
 int perteneceRAL(celda *, int, int *);
 int memorizacionPreviaRAL(celda *, datosVendedor, float *);
 int mostrarRAL(celda *);
@@ -121,7 +121,7 @@ void menuRAC(){
         case 2:
             printf("\nIngrese el dni del vendedor: ");
             scanf("%d", &dni);
-            int aux = bajaRAL(RAL, dni, &costo);
+            int aux = bajaRAL(RAL, vendedorRAC, &costo, 1);
             if(aux == 1) printf("\nNo hay elementos para dar de baja");
             else if(aux == 0) printf("\nEl vendendor no se encuentra cargado en la lista");
             else if(aux == -1) printf("\nSe cancelo la baja del vendedor");
@@ -243,16 +243,19 @@ int altaRAL(celda RAL[], datosVendedor dat, float *costo){
     return 2; //Exito
 }
 
-int bajaRAL(celda RAL[], int numDni, float *costo){
+int bajaRAL(celda RAL[], datosVendedor dat, float *costo, int opcAux){
     if(cantVendedoresRAC == 0) return 1;
     float costoAux;
-    int aux = localizarRAL(RAL, numDni, &pos, &costoAux);
+    int aux = localizarRAL(RAL, dat.numDni, &pos, &costoAux);
     if(aux == 0) return 0; //Fracasa, el elemento no esta en la lista
 
-    RAL[pos].estado = '+';
-    *costo = 0;
-    cantVendedoresRAC--;
-    /*
+    if(opcAux == 1){
+        if(dat.numDni == RAL[pos].dat.numDni && dat.cantVendido == RAL[pos].dat.cantVendido && dat.montoVendido == RAL[pos].dat.montoVendido && (strcmp(RAL[pos].dat.canalDeVenta, dat.canalDeVenta) == 0) && (strcmp(RAL[pos].dat.nombreApellido, dat.nombreApellido) == 0) && (strcmp(RAL[pos].dat.numTelefono, dat.numTelefono) == 0)){
+            opc = 1;
+        }else opc = 0;
+    }
+    if(opc == 0) return 3; //No son iguales los campos
+    if(opcAux == 0){
         printf("\n----------------------------");
         printf("\nDni: %d", RAL[pos].dat.numDni);
         printf("\nNombre y Apellido: %s", RAL[pos].dat.nombreApellido);
@@ -272,8 +275,11 @@ int bajaRAL(celda RAL[], int numDni, float *costo){
             *costo = 0;
             cantVendedoresRAC--;
         }else return -1;
-    */
+    }
 
+    RAL[pos].estado = '+';
+    *costo = 0;
+    cantVendedoresRAC--;
 
     return 2;
 }
