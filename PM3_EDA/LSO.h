@@ -1,3 +1,7 @@
+/*
+    Grupo 30 - Corales Alex Nahuel
+*/
+
 #ifndef LSO_H_INCLUDED
 #define LSO_H_INCLUDED
 #endif // LSO_H_INCLUDED
@@ -173,6 +177,24 @@ void imprimirVendedorLSO(datosVendedor dat){
     printf("\n------------------------------\n");
 }
 
+int localizarLSO(datosVendedor dat[], int numDni, int *posLSO, float *costo){
+    int i = 0;
+    *costo = 0.0;
+    while(dat[i].numDni < numDni){
+        *costo = *costo + 1;
+        i++;
+    }
+
+    if (dat[i].numDni == numDni){
+        *posLSO = i;
+        return 1;
+    }else{
+        *posLSO = i;
+        return -1;
+    }
+
+}
+
 int altaLSO(datosVendedor dat[], char nombreApellido[], int numDni, char numTelefono[], float montoVendido, int cantVendido, char canalDeVenta[], float *costo){
 
     if(ls == 110) return -1;
@@ -197,15 +219,21 @@ int altaLSO(datosVendedor dat[], char nombreApellido[], int numDni, char numTele
     return 1;
 }// ingreso de nuevos vendedores
 
-int bajaLSO(datosVendedor dat[], int dni, float *costo){
+int bajaLSO(datosVendedor dat[], datosVendedor datLSO, float *costo, int opcAux){
 
     int i = 0, auxopc = 0, opc = 0;
     char opc1[10];
     float costoAux;
-    int aux = localizarLSO(dat, dni, &posLSO, &costoAux);
+    int aux = localizarLSO(dat, datLSO.numDni, &posLSO, &costoAux);
     if (aux != 1) return -1;
 
-    /*
+    if(opcAux == 1){
+        if(datLSO.numDni == dat[posLSO].numDni && datLSO.cantVendido == dat[posLSO].cantVendido && datLSO.montoVendido == dat[posLSO].montoVendido && (strcmp(dat[posLSO].canalDeVenta, datLSO.canalDeVenta) == 0) && (strcmp(dat[posLSO].nombreApellido, datLSO.nombreApellido) == 0) && (strcmp(dat[posLSO].numTelefono, datLSO.numTelefono) == 0)){
+            opc = 1;
+        }else opc = 0;
+    }
+    if(opc == 0) return 3;
+    if(opcAux == 0){
         printf("------------------------------\n");
         printf("Nombre y Apellido: %s\n", dat[posLSO].nombreApellido);
         printf("Dni: %d\n", dat[posLSO].numDni);
@@ -225,10 +253,10 @@ int bajaLSO(datosVendedor dat[], int dni, float *costo){
         }while(auxopc==0 && atoi(opc1) != 1 && atoi(opc1) != 2);
         opc = atoi(opc1);
         if(opc == 1){
-            ls = corrimientoElementoEliminando(dat, &posLSO, ls, &costo);
+
             return 1;
         }
-    */
+    }
 
     for(i = posLSO; i < ls; i++){
         dat[i] = dat[i+1];
@@ -240,24 +268,6 @@ int bajaLSO(datosVendedor dat[], int dni, float *costo){
     return 1;
 
 } //eliminacion de vendedores existentes
-
-int localizarLSO(datosVendedor dat[], int numDni, int *posLSO, float *costo){
-    int i = 0;
-    *costo = 0.0;
-    while(dat[i].numDni < numDni){
-        *costo = *costo + 1;
-        i++;
-    }
-
-    if (dat[i].numDni == numDni){
-        *posLSO = i;
-        return 1;
-    }else{
-        *posLSO = i;
-        return -1;
-    }
-
-}
 
 datosVendedor evocarLSO(datosVendedor dat[], int numDni, float *costo){
     datosVendedor aux;
@@ -293,42 +303,36 @@ void mostrarEstrutura(datosVendedor dat[]){
     }
 } //mostrar estructura
 
-int memorizacionPrevia(datosVendedor dat []){
+int memorizacionPrevia(datosVendedor dat[]){
 
     int aux;
-    char nombreApellido[50];
-    int numDni;
-    char numTelefono[15];
-    float montoVendido;
-    int cantVendido;
-    char canalDeVenta[20];
     float costoAux;
     int i = 0;
+    int auxMemo;
 
     FILE *fp;
 
-    if((fp = fopen("vendedores.txt","r"))==NULL)
-        return 0;
-    else
-    {
-        while(!feof(fp))
-        {
-            if(ls == 110) return -1;
-
-            fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &numDni, nombreApellido, numTelefono, &montoVendido, &cantVendido, canalDeVenta);
-
-            if(localizarLSO(dat, numDni, &posLSO, &costoAux)!=1){
-                altaLSO(dat,nombreApellido,numDni,numTelefono,montoVendido,cantVendido,canalDeVenta,&costo);
+    if((fp = fopen("vendedores.txt","r"))==NULL)return 0;
+    else{
+        while(!feof(fp)){
+            fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &dat->numDni, dat->nombreApellido, dat->numTelefono, &dat->montoVendido, &dat->cantVendido, dat->canalDeVenta);
+            auxMemo = altaLSO(dat, dat->nombreApellido,dat->numDni,dat->numTelefono,dat->montoVendido,dat->cantVendido,dat->canalDeVenta,&costo);
+            if(auxMemo == -1){
+                fclose(fp);
+                return -1;
+            }else if(auxMemo == 0){
+                printf("\nHay un vendedor repetido");
+                printf("\nDesea ver el vendedor repetido?");
+                printf("\n<1> si");
+                printf("\n<2> No");
+                printf("\n- ");
+                scanf("%d", &auxMemo);
+                if(auxMemo == 1) imprimirVendedorLSO(*dat);
+                system("pause");
+                system("cls");
             }
         }
+        fclose(fp);
         return 1;
     }
-    fclose(fp);
-} //Guarda los datos del archivo
-
-void mas_Infinito(datosVendedor dat[]){ //En el menu principal ingresar el 256 para ver la posicion del mas infinito.
-    printf("\nMas infinito: %d", dat[ls].numDni);
-    printf("\nPosicion mas infinito: %d\n", ls);
-    system("pause");
-    system("cls");
 }

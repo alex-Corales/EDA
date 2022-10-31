@@ -117,7 +117,7 @@ void menuRAC(){
             }while(num==0);
 
             aux = altaRAC(RAC, vendedorRAC);
-            if (aux == 1) printf("\nEl vendedor se cargo con exito");
+            if (aux == 1) printf("\nEl vendedor ya se encuentra cargado");
             else if (aux == 0) printf("\nEl vendedor no se puede cargar por que no hay mas lugar");
             else printf("\nEl vendedor fue cargado con exito");
             printf("\n");

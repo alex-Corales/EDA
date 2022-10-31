@@ -1,3 +1,6 @@
+/*
+    Grupo 30 - Corales Alex Nahuel
+*/
 #ifndef VENDEDORES_H_INCLUDED
 #define VENDEDORES_H_INCLUDED
 #endif // VENDEDORES_H_INCLUDED

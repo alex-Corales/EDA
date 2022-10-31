@@ -1,3 +1,7 @@
+/*
+    Grupo 30 - Corales Alex Nahuel
+*/
+
 #ifndef ABB_H_INCLUDED
 #define ABB_H_INCLUDED
 #endif // ABB_H_INCLUDED
@@ -24,7 +28,7 @@ struct nodoABB *aux2 = NULL;
 datosVendedor evocarABB(int, float *);
 int localizarABB(int, float *);
 int altaABB(datosVendedor, float *);
-int bajaABB(datosVendedor, float *);
+int bajaABB(datosVendedor, float *, int);
 int pertenece(int);
 int preOrdenHijos(struct nodoABB *);
 int preOrden(struct nodoABB *);
@@ -118,7 +122,7 @@ void menuABB(){
         case 2:
             printf("\nIngrese el dni del vendedor que desea eliminar: ");
             scanf("%d", &vendedorABB.numDni);
-            int auxBaja = bajaABB(vendedorABB, &costo);
+            int auxBaja = bajaABB(vendedorABB, &costo, 1);
             if(auxBaja == 2) printf("\nSe cancelo la baja");
             else if(auxBaja == 1) printf("\nEl vendedor no se encuentra cargado");
             else if(auxBaja == 0) printf("\nEL vendedor se borro con exito");
@@ -256,12 +260,18 @@ int altaABB(datosVendedor dat, float *costo){
     return 2; //El vendedor se cargo
 }
 
-int bajaABB(datosVendedor dat, float *costo){ //Politica de remplazo: Mayor de los menores con copia de datos
+int bajaABB(datosVendedor dat, float *costo, int opcAux){ //Politica de remplazo: Mayor de los menores con copia de datos
     float costoAux;
     int aux = localizarABB(dat.numDni, &costoAux);
     if(aux == 1) return 1; //El vendedor no se encuentra en el arbol
 
-    /*
+    if(opcAux == 1){
+        if(dat.numDni == cursor->vipdABB.numDni && dat.cantVendido == cursor->vipdABB.cantVendido && dat.montoVendido == cursor->vipdABB.montoVendido && (strcmp(cursor->vipdABB.canalDeVenta, dat.canalDeVenta) == 0) && (strcmp(cursor->vipdABB.nombreApellido, dat.nombreApellido) == 0) && (strcmp(cursor->vipdABB.numTelefono, dat.numTelefono) == 0)){
+            opc = 1;
+        }else opc = 0;
+    }
+    if(opc == 0) return 3;
+    if(opcAux == 0){
         int opcBaja;
         printf("\nDni: %d", cursor->vipdABB.numDni);
         printf("\nNombre y apellido: %s", cursor->vipdABB.nombreApellido);
@@ -275,7 +285,7 @@ int bajaABB(datosVendedor dat, float *costo){ //Politica de remplazo: Mayor de l
         printf("\n- ");
         scanf("%d", &opcBaja);
         if(opcBaja == 2) return 2;
-    */
+    }
 
     if(cursor->nodoIzquierdo == NULL && cursor->nodoDerecho == NULL){ //No tiene hijos
         if(cursor == raiz){

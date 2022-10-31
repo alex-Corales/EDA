@@ -67,3 +67,28 @@
 	"funcionesLSOBT.h"
 	"controles.h"
 
+1666864007 source:c:\users\multirepair\documents\eda\pm1_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+	"menu.h"
+
+1666864007 c:\users\multirepair\documents\eda\pm1_eda\menu.h
+	<stdio.h>
+	<stdlib.h>
+	"vendedor.h"
+	"funciones.h"
+	"funcionesLSOBT.h"
+	"controles.h"
+
+1666864007 c:\users\multirepair\documents\eda\pm1_eda\vendedor.h
+
+1666864007 c:\users\multirepair\documents\eda\pm1_eda\funciones.h
+	<string.h>
+	<stdlib.h>
+
+1667071693 c:\users\multirepair\documents\eda\pm1_eda\funcioneslsobt.h
+	<string.h>
+	<stdlib.h>
+
+1666864007 c:\users\multirepair\documents\eda\pm1_eda\controles.h
+

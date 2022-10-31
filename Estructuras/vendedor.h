@@ -1,3 +1,9 @@
+/*
+    Grupo 30
+    Corales Alex Nahuel
+    alexcorales21@gmail.com
+*/
+
 #ifndef VENDEDOR_H_INCLUDED
 #define VENDEDOR_H_INCLUDED
 #endif // VENDEDOR_H_INCLUDED
@@ -10,3 +16,6 @@ typedef struct{
     int cantVendido;
     char canalDeVenta[20];
 }datosVendedor;
+
+
+

@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "funciones.h"
+#include "vendedor.h"
+#include "LSOBB.h"
+#include "controles.h"
+
 
 int main(){
-    rebalseAbiertoCuadratico();
+    listaSecuencialOrdenadaBusquedaBinaria();
     return 0;
 }

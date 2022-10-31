@@ -31,7 +31,16 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="LSOBB.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="RAC.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="RAL.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="controles.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="funciones.h">

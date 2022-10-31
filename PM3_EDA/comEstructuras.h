@@ -1,3 +1,7 @@
+/*
+    Grupo 30 - Corales Alex Nahuel
+*/
+
 #ifndef COMESTRUCTURAS_H_INCLUDED
 #define COMESTRUCTURAS_H_INCLUDED
 #endif // COMESTRUCTURAS_H_INCLUDED
@@ -140,17 +144,16 @@ int comparacionEstructuras(){
                     if(costo > costoRAL[1].costoMax) costoRAL[1].costoMax = costo;
                 }
                 //RS
-                //costo = 0;
-                //printf("\nDNI: %d", dat.numDni);
-                //exito = bajaRS(RS, dat.numDni, &costo);
-                //if(exito == 2){
-                    //costoRS[1].costoAcumulado = costoRS[1].costoAcumulado + costo;
-                    //costoRS[1].cant++;
-                    //if(costo > costoRS[1].costoMax) costoRS[1].costoMax = costo;
-                //}
+                costo = 0;
+                exito = bajaRS(RS, dat, &costo, 1);
+                if(exito == 2){
+                    costoRS[1].costoAcumulado = costoRS[1].costoAcumulado + costo;
+                    costoRS[1].cant++;
+                    if(costo > costoRS[1].costoMax) costoRS[1].costoMax = costo;
+                }
                 //ABB
                 costo = 0;
-                exito = bajaABB(dat, &costo);
+                exito = bajaABB(dat, &costo, 1);
                 if(exito == 0){
                     costoABB[1].costoAcumulado = costoABB[1].costoAcumulado + costo;
                     costoABB[1].cant++;
@@ -158,7 +161,7 @@ int comparacionEstructuras(){
                 }
                 //LSO
                 costo = 0;
-                exito = bajaLSO(LSO, dat.numDni, &costo);
+                exito = bajaLSO(LSO, dat, &costo, 1);
                 if(exito == 1){
                     costoLSO[1].costoAcumulado = costoLSO[1].costoAcumulado + costo;
                     costoLSO[1].cant++;
@@ -166,7 +169,7 @@ int comparacionEstructuras(){
                 }
                 //LSOBB
                 costo = 0;
-                exito = bajaLSOBT(LSOBB, dat.numDni, &costo);
+                exito = bajaLSOBT(LSOBB, dat, &costo, 1);
                 if(exito == 1){
                     costoLSOBB[1].costoAcumulado = costoLSOBB[1].costoAcumulado + costo;
                     costoLSOBB[1].cant++;

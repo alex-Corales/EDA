@@ -1,3 +1,7 @@
+/*
+    Grupo 30 - Corales Alex Nahuel
+*/
+
 #ifndef CONTROLES_H_INCLUDED
 #define CONTROLES_H_INCLUDED
 #endif // CONTROLES_H_INCLUDED

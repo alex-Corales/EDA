@@ -1,3 +1,7 @@
+/*
+    Grupo 30 - Corales Alex Nahuel
+*/
+
 #ifndef LSOBB_H_INCLUDED
 #define LSOBB_H_INCLUDED
 #endif // LSOBB_H_INCLUDED
@@ -167,18 +171,23 @@ int localizarLSOBT(datosVendedor arreglo[], int busqueda, int ls, int *posLSOBT,
     int li = 0;
     int testigo = 0;
     *costo = 0.0;
-    while (li <= ls){
-        *costo = *costo + 1;
-        testigo = (li + ls)/2;
-        if (busqueda == arreglo[testigo].numDni){
-            *posLSOBT = testigo;
-            return 1;
+    if(lsLSOBT != -1){
+        while (li <= ls){
+            *costo = *costo + 1;
+            testigo = (li + ls)/2;
+            if (busqueda == arreglo[testigo].numDni){
+                *posLSOBT = testigo;
+                return 1;
+            }
+            if (busqueda < arreglo[testigo].numDni) ls = testigo - 1;
+            else li = testigo + 1;
         }
-        if (busqueda < arreglo[testigo].numDni) ls = testigo - 1;
-        else li = testigo + 1;
+        *posLSOBT = li;
+        return -1;
+    }else{
+        *posLSOBT = 0;
+        return -1;
     }
-    *posLSOBT = testigo;
-    return -1;
 }
 
 int altaLSOBT(datosVendedor dat[], char nombreApellido[], int numDni, char numTelefono[], float montoVendido, int cantVendido, char canalDeVenta[], float *costo){
@@ -188,63 +197,37 @@ int altaLSOBT(datosVendedor dat[], char nombreApellido[], int numDni, char numTe
     int exito = localizarLSOBT(dat,numDni,lsLSOBT,&posLSOBT,&costoAux);
     if(exito == 1) return 0; //El vendedor ya esta cargado
 
-    int i = 0;
+    int i;
 
-    if(numDni > dat[lsLSOBT].numDni){
-        lsLSOBT++;
-        dat[lsLSOBT].numDni = numDni;
-        strcpy(dat[lsLSOBT].nombreApellido, nombreApellido);
-        strcpy(dat[lsLSOBT].numTelefono, numTelefono);
-        dat[lsLSOBT].montoVendido = montoVendido;
-        dat[lsLSOBT].cantVendido = cantVendido;
-        strcpy(dat[lsLSOBT].canalDeVenta, canalDeVenta);
-    }else{
-        if(lsLSOBT == -1){ //EL arreglo esta vacio
-            lsLSOBT++;
-            dat[0].numDni = numDni;
-            strcpy(dat[0].nombreApellido, nombreApellido);
-            strcpy(dat[0].numTelefono, numTelefono);
-            dat[0].montoVendido = montoVendido;
-            dat[0].cantVendido = cantVendido;
-            strcpy(dat[0].canalDeVenta, canalDeVenta);
-        }else if(posLSOBT == -1 && lsLSOBT != -1){ //El arreglo no esta vacio pero testigo se salio del arreglo
-            for(i = lsLSOBT; i >= 0; i--){
-                dat[i+1] = dat[i];
-                *costo = *costo + 1;
-            }
-            lsLSOBT++;
-            dat[0].numDni = numDni;
-            strcpy(dat[0].nombreApellido, nombreApellido);
-            strcpy(dat[0].numTelefono, numTelefono);
-            dat[0].montoVendido = montoVendido;
-            dat[0].cantVendido = cantVendido;
-            strcpy(dat[0].canalDeVenta, canalDeVenta);
-        }else{
-            for(i = lsLSOBT; i >= posLSOBT; i--){
-                dat[i+1] = dat[i];
-                *costo = *costo + 1;
-            }
-            lsLSOBT++;
-            dat[posLSOBT].numDni = numDni;
-            strcpy(dat[posLSOBT].nombreApellido, nombreApellido);
-            strcpy(dat[posLSOBT].numTelefono, numTelefono);
-            dat[posLSOBT].montoVendido = montoVendido;
-            dat[posLSOBT].cantVendido = cantVendido;
-            strcpy(dat[posLSOBT].canalDeVenta, canalDeVenta);
-        }
+    for(i = lsLSOBT; i >= posLSOBT; i--){
+        dat[i+1] = dat[i];
+        *costo = *costo + 1.5;
     }
 
+    dat[posLSOBT].numDni = numDni;
+    strcpy(dat[posLSOBT].nombreApellido, nombreApellido);
+    strcpy(dat[posLSOBT].numTelefono, numTelefono);
+    dat[posLSOBT].montoVendido = montoVendido;
+    dat[posLSOBT].cantVendido = cantVendido;
+    strcpy(dat[posLSOBT].canalDeVenta, canalDeVenta);
+    lsLSOBT++;
 
     return 1;
-}// ingreso de nuevos vendedores
+}
 
-int bajaLSOBT(datosVendedor dat[], int dni, float *costo){
+int bajaLSOBT(datosVendedor dat[], datosVendedor datLSOBB, float *costo, int opcAux){
     int auxopc = 0, opc = 0;
     char opc1[10];
     float costoAux;
-    if(localizarLSOBT(dat, dni, lsLSOBT,&posLSOBT,&costoAux) == -1) return -1;
+    if(localizarLSOBT(dat, datLSOBB.numDni, lsLSOBT,&posLSOBT,&costoAux) == -1) return -1;
 
-    /*
+    if(opcAux == 1){
+        if(datLSOBB.numDni == dat[posLSO].numDni && datLSOBB.cantVendido == dat[posLSO].cantVendido && datLSOBB.montoVendido == dat[posLSO].montoVendido && (strcmp(dat[posLSO].canalDeVenta, datLSOBB.canalDeVenta) == 0) && (strcmp(dat[posLSO].nombreApellido, datLSOBB.nombreApellido) == 0) && (strcmp(dat[posLSO].numTelefono, datLSOBB.numTelefono) == 0)){
+            opc = 1;
+        }else opc = 0;
+    }
+    if(opc == 0) return 3;
+    if(opcAux == 0){
         printf("------------------------------\n");
         printf("Nombre y Apellido: %s\n", dat[posLSOBT].nombreApellido);
         printf("Dni: %d\n", dat[posLSOBT].numDni);
@@ -265,10 +248,9 @@ int bajaLSOBT(datosVendedor dat[], int dni, float *costo){
         opc = atoi(opc1);
 
         if(opc == 1){
-            lsLSOBT = corrimientoElementoEliminandoLSOBT(dat, posLSOBT);
             return 1;
         }
-    */
+    }
 
     for(int i = posLSOBT; i < lsLSOBT; i++){
         dat[i] = dat[i+1];
@@ -314,30 +296,37 @@ int perteneceLSOBT(datosVendedor dat[], int dni){
     else return -1;
 }
 
-int memorizacionPreviaLSOBT(datosVendedor dat []){
+int memorizacionPreviaLSOBT(datosVendedor dat[]){
 
     char nombreApellido[50];
-    int numDni;
-    char numTelefono[15];
-    float montoVendido;
-    int cantVendido;
-    char canalDeVenta[20];
     float costoAux;
     int i = 0;
+    int auxMemo;
 
     FILE *fp;
 
     if((fp = fopen("vendedores.txt","r"))==NULL) return 0;
     else{
         while(!feof(fp)){
-            if(lsLSOBT == 109) return -1;
-            fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &numDni, nombreApellido, numTelefono, &montoVendido, &cantVendido, canalDeVenta);
-
-            if(localizarLSOBT(dat,numDni,lsLSOBT,&pos,&costoAux)!=1){
-                altaLSOBT(dat, nombreApellido,numDni,numTelefono,montoVendido,cantVendido,canalDeVenta,&costo);
+            fscanf(fp,"%d %[^\n] %[^\n] %f %d %[^\n]", &dat->numDni, dat->nombreApellido, dat->numTelefono, &dat->montoVendido, &dat->cantVendido, dat->canalDeVenta);
+            auxMemo = altaLSOBT(dat, dat->nombreApellido,dat->numDni,dat->numTelefono,dat->montoVendido,dat->cantVendido,dat->canalDeVenta,&costo);
+            if(auxMemo == -1){
+                fclose(fp);
+                return -1;
+            }else if(auxMemo == 0){
+                printf("\nHay un vendedor repetido");
+                printf("\nDesea ver el vendedor repetido?");
+                printf("\n<1> si");
+                printf("\n<2> No");
+                printf("\n- ");
+                scanf("%d", &auxMemo);
+                if(auxMemo == 1) imprimirVendedorLSOBT(*dat);
+                system("pause");
+                system("cls");
             }
+
         }
+        fclose(fp);
         return 1;
     }
-    fclose(fp);
-} //Guarda los datos del archivo
+}

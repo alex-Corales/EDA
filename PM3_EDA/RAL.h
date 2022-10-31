@@ -1,3 +1,7 @@
+/*
+    Grupo 30 - Corales Alex Nahuel
+*/
+
 #ifndef RAL_H_INCLUDED
 #define RAL_H_INCLUDED
 #endif // RAL_H_INCLUDED
@@ -220,8 +224,8 @@ int localizarRAL(celda RAL[] ,int dni ,int *pos, float *costo){
             i = (i+1) % M;
         }
     }
-    if(j == M) return 0; //El elemento no se encuentra en la lista, estan todas las celdas llenas
     if(libre == 1) return 2; //Encontre un lugar libre
+    if(j == M) return 0; //El elemento no se encuentra en la lista, estan todas las celdas llenas
     if(libre == 0){ // No encontre libre y pero hay una celda virgen
         *pos = i;
         return 2;
@@ -229,7 +233,7 @@ int localizarRAL(celda RAL[] ,int dni ,int *pos, float *costo){
 }
 
 int altaRAL(celda RAL[], datosVendedor dat, float *costo){
-    if (cantVendedoresRAC == 110) return 0; //fracasa por que la estructura esta llena
+    if (cantVendedoresRAC == M) return 0; //fracasa por que la estructura esta llena
     float costoAux;
     int aux = localizarRAL(RAL, dat.numDni, &pos, &costoAux);
     if(aux == 1) return 1; //fracasa por que el elemento se encuentra cargado
@@ -248,6 +252,7 @@ int bajaRAL(celda RAL[], datosVendedor dat, float *costo, int opcAux){
     float costoAux;
     int aux = localizarRAL(RAL, dat.numDni, &pos, &costoAux);
     if(aux == 0) return 0; //Fracasa, el elemento no esta en la lista
+    if(aux == 2) return 0;
 
     if(opcAux == 1){
         if(dat.numDni == RAL[pos].dat.numDni && dat.cantVendido == RAL[pos].dat.cantVendido && dat.montoVendido == RAL[pos].dat.montoVendido && (strcmp(RAL[pos].dat.canalDeVenta, dat.canalDeVenta) == 0) && (strcmp(RAL[pos].dat.nombreApellido, dat.nombreApellido) == 0) && (strcmp(RAL[pos].dat.numTelefono, dat.numTelefono) == 0)){

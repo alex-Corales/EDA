@@ -1,3 +1,7 @@
+/*
+    Grupo 30 - Corales Alex Nahuel
+*/
+
 #ifndef RS_H_INCLUDED
 #define RS_H_INCLUDED
 #endif // RS_H_INCLUDED
@@ -6,10 +10,21 @@
 #include "listaEnlazada.h"
 #define M 60 //p= 1.84 -> M = N/p -> M = 110/1.84 -> M = 59.78 -> M = 60.
 
+typedef struct{
+    datosVendedor vipd;
+    struct nodo *next;
+}nodo;
+
+typedef struct{
+    nodo *acceso;
+    nodo *cursor;
+}lista;
+
 /*
     VARIABLES
 */
 
+nodo *anteriorRS;
 int contRS;
 int opcAuxRS = 0;
 char auxDni[20];
@@ -28,13 +43,18 @@ lista RS[M];
 datosVendedor evocarRS(lista *, int, float *);
 int localizarRS(lista *, int, int *, float *);
 int altaRS(lista *, datosVendedor, float *);
-int bajaRS(lista *, int, float *);
+int bajaRS(lista *, datosVendedor, float *, int);
 int perteneceRS(lista *, int, int *);
 int mostrarRS(lista *);
 int memorizacionPreviaRS(lista *, datosVendedor);
 int hashingRS(int);
 void imprimirRS(datosVendedor);
 void initRS(lista *);
+
+void init(lista *p){
+    (*p).acceso = NULL;
+    (*p).cursor = NULL;
+}
 
 void menuRS(){
 
@@ -114,8 +134,8 @@ void menuRS(){
             break;
         case 2:
             printf("\nIngrese el dni del vendedor: ");
-            scanf("%d", &dni);
-            int aux = bajaRS(RS, dni, &costo);
+            scanf("%d", &vendedor.numDni);
+            int aux = bajaRS(RS, vendedor, &costo, 1);
             if(aux == 1) printf("\nNo hay elementos para dar de baja");
             else if(aux == 0) printf("\nEl vendendor no se encuentra cargado en la lista");
             else if(aux == -1) printf("\nSe cancelo la baja del vendedor");
@@ -189,10 +209,10 @@ int localizarRS(lista dat[], int dni, int *posRS, float *costo){
     *costo = 0.0;
     if(dat[*posRS].acceso == NULL) return 1; //Veo si hay elementos
     dat[*posRS].cursor = dat[*posRS].acceso;
-    dat[*posRS].cursoraux = dat[*posRS].acceso;
+    anteriorRS = dat[*posRS].acceso;
 
     while(dat[*posRS].cursor != NULL && dat[*posRS].cursor->vipd.numDni != dni){
-        dat[*posRS].cursoraux = dat[*posRS].cursor;
+        anteriorRS = dat[*posRS].cursor;
         dat[*posRS].cursor = dat[*posRS].cursor->next;
         *costo = *costo + 1;
     }
@@ -211,44 +231,31 @@ int altaRS(lista dat[], datosVendedor empleado, float *costo){
 
     dat[posRS].cursor = dat[posRS].acceso;
 
-    if(dat[posRS].cursor == dat[posRS].acceso){
-        dat[posRS].acceso = aux;
-        aux->next = dat[posRS].cursor;
-        dat[posRS].cursor = dat[posRS].acceso;
-        *costo = *costo + 1;
-    }else{
-        aux->next = dat[posRS].acceso;
-        dat[posRS].acceso = aux;
-        *costo = *costo + 1;
-    }
+    dat[posRS].acceso = aux;
+    aux->next = dat[posRS].cursor;
+    dat[posRS].cursor = dat[posRS].acceso;
+    *costo = *costo + 1;
+
     dat[posRS].cursor->vipd = empleado;
 
     contRS++;
     return 1;
 }
 
-int bajaRS(lista dat[], int dni, float *costo, int opcAux){
+int bajaRS(lista dat[], datosVendedor datRS, float *costo, int opcAux){
     if(contRS == 0) return 1; //No hay elementos
     float costoAux;
-    int aux = localizarRS(dat, dni, &posRS, &costoAux);
+    int aux = localizarRS(dat, datRS.numDni, &posRS, &costoAux);
     if(aux == 0) return 0; //El elemento no esta en la lista
+    if(aux == 1) return 1;
     *costo = 0.0;
-
-    if(dat[posRS].cursor == dat[posRS].acceso){
-        dat[posRS].acceso = dat[posRS].cursor->next;
-        free(dat[posRS].cursor);
-        dat[posRS].cursor = dat[posRS].acceso;
-        dat[posRS].cursoraux = dat[posRS].acceso;
-        *costo = *costo + 1;
-    }else{
-        dat[posRS].cursoraux->next = dat[posRS].cursor->next;
-        free(dat[posRS].cursor);
-        dat[posRS].cursor = dat[posRS].cursoraux->next;
-        *costo = *costo + 1;
+    if(opcAux == 1){
+        if(datRS.numDni == dat[posRS].cursor->vipd.numDni && datRS.cantVendido == dat[posRS].cursor->vipd.cantVendido && datRS.montoVendido == dat[posRS].cursor->vipd.montoVendido && (strcmp(dat[posRS].cursor->vipd.canalDeVenta, datRS.canalDeVenta) == 0) && (strcmp(dat[posRS].cursor->vipd.nombreApellido, datRS.nombreApellido) == 0) && (strcmp(dat[posRS].cursor->vipd.numTelefono, datRS.numTelefono) == 0)){
+            opc = 1;
+        }else opc = 0;
     }
-
-    contRS--;
-    /*
+    if(opc == 0) return 3;
+    if(opcAux == 0){
         imprimirRS(dat[posRS].cursor->vipd);
         printf("\nDesea eliminar los datos del vendedor");
         printf("\n<1> Si");
@@ -256,11 +263,22 @@ int bajaRS(lista dat[], int dni, float *costo, int opcAux){
         printf("\n- ");
         scanf("%d", &opc);
         if(opc == 1){
-            bajaLista(&dat[posRS], dni, &costo);
-            contRS--;
-        }else return -1;
-    */
 
+        }else return -1;
+    }
+    if(dat[posRS].cursor == dat[posRS].acceso){
+        dat[posRS].acceso = dat[posRS].cursor->next;
+        free(dat[posRS].cursor);
+        dat[posRS].cursor = dat[posRS].acceso;
+        anteriorRS = dat[posRS].acceso;
+        *costo = *costo + 1;
+    }else{
+        anteriorRS->next = dat[posRS].cursor->next;
+        free(dat[posRS].cursor);
+        dat[posRS].cursor = anteriorRS->next;
+        *costo = *costo + 1;
+    }
+    contRS--;
     return 2;
 }
 
@@ -290,6 +308,14 @@ int mostrarRS(lista dat[]){
         printf("\nBalde N: %d", i);
         mostrarLista(dat[i]);
         j++;
+    }
+}
+
+void mostrarLista(lista dat){
+    dat.cursor = dat.acceso;
+    while(dat.cursor != NULL){
+        imprimirRS(dat.cursor->vipd);
+        dat.cursor = dat.cursor->next;
     }
 }
 

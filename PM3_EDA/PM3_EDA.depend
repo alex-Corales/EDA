@@ -31,35 +31,35 @@
 
 1666731764 c:\users\multirepair\desktop\estructura de datos\estructuras\pm3_eda\lsobb.h
 
-1666870403 source:c:\users\multirepair\documents\eda\pm3_eda\main.c
+1667187183 source:c:\users\multirepair\documents\eda\pm3_eda\main.c
 	<stdio.h>
 	<stdlib.h>
 	"comEstructuras.h"
 
-1666872993 c:\users\multirepair\documents\eda\pm3_eda\comestructuras.h
+1667187226 c:\users\multirepair\documents\eda\pm3_eda\comestructuras.h
 	"RAL.h"
 	"RS.h"
 	"abb.h"
 	"LSO.h"
 	"LSOBB.h"
 
-1666873971 c:\users\multirepair\documents\eda\pm3_eda\ral.h
+1667187253 c:\users\multirepair\documents\eda\pm3_eda\ral.h
 	"vendedores.h"
 
-1666864007 c:\users\multirepair\documents\eda\pm3_eda\vendedores.h
+1667187271 c:\users\multirepair\documents\eda\pm3_eda\vendedores.h
 
-1666874246 c:\users\multirepair\documents\eda\pm3_eda\rs.h
+1667187264 c:\users\multirepair\documents\eda\pm3_eda\rs.h
 	"controles.h"
 	"listaEnlazada.h"
 
-1666864007 c:\users\multirepair\documents\eda\pm3_eda\controles.h
+1667187233 c:\users\multirepair\documents\eda\pm3_eda\controles.h
 
-1666868213 c:\users\multirepair\documents\eda\pm3_eda\listaenlazada.h
+1667086386 c:\users\multirepair\documents\eda\pm3_eda\listaenlazada.h
 	<malloc.h>
 
-1666872094 c:\users\multirepair\documents\eda\pm3_eda\abb.h
+1667187213 c:\users\multirepair\documents\eda\pm3_eda\abb.h
 
-1666867874 c:\users\multirepair\documents\eda\pm3_eda\lso.h
+1667187241 c:\users\multirepair\documents\eda\pm3_eda\lso.h
 
-1666865500 c:\users\multirepair\documents\eda\pm3_eda\lsobb.h
+1667187247 c:\users\multirepair\documents\eda\pm3_eda\lsobb.h
 
