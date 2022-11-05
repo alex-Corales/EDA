@@ -7,7 +7,6 @@
 #endif // RS_H_INCLUDED
 
 #include "controles.h"
-#include "listaEnlazada.h"
 #define M 60 //p= 1.84 -> M = N/p -> M = 110/1.84 -> M = 59.78 -> M = 60.
 
 typedef struct{

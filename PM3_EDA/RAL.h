@@ -209,7 +209,6 @@ int localizarRAL(celda RAL[] ,int dni ,int *pos, float *costo){
     int i = hashingRAL(dni);
     int j = 0;
     int libre = 0;
-    *costo = 0;
     while(j != M && RAL[i].estado != '*'){
         *costo = *costo + 1;
         if(RAL[i].dat.numDni == dni && RAL[i].estado == '-'){ //Dni igual y celda ocupada
@@ -224,6 +223,7 @@ int localizarRAL(celda RAL[] ,int dni ,int *pos, float *costo){
             i = (i+1) % M;
         }
     }
+    if(RAL[i].estado == '*') *costo = *costo + 1;
     if(libre == 1) return 2; //Encontre un lugar libre
     if(j == M) return 0; //El elemento no se encuentra en la lista, estan todas las celdas llenas
     if(libre == 0){ // No encontre libre y pero hay una celda virgen
@@ -309,16 +309,20 @@ int mostrarRAL(celda RAL[]){
 
 datosVendedor evocarRAL(celda RAL[], int numDni, float *costo){
     datosVendedor aux;
-    aux.numDni = 1;
-    if(cantVendedoresRAC == 0) return aux;
+    //aux.numDni = 1;
+    //if(cantVendedoresRAC == 0) return aux;
     aux.numDni = -1;
     float costoAux;
-    if(localizarRAL(RAL, numDni, &pos, &costoAux) != 1){
+    int auxOpc = localizarRAL(RAL, numDni, &pos, &costoAux);
+    if(auxOpc == 2 || auxOpc == 0){
         *costo = costoAux;
         return aux; //El vendedor no esta cargado
+    }else if(auxOpc == 1){
+        *costo = costoAux;
+        aux.numDni = 1;
+        return aux;
+        //return RAL[pos].dat;
     }
-    *costo = costoAux;
-    return RAL[pos].dat;
 }
 
 int memorizacionPreviaRAL(celda RAL[], datosVendedor dat, float *costo){

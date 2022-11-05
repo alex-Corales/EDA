@@ -229,8 +229,11 @@ int localizarABB(int numDni, float *costo){
             cursor = cursor->nodoDerecho;
         }
     }
-    if(cursor == NULL) return 1; //El vendedor no esta en el arbol
-    else return 0; //El vendedor se encuentra en el arbol
+
+    if(cursor == NULL){ //El vendedor no esta en el arbol
+        *costo = *costo + 1;
+        return 1;
+    }else return 0; //El vendedor se encuentra en el arbol
 }
 
 int altaABB(datosVendedor dat, float *costo){
@@ -353,15 +356,18 @@ int bajaABB(datosVendedor dat, float *costo, int opcAux){ //Politica de remplazo
 
 datosVendedor evocarABB(int dni, float *costo){
     datosVendedor temp;
-    temp.numDni = 1;
     float costoAux;
     int aux = localizarABB(dni, &costoAux);
     if(aux == 1){
         *costo = costoAux;
+        temp.numDni = 1;
         return temp; //El vendedor no esta cargado
+    }else{
+        *costo = costoAux;
+        temp.numDni == 0;
+        return temp;
+        //return cursor->vipdABB;
     }
-    *costo = costoAux;
-    return cursor->vipdABB;
 }
 
 int preOrdenHijos(struct nodoABB *cursor){

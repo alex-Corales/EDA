@@ -180,11 +180,11 @@ int comparacionEstructuras(){
                 //RAL
                 costo = 0;
                 exitoE = evocarRAL(RAL, dat.numDni, &costo);
-                if(exitoE.numDni != -1){
+                if(exitoE.numDni == 1){ //evocacion exitosa
                     costoRAL[2].costoAcumulado = costoRAL[2].costoAcumulado + costo;
                     costoRAL[2].cant++;
                     if(costo > costoRAL[2].costoMax) costoRAL[2].costoMax = costo;
-                }else if(exitoE.numDni == -1){
+                }else if(exitoE.numDni == -1){ //evocacion no exitosa, return -1
                     costoRAL[3].costoAcumulado = costoRAL[3].costoAcumulado + costo;
                     costoRAL[3].cant++;
                     if(costo > costoRAL[3].costoMax) costoRAL[3].costoMax = costo;
@@ -204,11 +204,11 @@ int comparacionEstructuras(){
                 //ABB
                 costo = 0;
                 exitoE = evocarABB(dat.numDni, &costo);
-                if(exitoE.numDni != 1){
+                if(exitoE.numDni == 0){ //evocacion exitosa
                     costoABB[2].costoAcumulado = costoABB[2].costoAcumulado + costo;
                     costoABB[2].cant++;
                     if(costo > costoABB[2].costoMax) costoABB[2].costoMax = costo;
-                }else if(exitoE.numDni == 1){
+                }else if(exitoE.numDni == 1){ //evocacion no exitosa
                     costoABB[3].costoAcumulado = costoABB[3].costoAcumulado + costo;
                     costoABB[3].cant++;
                     if(costo > costoABB[3].costoMax) costoABB[3].costoMax = costo;
