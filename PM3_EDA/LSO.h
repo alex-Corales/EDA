@@ -179,7 +179,8 @@ void imprimirVendedorLSO(datosVendedor dat){
 
 int localizarLSO(datosVendedor dat[], int numDni, int *posLSO, float *costo){
     int i = 0;
-    *costo = 0.0;
+    *costo = 1.0;
+    //*costo = 0.0;
     while(dat[i].numDni < numDni){
         *costo = *costo + 1;
         i++;

@@ -25,7 +25,7 @@ struct nodoABB *aux2 = NULL;
     PROTOTIPOS
 */
 
-datosVendedor evocarABB(int, float *);
+int evocarABB(int, float *);
 int localizarABB(int, float *);
 int altaABB(datosVendedor, float *);
 int bajaABB(datosVendedor, float *, int);
@@ -135,10 +135,10 @@ void menuABB(){
             printf("\nIngrese el dni del vendedor que desea buscar: ");
             scanf("%d", &numDni);
 
-            datosVendedor tempABB = evocarABB(numDni, &costo);
+            int tempABB = evocarABB(numDni, &costo);
 
-            if(tempABB.numDni == 1) printf("\nEl vendedor no se encuentra cargado");
-            else imprimirABB(tempABB);
+            if(tempABB == 1) printf("\nEl vendedor no se encuentra cargado");
+            //else imprimirABB(tempABB);
             printf("\n");
             system("pause");
             system("cls");
@@ -218,7 +218,8 @@ void imprimirABB(datosVendedor dat){
 
 int localizarABB(int numDni, float *costo){
     cursor = raiz;
-    *costo = 0.0;
+    //*costo = 0.0;
+    *costo = 1.0;
     while(cursor != NULL && cursor->vipdABB.numDni != numDni){
         *costo = *costo + 1;
         anterior = cursor;
@@ -341,31 +342,36 @@ int bajaABB(datosVendedor dat, float *costo, int opcAux){ //Politica de remplazo
         if(aux1 == aux2){
             cursor->nodoIzquierdo = aux1->nodoIzquierdo;
             cursor->vipdABB = aux1->vipdABB;
-            *costo = *costo + 1.5;
+            *costo = *costo + 1;
+            //*costo = *costo + 1.5;
         }else{
             cursor->vipdABB = aux1->vipdABB;
             aux2->nodoDerecho = aux1->nodoIzquierdo;
-            *costo = *costo + 1.5;
+            *costo = *costo + 1;
+            //*costo = *costo + 1.5;
         }
         cursor = aux1;
+        *costo = *costo + 1.5;
+        /*
+            Un costo por la actulizacion del puntero a null
+            y 1.5 por la copia de datos, seria entonces
+            2.5 (PREGUNTAR)
+        */
     }
     free(cursor);
     cantVendedoresABB--;
     return 0; //El vendedor se elimino
 }
 
-datosVendedor evocarABB(int dni, float *costo){
-    datosVendedor temp;
+int evocarABB(int dni, float *costo){
     float costoAux;
     int aux = localizarABB(dni, &costoAux);
     if(aux == 1){
         *costo = costoAux;
-        temp.numDni = 1;
-        return temp; //El vendedor no esta cargado
-    }else{
+        return 1; //El vendedor no esta cargado
+    }else if(aux == 0){
         *costo = costoAux;
-        temp.numDni == 0;
-        return temp;
+        return 0;
         //return cursor->vipdABB;
     }
 }
