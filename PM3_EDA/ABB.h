@@ -264,7 +264,8 @@ int altaABB(datosVendedor dat, float *costo){
     return 2; //El vendedor se cargo
 }
 
-int bajaABB(datosVendedor dat, float *costo, int opcAux){ //Politica de remplazo: Mayor de los menores con copia de datos
+int bajaABB(datosVendedor dat, float *costo, int opcAux){
+
     float costoAux;
     int aux = localizarABB(dat.numDni, &costoAux);
     if(aux == 1) return 1; //El vendedor no se encuentra en el arbol
@@ -332,7 +333,7 @@ int bajaABB(datosVendedor dat, float *costo, int opcAux){ //Politica de remplazo
                 }
             }
         }
-    }else{
+    }else{ //Politica de remplazo: Mayor de los menores con copia de datos
         aux2 = cursor->nodoIzquierdo;
         aux1 = cursor->nodoIzquierdo;
         while(aux1->nodoDerecho != NULL){

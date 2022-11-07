@@ -2,59 +2,47 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="main.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="530" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="40" />
-		</Folding>
-	</File>
 	<File name="comEstructuras.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="7680" topLine="190" />
+			<Cursor1 position="7277" topLine="187" />
 		</Cursor>
 		<Folding>
 			<Collapse line="289" />
 			<Collapse line="298" />
 		</Folding>
 	</File>
-	<File name="vendedores.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="LSOBB.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="42" topLine="0" />
+			<Cursor1 position="5536" topLine="154" />
 		</Cursor>
+		<Folding>
+			<Collapse line="156" />
+			<Collapse line="192" />
+			<Collapse line="217" />
+			<Collapse line="277" />
+			<Collapse line="291" />
+			<Collapse line="298" />
+		</Folding>
 	</File>
-	<File name="LSO.h" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+	<File name="LSO.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5640" topLine="35" />
+			<Cursor1 position="5539" topLine="26" />
 		</Cursor>
 		<Folding>
 			<Collapse line="37" />
 			<Collapse line="167" />
+			<Collapse line="179" />
+			<Collapse line="198" />
+			<Collapse line="222" />
+			<Collapse line="272" />
 			<Collapse line="285" />
 			<Collapse line="292" />
 			<Collapse line="306" />
 		</Folding>
 	</File>
-	<File name="ABB.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="RS.h" open="1" top="1" tabpos="5" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="7964" topLine="21" />
-		</Cursor>
-		<Folding>
-			<Collapse line="49" />
-			<Collapse line="207" />
-			<Collapse line="218" />
-			<Collapse line="239" />
-			<Collapse line="266" />
-			<Collapse line="365" />
-			<Collapse line="378" />
-			<Collapse line="412" />
-			<Collapse line="426" />
-		</Folding>
-	</File>
-	<File name="RS.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="141" topLine="0" />
+			<Cursor1 position="6205" topLine="47" />
 		</Cursor>
 		<Folding>
 			<Collapse line="52" />
@@ -66,38 +54,30 @@
 			<Collapse line="222" />
 			<Collapse line="243" />
 			<Collapse line="283" />
-			<Collapse line="296" />
-			<Collapse line="312" />
-			<Collapse line="320" />
+			<Collapse line="297" />
+			<Collapse line="313" />
+			<Collapse line="321" />
 		</Folding>
 	</File>
-	<File name="LSOBB.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+	<File name="vendedores.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="42" topLine="0" />
 		</Cursor>
-		<Folding>
-			<Collapse line="31" />
-			<Collapse line="156" />
-			<Collapse line="168" />
-			<Collapse line="192" />
-			<Collapse line="217" />
-			<Collapse line="264" />
-			<Collapse line="277" />
-			<Collapse line="291" />
-			<Collapse line="298" />
-		</Folding>
 	</File>
-	<File name="RAL.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+	<File name="ABB.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="10805" topLine="211" />
+			<Cursor1 position="13212" topLine="38" />
 		</Cursor>
 		<Folding>
-			<Collapse line="172" />
-			<Collapse line="182" />
-			<Collapse line="189" />
-			<Collapse line="234" />
-			<Collapse line="249" />
-			<Collapse line="291" />
+			<Collapse line="49" />
+			<Collapse line="207" />
+			<Collapse line="218" />
+			<Collapse line="239" />
+			<Collapse line="266" />
+			<Collapse line="366" />
+			<Collapse line="379" />
+			<Collapse line="413" />
+			<Collapse line="427" />
 		</Folding>
 	</File>
 	<File name="controles.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
@@ -108,6 +88,31 @@
 			<Collapse line="8" />
 			<Collapse line="21" />
 			<Collapse line="33" />
+		</Folding>
+	</File>
+	<File name="RAL.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6942" topLine="40" />
+		</Cursor>
+		<Folding>
+			<Collapse line="49" />
+			<Collapse line="172" />
+			<Collapse line="182" />
+			<Collapse line="189" />
+			<Collapse line="200" />
+			<Collapse line="234" />
+			<Collapse line="249" />
+			<Collapse line="291" />
+			<Collapse line="310" />
+			<Collapse line="328" />
+		</Folding>
+	</File>
+	<File name="main.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="530" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="40" />
 		</Folding>
 	</File>
 </CodeBlocks_layout_file>

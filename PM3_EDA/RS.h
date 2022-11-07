@@ -205,7 +205,7 @@ void initRS(lista dat[]){
 
 int localizarRS(lista dat[], int dni, int *posRS, float *costo){
     *posRS = hashingRS(dni);
-    *costo = 0.0;
+    *costo = 1.0;
     if(dat[*posRS].acceso == NULL) return 1; //Veo si hay elementos
     dat[*posRS].cursor = dat[*posRS].acceso;
     anteriorRS = dat[*posRS].acceso;
@@ -233,7 +233,7 @@ int altaRS(lista dat[], datosVendedor empleado, float *costo){
     dat[posRS].acceso = aux;
     aux->next = dat[posRS].cursor;
     dat[posRS].cursor = dat[posRS].acceso;
-    *costo = *costo + 1;
+    *costo = *costo + 2; //Actualizo dos punteros, acceso apunta a aux y aux a cursor.
 
     dat[posRS].cursor->vipd = empleado;
 
@@ -290,6 +290,7 @@ datosVendedor evocarRS(lista dat[], int dni, float *costo){
         return aux;
     }
 
+    if(costoAux == 6) printf("\n%d", hashingRS(dni));
     *costo = costoAux;
     return dat[posRS].cursor->vipd;
 }

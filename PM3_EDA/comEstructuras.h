@@ -217,11 +217,11 @@ int comparacionEstructuras(){
                 //LSO
                 costo = 0;
                 exitoE = evocarLSO(LSO, dat.numDni, &costo);
-                if(exitoE.numDni != -1){
+                if(exitoE.numDni != -1){ //evocacion exitosa
                     costoLSO[2].costoAcumulado = costoLSO[2].costoAcumulado + costo;
                     costoLSO[2].cant++;
                     if(costo > costoLSO[2].costoMax) costoLSO[2].costoMax = costo;
-                }else if(exitoE.numDni == -1){
+                }else if(exitoE.numDni == -1){ //evocacion no exitosa
                     costoLSO[3].costoAcumulado = costoLSO[3].costoAcumulado + costo;
                     costoLSO[3].cant++;
                     if(costo > costoLSO[3].costoMax) costoLSO[3].costoMax = costo;

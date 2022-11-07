@@ -221,7 +221,7 @@ int altaLSO(datosVendedor dat[], char nombreApellido[], int numDni, char numTele
 }// ingreso de nuevos vendedores
 
 int bajaLSO(datosVendedor dat[], datosVendedor datLSO, float *costo, int opcAux){
-
+    if(ls == 0) return -1;
     int i = 0, auxopc = 0, opc = 0;
     char opc1[10];
     float costoAux;

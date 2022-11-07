@@ -295,6 +295,7 @@ int mostrarRAL(celda RAL[]){
         printf("\n-----------------------");
         printf("\nNumero de balde: %d", i);
         if(RAL[i].estado == '-'){
+            printf("\nHash: %d", hashingRAL(RAL[i].dat.numDni));
             printf("\nEstado de la celda: [%c] (Ocupada)", RAL[i].estado);
             printf("\nDni: %d", RAL[i].dat.numDni);
             printf("\nNombre y Apellido: %s", RAL[i].dat.nombreApellido);
