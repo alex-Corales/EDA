@@ -66,7 +66,7 @@ int comparacionEstructuras(){
     initM(mLSOBB);
 
     FILE *fp;
-    if((fp = fopen("Operaciones.txt","r"))==NULL) return 1;
+    if((fp = fopen("OperacionesPrueba.txt","r"))==NULL) return 1;
     else{
         while(!feof(fp)){
             /*
@@ -204,7 +204,7 @@ int comparacionEstructuras(){
                 //ABB
                 costo = 0;
                 exitoE = evocarABB(dat.numDni, &costo);
-                if(exitoE.numDni != 1){ //evocacion exitosa
+                if(exitoE.numDni != 1){ //evocacion no exitosa
                     costoABB[2].costoAcumulado = costoABB[2].costoAcumulado + costo;
                     costoABB[2].cant++;
                     if(costo > costoABB[2].costoMax) costoABB[2].costoMax = costo;
