@@ -62,3 +62,31 @@
 
 1667702009 c:\users\multirepair\documents\eda\pm3_eda\lsobb.h
 
+1667780691 source:c:\users\alex_\onedrive\documentos\universidad\eda\pm3_eda\main.c
+	<stdio.h>
+	<stdlib.h>
+	"comEstructuras.h"
+
+1667787835 c:\users\alex_\onedrive\documentos\universidad\eda\pm3_eda\comestructuras.h
+	"RAL.h"
+	"RS.h"
+	"abb.h"
+	"LSO.h"
+	"LSOBB.h"
+
+1667783012 c:\users\alex_\onedrive\documentos\universidad\eda\pm3_eda\ral.h
+	"vendedores.h"
+
+1667780691 c:\users\alex_\onedrive\documentos\universidad\eda\pm3_eda\vendedores.h
+
+1667790697 c:\users\alex_\onedrive\documentos\universidad\eda\pm3_eda\rs.h
+	"controles.h"
+
+1667780691 c:\users\alex_\onedrive\documentos\universidad\eda\pm3_eda\controles.h
+
+1667789965 c:\users\alex_\onedrive\documentos\universidad\eda\pm3_eda\abb.h
+
+1667789228 c:\users\alex_\onedrive\documentos\universidad\eda\pm3_eda\lso.h
+
+1667788423 c:\users\alex_\onedrive\documentos\universidad\eda\pm3_eda\lsobb.h
+

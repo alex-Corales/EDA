@@ -25,7 +25,7 @@ struct nodoABB *aux2 = NULL;
     PROTOTIPOS
 */
 
-int evocarABB(int, float *);
+datosVendedor evocarABB(int, float *);
 int localizarABB(int, float *);
 int altaABB(datosVendedor, float *);
 int bajaABB(datosVendedor, float *, int);
@@ -135,10 +135,10 @@ void menuABB(){
             printf("\nIngrese el dni del vendedor que desea buscar: ");
             scanf("%d", &numDni);
 
-            int tempABB = evocarABB(numDni, &costo);
+            datosVendedor tempABB = evocarABB(numDni, &costo);
 
-            if(tempABB == 1) printf("\nEl vendedor no se encuentra cargado");
-            //else imprimirABB(tempABB);
+            if(tempABB.numDni == 1) printf("\nEl vendedor no se encuentra cargado");
+            else imprimirABB(tempABB);
             printf("\n");
             system("pause");
             system("cls");
@@ -218,8 +218,7 @@ void imprimirABB(datosVendedor dat){
 
 int localizarABB(int numDni, float *costo){
     cursor = raiz;
-    //*costo = 0.0;
-    *costo = 1.0;
+    *costo = 0.0;
     while(cursor != NULL && cursor->vipdABB.numDni != numDni){
         *costo = *costo + 1;
         anterior = cursor;
@@ -234,7 +233,10 @@ int localizarABB(int numDni, float *costo){
     if(cursor == NULL){ //El vendedor no esta en el arbol
         *costo = *costo + 1;
         return 1;
-    }else return 0; //El vendedor se encuentra en el arbol
+    }else if(cursor->vipdABB.numDni == numDni){ //El vendedor se encuentra en el arbol
+        *costo = *costo + 1; //Cuando sale por que encuentra el dni costo no cuenta el nodo en el que esta el dni
+        return 0;
+    }
 }
 
 int altaABB(datosVendedor dat, float *costo){
@@ -364,16 +366,18 @@ int bajaABB(datosVendedor dat, float *costo, int opcAux){
     return 0; //El vendedor se elimino
 }
 
-int evocarABB(int dni, float *costo){
+datosVendedor evocarABB(int dni, float *costo){
+    datosVendedor aux;
+    aux.numDni = 1;
     float costoAux;
-    int aux = localizarABB(dni, &costoAux);
-    if(aux == 1){
+    int auxE = localizarABB(dni, &costoAux);
+    if(auxE == 1){
         *costo = costoAux;
-        return 1; //El vendedor no esta cargado
-    }else if(aux == 0){
+        return aux; //El vendedor no esta cargado
+    }else if(auxE == 0){
         *costo = costoAux;
-        return 0;
-        //return cursor->vipdABB;
+        //return 0;
+        return cursor->vipdABB;
     }
 }
 

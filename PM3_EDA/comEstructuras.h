@@ -203,13 +203,12 @@ int comparacionEstructuras(){
                 }
                 //ABB
                 costo = 0;
-                int a;
-                a = evocarABB(dat.numDni, &costo);
-                if(a == 0){ //evocacion exitosa
+                exitoE = evocarABB(dat.numDni, &costo);
+                if(exitoE.numDni != 1){ //evocacion exitosa
                     costoABB[2].costoAcumulado = costoABB[2].costoAcumulado + costo;
                     costoABB[2].cant++;
                     if(costo > costoABB[2].costoMax) costoABB[2].costoMax = costo;
-                }else if(a == 1){ //evocacion no exitosa
+                }else if(exitoE.numDni == 1){ //evocacion no exitosa
                     costoABB[3].costoAcumulado = costoABB[3].costoAcumulado + costo;
                     costoABB[3].cant++;
                     if(costo > costoABB[3].costoMax) costoABB[3].costoMax = costo;

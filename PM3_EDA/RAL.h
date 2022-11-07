@@ -223,7 +223,7 @@ int localizarRAL(celda RAL[] ,int dni ,int *pos, float *costo){
             i = (i+1) % M;
         }
     }
-    if(RAL[i].estado == '*') *costo = *costo + 1;
+    if(RAL[i].estado == '*') *costo = *costo + 1; //Correccion (PREGUNTAR)
     if(libre == 1) return 2; //Encontre un lugar libre
     if(j == M) return 0; //El elemento no se encuentra en la lista, estan todas las celdas llenas
     if(libre == 0){ // No encontre libre y pero hay una celda virgen

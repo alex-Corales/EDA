@@ -205,7 +205,7 @@ void initRS(lista dat[]){
 
 int localizarRS(lista dat[], int dni, int *posRS, float *costo){
     *posRS = hashingRS(dni);
-    *costo = 1.0;
+    *costo = 0.0;
     if(dat[*posRS].acceso == NULL) return 1; //Veo si hay elementos
     dat[*posRS].cursor = dat[*posRS].acceso;
     anteriorRS = dat[*posRS].acceso;
@@ -216,8 +216,14 @@ int localizarRS(lista dat[], int dni, int *posRS, float *costo){
         *costo = *costo + 1;
     }
 
-    if(dat[*posRS].cursor == NULL) return 0; //El elemento no esta en la lista
-    if(dat[*posRS].cursor->vipd.numDni == dni) return 2;
+    if(dat[*posRS].cursor == NULL){
+        *costo = *costo + 1;
+        return 0; //El elemento no esta en la lista
+    }
+    if(dat[*posRS].cursor->vipd.numDni == dni){
+        *costo = *costo + 1;
+        return 2;
+    }
 }
 
 int altaRS(lista dat[], datosVendedor empleado, float *costo){
@@ -285,12 +291,11 @@ datosVendedor evocarRS(lista dat[], int dni, float *costo){
     datosVendedor aux;
     aux.numDni = -1;
     float costoAux;
-    if(localizarRS(dat, dni, &posRS, &costoAux) != 2){
+    int auxE = localizarRS(dat, dni, &posRS, &costoAux);
+    if(auxE == 1 || auxE == 0){ //Evocacion no exitosa
         *costo = costoAux;
         return aux;
     }
-
-    if(costoAux == 6) printf("\n%d", hashingRS(dni));
     *costo = costoAux;
     return dat[posRS].cursor->vipd;
 }
